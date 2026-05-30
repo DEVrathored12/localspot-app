@@ -1,4 +1,5 @@
 /* LocalSpot — Main JavaScript */
+const API_BASE = 'https://localspot-ngn1.onrender.com/api';
 
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
