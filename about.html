@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .about-hero { background:linear-gradient(145deg,#fff5f5,#fff); padding:100px 0 60px; }
+    .about-hero h1 { margin-bottom:12px; }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .about-visual { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .about-stat-card { background:var(--white); border:1px solid var(--grey-200); border-radius:var(--radius); padding:24px; text-align:center; box-shadow:var(--shadow-sm); }
+    .about-stat-card strong { display:block; font-size:2rem; font-family:var(--font-display); color:var(--red); }
+    .about-stat-card span { font-size:13px; color:var(--grey-600); }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:24px; }
+    .team-card { background:var(--white); border:1px solid var(--grey-200); border-radius:var(--radius); padding:24px; text-align:center; transition:all var(--transition); }
+    .team-card:hover { box-shadow:var(--shadow-md); border-color:var(--red-mid); }
+    .team-avatar { width:72px; height:72px; border-radius:50%; background:var(--red); color:#fff; font-size:1.5rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+    .team-card h4 { margin-bottom:4px; }
+    .team-card span { font-size:12px; color:var(--grey-400); }
+    /* Pricing */
+    .pricing-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px; }
+    .pricing-card { background:var(--white); border:1px solid var(--grey-200); border-radius:var(--radius); padding:32px; transition:all var(--transition); position:relative; }
+    .pricing-card.popular { border-color:var(--red); box-shadow:0 0 0 3px rgba(230,57,70,0.1); }
+    .popular-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--red); color:#fff; font-size:11px; font-weight:700; padding:4px 16px; border-radius:var(--radius-full); white-space:nowrap; }
+    .pricing-card h3 { font-size:1.1rem; margin-bottom:8px; }
+    .pricing-price { font-family:var(--font-display); font-size:2.5rem; font-weight:900; color:var(--black); line-height:1; margin-bottom:4px; }
+    .pricing-price span { font-size:1rem; font-weight:400; color:var(--grey-400); font-family:var(--font-body); }
+    .pricing-desc { font-size:13px; color:var(--grey-600); margin-bottom:20px; }
+    .pricing-features { display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+    .pricing-features li { display:flex; align-items:center; gap:10px; font-size:13px; }
+    .pricing-features .fa-check { color:#27ae60; }
+    .pricing-features .fa-times { color:var(--grey-300); }
+    .pricing-features .inactive { color:var(--grey-400); }
+    /* Contact */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+    .contact-form { display:flex; flex-direction:column; gap:16px; }
+    .contact-form input, .contact-form textarea, .contact-form select {
+      width:100%; padding:12px 16px; border:1.5px solid var(--grey-200); border-radius:var(--radius-sm);
+      font-size:14px; font-family:inherit; color:var(--black); transition:border-color var(--transition);
+    }
+    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color:var(--red); outline:none; }
+    .contact-info-item { display:flex; align-items:flex-start; gap:14px; margin-bottom:20px; }
+    .contact-info-item i { width:40px; height:40px; background:var(--red-light); color:var(--red); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .contact-info-item strong { display:block; font-size:13px; margin-bottom:2px; }
+    .contact-info-item span { font-size:13px; color:var(--grey-600); }
+    @media(max-width:768px) {
+      .about-grid, .contact-grid { grid-template-columns:1fr; }
+      .about-visual { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shops.html">Shops</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+    <ul>
+      <li><a href="index.html">Home</a></li><li><a href="shops.html">Shops</a></li>
+      <li><a href="categories.html">Categories</a></li><li><a href="creators.html">Creators</a></li>
+      <li><a href="about.html">About</a></li><li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="container">
+      <span class="section-label">Our Story</span>
+      <h1>About <em>LocalSpot</em></h1>
+      <p style="max-width:560px; font-size:1.05rem;">We're on a mission to put local businesses on the map — literally. LocalSpot connects customers with the best shops in their neighbourhood through rich media, real reviews, and instant contact.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <span class="section-label">Who We Are</span>
+          <h2>Built for <em>Local Businesses</em></h2>
+          <p style="margin-bottom:16px">LocalSpot was founded in 2024 with a simple belief: every great local shop deserves to be discovered. We saw talented shop owners struggling to compete with big e-commerce platforms, and we built a solution that plays to their strengths — real products, real people, real locations.</p>
+          <p style="margin-bottom:24px">Today we serve 1,200+ shops across 48 neighbourhoods in Mumbai, with plans to expand across India. Our platform connects shops with customers and local video creators, creating a thriving hyperlocal ecosystem.</p>
+          <a href="register.html?type=shop" class="btn btn-primary">List Your Shop Free <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="about-visual">
+          <div class="about-stat-card"><strong>1,200+</strong><span>Shops Listed</span></div>
+          <div class="about-stat-card"><strong>48</strong><span>Neighbourhoods</span></div>
+          <div class="about-stat-card"><strong>320+</strong><span>Video Creators</span></div>
+          <div class="about-stat-card"><strong>50K+</strong><span>Monthly Users</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section" style="background:var(--grey-50)">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">The People</span>
+        <h2>Meet the <em>Team</em></h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar">AK</div><h4>Aditya Kumar</h4><span>Co-Founder & CEO</span></div>
+        <div class="team-card"><div class="team-avatar">PS</div><h4>Pooja Singh</h4><span>Co-Founder & CTO</span></div>
+        <div class="team-card"><div class="team-avatar">RV</div><h4>Rohan Verma</h4><span>Head of Growth</span></div>
+        <div class="team-card"><div class="team-avatar">NM</div><h4>Neha Malhotra</h4><span>Head of Design</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">Simple Pricing</span>
+        <h2>Plans for Every <em>Business</em></h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <div class="pricing-price">₹0 <span>/ month</span></div>
+          <p class="pricing-desc">Perfect to get started and get discovered.</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Shop profile page</li>
+            <li><i class="fas fa-check"></i> Up to 5 products</li>
+            <li><i class="fas fa-check"></i> Call & WhatsApp button</li>
+            <li><i class="fas fa-check"></i> Map location</li>
+            <li class="inactive"><i class="fas fa-times"></i> Featured listing</li>
+            <li class="inactive"><i class="fas fa-times"></i> Video showcase</li>
+            <li class="inactive"><i class="fas fa-times"></i> Analytics dashboard</li>
+          </ul>
+          <a href="register.html?type=shop" class="btn btn-outline btn-full">Get Started Free</a>
+        </div>
+        <div class="pricing-card popular">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <h3>Growth</h3>
+          <div class="pricing-price">₹999 <span>/ month</span></div>
+          <p class="pricing-desc">For shops ready to grow their customer base.</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Everything in Free</li>
+            <li><i class="fas fa-check"></i> Up to 50 products</li>
+            <li><i class="fas fa-check"></i> Featured listing</li>
+            <li><i class="fas fa-check"></i> 1 promo video slot</li>
+            <li><i class="fas fa-check"></i> Analytics dashboard</li>
+            <li><i class="fas fa-check"></i> Priority support</li>
+            <li class="inactive"><i class="fas fa-times"></i> Festival campaigns</li>
+          </ul>
+          <a href="register.html?type=shop" class="btn btn-primary btn-full">Start Growth Plan</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Premium</h3>
+          <div class="pricing-price">₹2,499 <span>/ month</span></div>
+          <p class="pricing-desc">Maximum visibility for established businesses.</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Everything in Growth</li>
+            <li><i class="fas fa-check"></i> Unlimited products</li>
+            <li><i class="fas fa-check"></i> Top sponsored slot</li>
+            <li><i class="fas fa-check"></i> 3 promo video slots</li>
+            <li><i class="fas fa-check"></i> Festival campaigns</li>
+            <li><i class="fas fa-check"></i> Dedicated account manager</li>
+            <li><i class="fas fa-check"></i> Custom offers & banners</li>
+          </ul>
+          <a href="register.html?type=shop" class="btn btn-outline btn-full">Go Premium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVERTISE -->
+  <section id="advertise" class="section" style="background:var(--black)">
+    <div class="container" style="text-align:center">
+      <span class="section-label" style="color:rgba(255,255,255,0.5)">Reach More Customers</span>
+      <h2 style="color:#fff; margin-bottom:12px">Advertise on <em>LocalSpot</em></h2>
+      <p style="color:rgba(255,255,255,0.6); max-width:520px; margin:0 auto 32px">Reach 50,000+ monthly users actively looking for local shops. Banner ads, sponsored listings, festival campaigns, and push notifications available.</p>
+      <a href="#contact" class="btn btn-primary btn-lg">Get Advertising Info <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">Get in Touch</span>
+        <h2>Contact <em>Us</em></h2>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info-item">
+            <i class="fas fa-envelope"></i>
+            <div><strong>Email</strong><span>hello@localspot.in</span></div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fas fa-phone"></i>
+            <div><strong>Phone</strong><span>+91 98765 00000</span></div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fab fa-whatsapp"></i>
+            <div><strong>WhatsApp</strong><span>+91 98765 00000</span></div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div><strong>Office</strong><span>Bandra Kurla Complex, Mumbai – 400051</span></div>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="handleContact(event)">
+          <input type="text" placeholder="Your Name" required/>
+          <input type="email" placeholder="Email Address" required/>
+          <select>
+            <option>General Enquiry</option>
+            <option>List My Shop</option>
+            <option>Advertising</option>
+            <option>Creator Partnership</option>
+            <option>Technical Support</option>
+          </select>
+          <textarea rows="5" placeholder="Your message..." required></textarea>
+          <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+        <p>Hyperlocal discovery for famous shops, products, and creators near you.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links"><h4>Discover</h4><ul><li><a href="shops.html">Browse Shops</a></li><li><a href="categories.html">Categories</a></li></ul></div>
+      <div class="footer-links"><h4>For Business</h4><ul><li><a href="register.html?type=shop">List Your Shop</a></li><li><a href="register.html?type=creator">Become a Creator</a></li><li><a href="about.html#pricing">Pricing</a></li></ul></div>
+      <div class="footer-links"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="about.html#contact">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 LocalSpot. All rights reserved. Made with ❤️ for local businesses.</p></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function handleContact(e) {
+      e.preventDefault();
+      e.target.innerHTML = '<p style="color:#27ae60;font-weight:600;text-align:center;padding:24px"><i class="fas fa-check-circle"></i> Message sent! We\'ll get back to you within 24 hours.</p>';
+    }
+  </script>
+</body>
+</html>

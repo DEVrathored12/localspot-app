@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Spice Route — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shops.html">Shops</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="creators.html">Creators</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <!-- SHOP COVER -->
+  <div class="shop-cover-hero" style="background:linear-gradient(135deg,#b5152b 0%,#e63946 60%,#ff6b6b 100%)">
+    <div class="shop-cover-overlay"></div>
+    <div class="shop-cover-content">
+      <div class="shop-profile-avatar">🌶️</div>
+      <div class="shop-profile-info">
+        <div class="shop-badges-row">
+          <span class="badge-pill badge-featured"><i class="fas fa-star"></i> Featured</span>
+          <span class="badge-pill badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+          <span class="badge-pill badge-open">Open Now</span>
+        </div>
+        <h1>The Spice Route</h1>
+        <p class="shop-subtitle"><i class="fas fa-tag"></i> Food & Spices &nbsp;·&nbsp; <i class="fas fa-map-marker-alt"></i> Bandra West, Mumbai</p>
+        <div class="shop-quick-stats">
+          <span><i class="fas fa-star"></i> 4.8 (342 reviews)</span>
+          <span><i class="far fa-clock"></i> 9:00 AM – 9:00 PM</span>
+          <span><i class="fas fa-calendar-alt"></i> Est. 1978</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTION BAR -->
+  <div class="action-bar-sticky">
+    <div class="container">
+      <div class="action-bar-inner">
+        <div class="action-tabs-nav">
+          <a href="#about" class="atab active">About</a>
+          <a href="#products" class="atab">Products</a>
+          <a href="#videos" class="atab">Videos</a>
+          <a href="#reviews" class="atab">Reviews</a>
+          <a href="#location" class="atab">Location</a>
+        </div>
+        <div class="action-btns-row">
+          <a href="tel:+919876543210" class="action-btn-mini call"><i class="fas fa-phone"></i> Call</a>
+          <a href="https://wa.me/919876543210" class="action-btn-mini whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a href="#location" class="action-btn-mini navigate"><i class="fas fa-directions"></i> Navigate</a>
+          <button class="action-btn-mini save" id="saveBtn" onclick="toggleSave()"><i class="far fa-heart"></i> Save</button>
+          <button class="action-btn-mini share"><i class="fas fa-share-alt"></i> Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="profile-layout container">
+    <div class="profile-main">
+
+      <!-- ABOUT -->
+      <section id="about" class="profile-section">
+        <h2 class="profile-section-title">About the Shop</h2>
+        <p>The Spice Route is Mumbai's most trusted spice and dry fruit store, serving over 10,000 families since 1978. We source our spices directly from farms across India — cardamom from Kerala, saffron from Kashmir, black pepper from Wayanad — ensuring authenticity and freshness in every packet.</p>
+        <p>Our product range includes over 200 varieties of spices, masalas, dry fruits, seeds, herbs, and natural food colours. All products are hygienically packed and lab-tested for quality.</p>
+        <div class="info-grid">
+          <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Address</strong><span>14, Hill Road, Bandra West, Mumbai – 400050</span></div></div>
+          <div class="info-item"><i class="far fa-clock"></i><div><strong>Hours</strong><span>Mon–Sat: 9:00 AM – 9:00 PM<br>Sunday: 10:00 AM – 6:00 PM</span></div></div>
+          <div class="info-item"><i class="fas fa-phone"></i><div><strong>Phone</strong><span>+91 98765 43210</span></div></div>
+          <div class="info-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><span>+91 98765 43210</span></div></div>
+          <div class="info-item"><i class="fas fa-tag"></i><div><strong>Category</strong><span>Food & Spices</span></div></div>
+          <div class="info-item"><i class="fas fa-rupee-sign"></i><div><strong>Price Range</strong><span>₹50 – ₹2,000</span></div></div>
+        </div>
+        <div class="offer-banner">
+          <i class="fas fa-percent"></i>
+          <div><strong>Festival Offer:</strong> 20% off on all dry fruits this Diwali season! Offer valid till Oct 31.</div>
+        </div>
+      </section>
+
+      <!-- PRODUCT GALLERY -->
+      <section id="products" class="profile-section">
+        <h2 class="profile-section-title">Products <span class="count-badge">24 items</span></h2>
+        <div class="product-filters">
+          <button class="pfilt active">All</button>
+          <button class="pfilt">Spices</button>
+          <button class="pfilt">Dry Fruits</button>
+          <button class="pfilt">Masalas</button>
+          <button class="pfilt">Herbs</button>
+        </div>
+        <div class="products-grid">
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24)"><span class="prod-emoji">🌶️</span></div>
+            <div class="product-body">
+              <h4>Kashmiri Chilli Powder</h4>
+              <p>Pure, vibrant red chilli powder for authentic colour and mild heat in curries.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹120 / 250g</span>
+                <span class="prod-tag available">Available</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#f9ca24,#f0932b)"><span class="prod-emoji">🪁</span></div>
+            <div class="product-body">
+              <h4>Premium Saffron</h4>
+              <p>Authentic Grade A Kashmiri saffron — rich aroma, deep colour, certified pure.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹850 / 1g</span>
+                <span class="prod-tag available">Available</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#6ab04c,#badc58)"><span class="prod-emoji">🫙</span></div>
+            <div class="product-body">
+              <h4>Garam Masala Blend</h4>
+              <p>Secret family recipe masala blend with 18 spices. Makes every dish extraordinary.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹180 / 200g</span>
+                <span class="prod-tag available">Available</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#a29bfe,#6c5ce7)"><span class="prod-emoji">🫐</span></div>
+            <div class="product-body">
+              <h4>Premium Blueberries</h4>
+              <p>Imported dried blueberries — perfect for baking, smoothies, and snacking.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹420 / 200g</span>
+                <span class="prod-tag limited">Limited</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#d4a574,#a0714f)"><span class="prod-emoji">🥜</span></div>
+            <div class="product-body">
+              <h4>Premium Cashews</h4>
+              <p>W240 grade whole cashews sourced directly from Goa. Freshly packed weekly.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹750 / 500g</span>
+                <span class="prod-tag available">Available</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-img" style="background:linear-gradient(135deg,#fd79a8,#e84393)"><span class="prod-emoji">🌸</span></div>
+            <div class="product-body">
+              <h4>Rose Cardamom Mix</h4>
+              <p>Aromatic blend of green cardamom and rose petals for teas and desserts.</p>
+              <div class="product-footer">
+                <span class="prod-price">₹240 / 100g</span>
+                <span class="prod-tag seasonal">Seasonal</span>
+              </div>
+              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIDEOS -->
+      <section id="videos" class="profile-section">
+        <h2 class="profile-section-title">Shop Videos</h2>
+        <div class="videos-grid">
+          <div class="video-card">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#b5152b,#e63946)">
+              <div class="play-btn"><i class="fas fa-play"></i></div>
+              <span class="video-duration">1:24</span>
+            </div>
+            <div class="video-info"><strong>Shop Tour — The Spice Route</strong><span>2.4K views · 3 days ago</span></div>
+          </div>
+          <div class="video-card">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#ff6b6b,#f39c12)">
+              <div class="play-btn"><i class="fas fa-play"></i></div>
+              <span class="video-duration">0:45</span>
+            </div>
+            <div class="video-info"><strong>Diwali Dry Fruit Offers</strong><span>1.8K views · 1 week ago</span></div>
+          </div>
+          <div class="video-card">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#2d3436,#636e72)">
+              <div class="play-btn"><i class="fas fa-play"></i></div>
+              <span class="video-duration">2:10</span>
+            </div>
+            <div class="video-info"><strong>Saffron Sourcing Story</strong><span>5.1K views · 2 weeks ago</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section id="reviews" class="profile-section">
+        <h2 class="profile-section-title">Customer Reviews <span class="count-badge">342 reviews</span></h2>
+        <div class="rating-summary">
+          <div class="rating-big">4.8</div>
+          <div class="rating-bars">
+            <div class="rbar"><span>5★</span><div class="bar"><div style="width:72%"></div></div><small>72%</small></div>
+            <div class="rbar"><span>4★</span><div class="bar"><div style="width:18%"></div></div><small>18%</small></div>
+            <div class="rbar"><span>3★</span><div class="bar"><div style="width:6%"></div></div><small>6%</small></div>
+            <div class="rbar"><span>2★</span><div class="bar"><div style="width:2%"></div></div><small>2%</small></div>
+            <div class="rbar"><span>1★</span><div class="bar"><div style="width:2%"></div></div><small>2%</small></div>
+          </div>
+        </div>
+        <div class="reviews-list">
+          <div class="review-item">
+            <div class="review-author"><div class="rev-avatar">PK</div><div><strong>Priya Kulkarni</strong><span>2 days ago</span></div><div class="rev-stars">★★★★★</div></div>
+            <p>Best spice shop in Mumbai! The saffron is absolutely authentic and the masala blends are legendary. Been coming here for 10 years.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-author"><div class="rev-avatar">RS</div><div><strong>Rahul Shah</strong><span>1 week ago</span></div><div class="rev-stars">★★★★★</div></div>
+            <p>Amazing quality and very reasonable prices. The shop staff is knowledgeable and helpful. Highly recommended!</p>
+          </div>
+          <div class="review-item">
+            <div class="review-author"><div class="rev-avatar">SM</div><div><strong>Sneha Mehta</strong><span>2 weeks ago</span></div><div class="rev-stars">★★★★☆</div></div>
+            <p>Great variety of dry fruits. Packaging is neat. Prices are a bit high for some items but the quality justifies it.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOCATION -->
+      <section id="location" class="profile-section">
+        <h2 class="profile-section-title">Location & Directions</h2>
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt"></i>
+          <p>14, Hill Road, Bandra West, Mumbai – 400050</p>
+          <a href="https://maps.google.com" class="btn btn-primary" target="_blank"><i class="fas fa-directions"></i> Get Directions</a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="profile-sidebar">
+      <div class="sidebar-card contact-card">
+        <h3>Contact Shop</h3>
+        <a href="tel:+919876543210" class="contact-btn call-btn"><i class="fas fa-phone"></i> Call Now</a>
+        <a href="https://wa.me/919876543210" class="contact-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="#location" class="contact-btn navigate-btn"><i class="fas fa-directions"></i> Navigate</a>
+        <a href="#" class="contact-btn share-btn"><i class="fas fa-share-alt"></i> Share Shop</a>
+      </div>
+      <div class="sidebar-card">
+        <h3>Business Hours</h3>
+        <div class="hours-list">
+          <div class="hour-row"><span>Mon – Fri</span><span class="open">9:00 AM – 9:00 PM</span></div>
+          <div class="hour-row"><span>Saturday</span><span class="open">9:00 AM – 9:00 PM</span></div>
+          <div class="hour-row"><span>Sunday</span><span class="open">10:00 AM – 6:00 PM</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Current Offers</h3>
+        <div class="offer-mini"><i class="fas fa-tag"></i> 20% off dry fruits this Diwali</div>
+        <div class="offer-mini"><i class="fas fa-tag"></i> Buy 500g get 50g free on masalas</div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Social Media</h3>
+        <div class="social-links-shop">
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+          <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+        <p>Hyperlocal discovery for famous shops near you.</p>
+      </div>
+      <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="shops.html">Shops</a></li><li><a href="login.html">Login</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 LocalSpot. All rights reserved.</p></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function toggleSave() {
+      const btn = document.getElementById('saveBtn');
+      const icon = btn.querySelector('i');
+      icon.classList.toggle('far');
+      icon.classList.toggle('fas');
+      btn.style.color = icon.classList.contains('fas') ? '#e63946' : '';
+    }
+    document.querySelectorAll('.pfilt').forEach(f => {
+      f.addEventListener('click', () => {
+        document.querySelectorAll('.pfilt').forEach(b => b.classList.remove('active'));
+        f.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

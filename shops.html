@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Shops — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .shops-page-hero { background: linear-gradient(135deg,#fff5f5,#fff); padding: 100px 0 40px; }
+    .shops-page-hero h1 { margin-bottom: 8px; }
+    .shops-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+    .shops-toolbar .search-wrap { flex:1; min-width:260px; }
+    .filter-select { padding:10px 16px; border:1.5px solid var(--grey-200); border-radius:var(--radius-full); font-size:13px; background:var(--white); color:var(--grey-800); cursor:pointer; }
+    .filter-select:focus { border-color:var(--red); outline:none; }
+    .results-count { font-size:13px; color:var(--grey-400); margin-bottom:16px; }
+    .load-more { display:flex; justify-content:center; margin-top:40px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shops.html" class="active">Shops</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shops.html">Shops</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="creators.html">Creators</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+  </div>
+
+  <section class="shops-page-hero">
+    <div class="container">
+      <span class="section-label">Explore LocalSpot</span>
+      <h1>Browse <em>Local Shops</em></h1>
+      <p>Discover the best shops near you — search by name, category, or area.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:32px">
+    <div class="container">
+      <div class="shops-toolbar">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="shopSearch" placeholder="Search shops or products..." oninput="filterShops()"/>
+          <select id="areaFilter" onchange="filterShops()">
+            <option value="">All Areas</option>
+            <option>Bandra West</option>
+            <option>Linking Road</option>
+            <option>Colaba</option>
+            <option>Andheri</option>
+            <option>Juhu</option>
+          </select>
+          <button class="btn btn-primary" onclick="filterShops()">Search</button>
+        </div>
+        <select class="filter-select" id="catFilter" onchange="filterShops()">
+          <option value="">All Categories</option>
+          <option>Food & Spices</option>
+          <option>Clothing</option>
+          <option>Electronics</option>
+          <option>Beauty</option>
+          <option>Jewellery</option>
+          <option>Gifts</option>
+          <option>Services</option>
+        </select>
+        <select class="filter-select" id="sortFilter" onchange="filterShops()">
+          <option value="featured">Featured First</option>
+          <option value="rating">Top Rated</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+      <p class="results-count" id="resultsCount">Showing 8 shops</p>
+      <div class="shops-grid" id="shopsGrid">
+        <div class="shop-card" data-cat="Food & Spices" data-area="Bandra West" data-badge="featured">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#b5152b,#e63946)">
+            <span class="shop-badge">⭐ Featured</span><div class="shop-avatar">🌶️</div>
+          </div>
+          <div class="shop-body">
+            <h3>The Spice Route</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Food & Spices · Bandra West</p>
+            <p class="shop-desc">Premium hand-picked spices, masalas, and dry fruits since 1978.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.8</span><span><i class="far fa-clock"></i> 9am–9pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Clothing" data-area="Linking Road" data-badge="trending">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#8b0000,#c0392b)">
+            <span class="shop-badge">🔥 Trending</span><div class="shop-avatar">👗</div>
+          </div>
+          <div class="shop-body">
+            <h3>Silk & Threads</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Clothing · Linking Road</p>
+            <p class="shop-desc">Traditional and designer ethnic wear for every occasion.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.6</span><span><i class="far fa-clock"></i> 10am–8pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Electronics" data-area="Andheri" data-badge="trusted">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#1a1a2e,#e63946)">
+            <span class="shop-badge">✅ Trusted</span><div class="shop-avatar">💻</div>
+          </div>
+          <div class="shop-body">
+            <h3>Crystal Electronics</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Electronics · Andheri</p>
+            <p class="shop-desc">Mobiles, laptops, accessories, and repairs. 10-year legacy.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.7</span><span><i class="far fa-clock"></i> 10am–9pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Jewellery" data-area="Colaba" data-badge="new">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#c0392b,#f39c12)">
+            <span class="shop-badge">🆕 New</span><div class="shop-avatar">💍</div>
+          </div>
+          <div class="shop-body">
+            <h3>Meena Jewellers</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Jewellery · Colaba</p>
+            <p class="shop-desc">Fine gold, silver & diamond jewellery. Custom designs, bridal collections.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.9</span><span><i class="far fa-clock"></i> 11am–7pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Beauty" data-area="Juhu" data-badge="featured">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#fd79a8,#e84393)">
+            <span class="shop-badge">⭐ Featured</span><div class="shop-avatar">💄</div>
+          </div>
+          <div class="shop-body">
+            <h3>Glow Studio</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Beauty · Juhu</p>
+            <p class="shop-desc">Premium skincare, makeup, and beauty treatments by certified experts.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.5</span><span><i class="far fa-clock"></i> 10am–8pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Gifts" data-area="Bandra West" data-badge="trending">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
+            <span class="shop-badge">🔥 Trending</span><div class="shop-avatar">🎁</div>
+          </div>
+          <div class="shop-body">
+            <h3>The Gift Box</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Gifts · Bandra West</p>
+            <p class="shop-desc">Curated gift hampers, personalised items, and luxury packaging.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.4</span><span><i class="far fa-clock"></i> 11am–9pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Food & Spices" data-area="Colaba" data-badge="trusted">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#00b894,#00cec9)">
+            <span class="shop-badge">✅ Trusted</span><div class="shop-avatar">🍰</div>
+          </div>
+          <div class="shop-body">
+            <h3>Colaba Bakehouse</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Food & Spices · Colaba</p>
+            <p class="shop-desc">Artisan breads, cakes, and pastries baked fresh every morning.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.7</span><span><i class="far fa-clock"></i> 7am–10pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="shop-card" data-cat="Services" data-area="Andheri" data-badge="new">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#0984e3,#74b9ff)">
+            <span class="shop-badge">🆕 New</span><div class="shop-avatar">🔧</div>
+          </div>
+          <div class="shop-body">
+            <h3>FixIt Pro</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Services · Andheri</p>
+            <p class="shop-desc">Home appliance repair, plumbing, and electrical services on demand.</p>
+            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.3</span><span><i class="far fa-clock"></i> 8am–8pm</span></div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="load-more">
+        <button class="btn btn-outline btn-lg"><i class="fas fa-sync-alt"></i> Load More Shops</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+        <p>Hyperlocal discovery for famous shops, products, and creators near you.</p>
+      </div>
+      <div class="footer-links"><h4>Discover</h4><ul><li><a href="shops.html">Browse Shops</a></li><li><a href="categories.html">Categories</a></li></ul></div>
+      <div class="footer-links"><h4>For Business</h4><ul><li><a href="register.html?type=shop">List Your Shop</a></li><li><a href="register.html?type=creator">Become a Creator</a></li></ul></div>
+      <div class="footer-links"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="login.html">Login</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 LocalSpot. All rights reserved.</p></div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function filterShops() {
+      const q = document.getElementById('shopSearch').value.toLowerCase();
+      const cat = document.getElementById('catFilter').value;
+      const area = document.getElementById('areaFilter').value;
+      const cards = document.querySelectorAll('#shopsGrid .shop-card');
+      let count = 0;
+      cards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const cardCat = card.dataset.cat;
+        const cardArea = card.dataset.area;
+        const match = (!q || name.includes(q)) && (!cat || cardCat === cat) && (!area || cardArea === area);
+        card.style.display = match ? '' : 'none';
+        if (match) count++;
+      });
+      document.getElementById('resultsCount').textContent = `Showing ${count} shop${count !== 1 ? 's' : ''}`;
+    }
+    // Pre-filter from URL params
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('cat')) { document.getElementById('catFilter').value = p.get('cat'); filterShops(); }
+    if (p.get('filter')) {
+      const badge = p.get('filter');
+      document.querySelectorAll('#shopsGrid .shop-card').forEach(c => {
+        if (c.dataset.badge !== badge) c.style.display = 'none';
+      });
+    }
+  </script>
+</body>
+</html>

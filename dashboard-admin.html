@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dashboard-page">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-logo">
+      <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+    </div>
+    <div class="dash-user">
+      <div class="dash-avatar">AD</div>
+      <div><strong>Admin</strong><span>Super Admin</span></div>
+    </div>
+    <nav class="dash-nav">
+      <a data-section="overview"  class="dash-link active"><i class="fas fa-tachometer-alt"></i> Overview</a>
+      <a data-section="users"     class="dash-link"><i class="fas fa-users"></i> Users</a>
+      <a data-section="shops"     class="dash-link"><i class="fas fa-store"></i> Shops</a>
+      <a data-section="creators"  class="dash-link"><i class="fas fa-video"></i> Creators</a>
+      <a data-section="reviews"   class="dash-link"><i class="fas fa-star"></i> Reviews</a>
+      <a data-section="analytics" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
+      <div class="dash-divider"></div>
+      <a data-section="settings"  class="dash-link"><i class="fas fa-cog"></i> Settings</a>
+      <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <div class="dash-topbar-title">
+        <h1 id="pageTitle">Overview</h1>
+        <span>Welcome back, Admin! 🛡️</span>
+      </div>
+      <div class="dash-topbar-actions">
+        <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a href="index.html" class="btn btn-sm btn-outline">View Site</a>
+      </div>
+    </header>
+
+    <div class="dash-content">
+
+      <!-- ── OVERVIEW ── -->
+      <div id="section-overview" class="admin-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-users"></i></div>
+            <div class="stat-info"><span>Total Users</span><strong id="statUsers">—</strong><small class="up"><i class="fas fa-arrow-up"></i> All time</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-store"></i></div>
+            <div class="stat-info"><span>Total Shops</span><strong id="statShops">—</strong><small class="up"><i class="fas fa-arrow-up"></i> All time</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-video"></i></div>
+            <div class="stat-info"><span>Total Creators</span><strong id="statCreators">—</strong><small style="color:var(--grey-400)">Active creators</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-rupee-sign"></i></div>
+            <div class="stat-info"><span>Revenue</span><strong id="statRevenue">₹0</strong><small style="color:var(--grey-400)">This month</small></div>
+          </div>
+        </div>
+        <div class="dash-two-col">
+          <div class="dash-card">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions" style="margin-top:12px">
+              <button class="qa-btn" onclick="showSection('users')"><i class="fas fa-users"></i> Manage Users</button>
+              <button class="qa-btn" onclick="showSection('shops')"><i class="fas fa-store"></i> Manage Shops</button>
+              <button class="qa-btn" onclick="showSection('creators')"><i class="fas fa-video"></i> View Creators</button>
+              <button class="qa-btn" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i> Analytics</button>
+            </div>
+          </div>
+          <div class="dash-card">
+            <h3>System Status</h3>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--grey-50);border-radius:var(--radius-sm)">
+                <span><i class="fas fa-server" style="color:#27ae60;margin-right:8px"></i>API Server</span>
+                <span class="status-badge active">Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--grey-50);border-radius:var(--radius-sm)">
+                <span><i class="fas fa-database" style="color:#27ae60;margin-right:8px"></i>MongoDB</span>
+                <span class="status-badge active">Connected</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--grey-50);border-radius:var(--radius-sm)">
+                <span><i class="fas fa-shield-alt" style="color:#27ae60;margin-right:8px"></i>Auth Service</span>
+                <span class="status-badge active">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── USERS ── -->
+      <div id="section-users" class="admin-section" style="display:none">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>All Users</h3>
+            <span class="count-badge" id="usersCount">0</span>
+          </div>
+          <div class="products-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="5" style="text-align:center;color:var(--grey-400)">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SHOPS ── -->
+      <div id="section-shops" class="admin-section" style="display:none">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>All Shops</h3>
+            <span class="count-badge" id="shopsCount">0</span>
+          </div>
+          <div class="products-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Shop</th><th>Category</th><th>Area</th><th>Rating</th><th>Actions</th></tr></thead>
+              <tbody id="shopsTableBody">
+                <tr><td colspan="5" style="text-align:center;color:var(--grey-400)">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CREATORS ── -->
+      <div id="section-creators" class="admin-section" style="display:none">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>All Creators</h3>
+            <span class="count-badge" id="creatorsCount">0</span>
+          </div>
+          <div class="products-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Joined</th></tr></thead>
+              <tbody id="creatorsTableBody">
+                <tr><td colspan="3" style="text-align:center;color:var(--grey-400)">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REVIEWS ── -->
+      <div id="section-reviews" class="admin-section" style="display:none">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Reviews</h3></div>
+          <div style="padding:40px;text-align:center;color:var(--grey-400)">
+            <i class="fas fa-star" style="font-size:40px;margin-bottom:12px;display:block"></i>
+            No reviews yet. Reviews will appear here once customers start rating shops.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ANALYTICS ── -->
+      <div id="section-analytics" class="admin-section" style="display:none">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-eye"></i></div>
+            <div class="stat-info"><span>Page Views</span><strong>—</strong><small style="color:var(--grey-400)">Coming soon</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-mouse-pointer"></i></div>
+            <div class="stat-info"><span>Click Rate</span><strong>—</strong><small style="color:var(--grey-400)">Coming soon</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-user-plus"></i></div>
+            <div class="stat-info"><span>New Signups</span><strong id="analyticsUsers">—</strong><small style="color:var(--grey-400)">Total registered</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-store"></i></div>
+            <div class="stat-info"><span>Listed Shops</span><strong id="analyticsShops">—</strong><small style="color:var(--grey-400)">Total listed</small></div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <h3>Analytics</h3>
+          <div style="padding:40px;text-align:center;color:var(--grey-400)">
+            <i class="fas fa-chart-line" style="font-size:40px;margin-bottom:12px;display:block"></i>
+            Detailed analytics charts coming soon. Connect an analytics provider to see graphs here.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SETTINGS ── -->
+      <div id="section-settings" class="admin-section" style="display:none">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Settings</h3></div>
+          <form onsubmit="event.preventDefault(); alert('Settings saved!')" style="display:flex;flex-direction:column;gap:16px;max-width:480px">
+            <div class="form-group">
+              <label>Site Name</label>
+              <input type="text" value="LocalSpot"/>
+            </div>
+            <div class="form-group">
+              <label>Admin Email</label>
+              <input type="email" value="admin@localspot.com"/>
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" placeholder="Leave blank to keep current"/>
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" placeholder="Confirm new password"/>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    const API = 'http://localhost:5000/api';
+    const token = localStorage.getItem('token');
+
+    // ── Sidebar toggle (mobile) ──
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('dashSidebar').classList.toggle('open');
+    });
+
+    // ── Section switching ──
+    function showSection(name) {
+      document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+      document.querySelectorAll('.dash-link[data-section]').forEach(l => l.classList.remove('active'));
+      document.getElementById('section-' + name).style.display = 'block';
+      const link = document.querySelector(`.dash-link[data-section="${name}"]`);
+      if (link) link.classList.add('active');
+      document.getElementById('pageTitle').textContent = link ? link.textContent.trim() : name;
+      // close sidebar on mobile
+      document.getElementById('dashSidebar').classList.remove('open');
+    }
+
+    document.querySelectorAll('.dash-link[data-section]').forEach(link => {
+      link.style.cursor = 'pointer';
+      link.addEventListener('click', () => showSection(link.dataset.section));
+    });
+
+    // ── API helpers ──
+    async function authFetch(url, options = {}) {
+      const res = await fetch(url, { ...options, headers: { Authorization: `Bearer ${token}`, ...options.headers } });
+      return res.json();
+    }
+
+    // ── Load stats (single source of truth for all 4 cards) ──
+    async function loadStats() {
+      const data = await authFetch(`${API}/admin/stats`);
+      if (!data.success) return;
+      const { users, shops, creators, revenue } = data.data;
+      document.getElementById('statUsers').textContent    = users;
+      document.getElementById('statShops').textContent    = shops;
+      document.getElementById('statCreators').textContent = creators;
+      document.getElementById('statRevenue').textContent  = '₹' + (revenue || 0).toLocaleString('en-IN');
+      document.getElementById('analyticsUsers').textContent = users;
+      document.getElementById('analyticsShops').textContent = shops;
+    }
+
+    // ── Load users table ──
+    async function loadUsers() {
+      const data = await authFetch(`${API}/admin/users`);
+      const tbody = document.getElementById('usersTableBody');
+      if (!data.success) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:red">${data.message}</td></tr>`;
+        return;
+      }
+      document.getElementById('usersCount').textContent = data.count;
+      tbody.innerHTML = data.data.map(u => `
+        <tr>
+          <td><div class="prod-name-cell">
+            <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${u.name.slice(0,2).toUpperCase()}</div>
+            <span>${u.name}</span>
+          </div></td>
+          <td>${u.email}</td>
+          <td><span class="status-badge ${u.role === 'admin' ? 'active' : 'pending'}">${u.role}</span></td>
+          <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+          <td><button class="icon-btn red" onclick="deleteUser('${u._id}')"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('');
+    }
+
+    // ── Load shops table ──
+    async function loadShops() {
+      const data = await fetch(`${API}/shops`).then(r => r.json());
+      const tbody = document.getElementById('shopsTableBody');
+      if (!data.success || !data.count) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">No shops yet</td></tr>`;
+        return;
+      }
+      document.getElementById('shopsCount').textContent = data.count;
+      tbody.innerHTML = data.data.map(s => `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.category}</td>
+          <td>${s.area}</td>
+          <td>${s.rating || '—'}</td>
+          <td><button class="icon-btn red" onclick="deleteShop('${s._id}')"><i class="fas fa-trash"></i></button></td>
+        </tr>`).join('');
+    }
+
+    // ── Load creators table ──
+    async function loadCreators() {
+      const data = await fetch(`${API}/creators`).then(r => r.json());
+      const tbody = document.getElementById('creatorsTableBody');
+      if (!data.success || !data.count) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--grey-400)">No creators yet</td></tr>`;
+        return;
+      }
+      document.getElementById('creatorsCount').textContent = data.count;
+      tbody.innerHTML = data.data.map(c => `
+        <tr>
+          <td><div class="prod-name-cell">
+            <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${c.name.slice(0,2).toUpperCase()}</div>
+            <span>${c.name}</span>
+          </div></td>
+          <td>${c.email}</td>
+          <td>${new Date(c.createdAt).toLocaleDateString()}</td>
+        </tr>`).join('');
+    }
+
+    // ── Delete actions ──
+    async function deleteUser(id) {
+      if (!confirm('Delete this user?')) return;
+      await authFetch(`${API}/admin/users/${id}`, { method: 'DELETE' });
+      loadUsers();
+      loadStats();
+    }
+
+    async function deleteShop(id) {
+      if (!confirm('Delete this shop?')) return;
+      await fetch(`${API}/shops/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      loadShops();
+      loadStats();
+    }
+
+    // ── Init ──
+    loadStats();
+    loadUsers();
+    loadShops();
+    loadCreators();
+  </script>
+</body>
+</html>

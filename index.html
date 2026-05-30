@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LocalSpot — Discover Famous Local Shops</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="shops.html">Shops</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="creators.html">Creators</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shops.html">Shops</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="creators.html">Creators</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <span class="hero-badge"><i class="fas fa-map-marker-alt"></i> Hyperlocal Discovery</span>
+      <h1>Discover the <em>Famous</em><br>Shops Near You</h1>
+      <p>Explore curated local shops, view real product photos, watch promo videos, and connect instantly — all in one place.</p>
+      <div class="hero-search">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search shops, products, or categories..." />
+          <select>
+            <option>All Areas</option>
+            <option>Bandra West</option>
+            <option>Linking Road</option>
+            <option>Colaba</option>
+            <option>Andheri</option>
+          </select>
+          <button class="btn btn-primary">Search</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>1,200+</strong><span>Shops Listed</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>48</strong><span>Neighbourhoods</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>320+</strong><span>Video Creators</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="app-bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+          <div class="app-header-mini">
+            <div class="app-logo-mini">LS</div>
+            <span>LocalSpot</span>
+          </div>
+          <div class="app-card-mini featured">
+            <div class="shop-thumb"></div>
+            <div class="shop-info-mini">
+              <strong>The Spice Route</strong>
+              <span><i class="fas fa-star"></i> 4.8 · Food & Spices</span>
+            </div>
+          </div>
+          <div class="app-card-mini">
+            <div class="shop-thumb t2"></div>
+            <div class="shop-info-mini">
+              <strong>Silk & Threads</strong>
+              <span><i class="fas fa-star"></i> 4.6 · Clothing</span>
+            </div>
+          </div>
+          <div class="app-card-mini">
+            <div class="shop-thumb t3"></div>
+            <div class="shop-info-mini">
+              <strong>Crystal Electronics</strong>
+              <span><i class="fas fa-star"></i> 4.7 · Electronics</span>
+            </div>
+          </div>
+          <div class="app-nav-mini">
+            <i class="fas fa-home"></i>
+            <i class="fas fa-search"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+      </div>
+      <div class="floating-card fc1"><i class="fas fa-video"></i><span>Live Promos</span></div>
+      <div class="floating-card fc2"><i class="fas fa-directions"></i><span>Navigate</span></div>
+      <div class="floating-card fc3"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section categories-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Browse by Category</span>
+        <h2>What Are You <em>Looking For?</em></h2>
+      </div>
+      <div class="categories-grid">
+        <a href="shops.html?cat=food" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-utensils" style="color:#e63946"></i></div>
+          <span>Food & Spices</span>
+          <small>148 shops</small>
+        </a>
+        <a href="shops.html?cat=clothing" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-tshirt" style="color:#e63946"></i></div>
+          <span>Clothing</span>
+          <small>234 shops</small>
+        </a>
+        <a href="shops.html?cat=electronics" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-laptop" style="color:#e63946"></i></div>
+          <span>Electronics</span>
+          <small>89 shops</small>
+        </a>
+        <a href="shops.html?cat=beauty" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-spa" style="color:#e63946"></i></div>
+          <span>Beauty</span>
+          <small>112 shops</small>
+        </a>
+        <a href="shops.html?cat=gifts" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-gift" style="color:#e63946"></i></div>
+          <span>Gifts</span>
+          <small>67 shops</small>
+        </a>
+        <a href="shops.html?cat=services" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-tools" style="color:#e63946"></i></div>
+          <span>Services</span>
+          <small>95 shops</small>
+        </a>
+        <a href="shops.html?cat=jewellery" class="cat-card">
+          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-gem" style="color:#e63946"></i></div>
+          <span>Jewellery</span>
+          <small>54 shops</small>
+        </a>
+        <a href="categories.html" class="cat-card cat-more">
+          <div class="cat-icon" style="background:#e63946"><i class="fas fa-th" style="color:#fff"></i></div>
+          <span>View All</span>
+          <small>Categories</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED SHOPS -->
+  <section class="section featured-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Handpicked for You</span>
+        <h2>Featured <em>Famous Shops</em></h2>
+        <a href="shops.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="shops-grid">
+        <!-- Shop Card 1 -->
+        <div class="shop-card">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#b5152b,#e63946)">
+            <span class="shop-badge">⭐ Featured</span>
+            <div class="shop-avatar">🌶️</div>
+          </div>
+          <div class="shop-body">
+            <h3>The Spice Route</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Food & Spices · Bandra West</p>
+            <p class="shop-desc">Premium hand-picked spices, masalas, and dry fruits since 1978. Trusted by 10,000+ families.</p>
+            <div class="shop-meta">
+              <span><i class="fas fa-star"></i> 4.8</span>
+              <span><i class="far fa-clock"></i> 9am–9pm</span>
+            </div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn" title="Navigate"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn" title="Call"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <!-- Shop Card 2 -->
+        <div class="shop-card">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#8b0000,#c0392b)">
+            <span class="shop-badge">🔥 Trending</span>
+            <div class="shop-avatar">👗</div>
+          </div>
+          <div class="shop-body">
+            <h3>Silk & Threads</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Clothing · Linking Road</p>
+            <p class="shop-desc">Traditional and designer ethnic wear. Sarees, salwars, and fusion collections for every occasion.</p>
+            <div class="shop-meta">
+              <span><i class="fas fa-star"></i> 4.6</span>
+              <span><i class="far fa-clock"></i> 10am–8pm</span>
+            </div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <!-- Shop Card 3 -->
+        <div class="shop-card">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#1a1a2e,#e63946)">
+            <span class="shop-badge">✅ Trusted</span>
+            <div class="shop-avatar">💻</div>
+          </div>
+          <div class="shop-body">
+            <h3>Crystal Electronics</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Electronics · Andheri</p>
+            <p class="shop-desc">Mobiles, laptops, accessories, and repairs. Authorized service center with 10-year legacy.</p>
+            <div class="shop-meta">
+              <span><i class="fas fa-star"></i> 4.7</span>
+              <span><i class="far fa-clock"></i> 10am–9pm</span>
+            </div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+        <!-- Shop Card 4 -->
+        <div class="shop-card">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#c0392b,#f39c12)">
+            <span class="shop-badge">🆕 New</span>
+            <div class="shop-avatar">💍</div>
+          </div>
+          <div class="shop-body">
+            <h3>Meena Jewellers</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> Jewellery · Colaba</p>
+            <p class="shop-desc">Fine gold, silver & diamond jewellery. Custom designs, bridal collections, and lifetime exchange.</p>
+            <div class="shop-meta">
+              <span><i class="fas fa-star"></i> 4.9</span>
+              <span><i class="far fa-clock"></i> 11am–7pm</span>
+            </div>
+            <div class="shop-actions">
+              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
+              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
+              <button class="icon-btn"><i class="fas fa-directions"></i></button>
+              <button class="icon-btn"><i class="fas fa-phone"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how-section">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">Simple & Powerful</span>
+        <h2>How <em>LocalSpot</em> Works</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Select Your Area</h3>
+          <p>Choose your market, road, or neighbourhood to see only the shops near you.</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="fas fa-search"></i></div>
+          <h3>Discover Shops</h3>
+          <p>Browse by category, search by product name, or explore trending and featured shops.</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="fas fa-images"></i></div>
+          <h3>View Products & Videos</h3>
+          <p>See real product photos, price ranges, and short promo videos before you visit.</p>
+        </div>
+        <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon"><i class="fas fa-directions"></i></div>
+          <h3>Connect & Navigate</h3>
+          <p>Call, WhatsApp, or get directions with one tap. Visit the shop with full confidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATOR SECTION -->
+  <section class="section creator-section">
+    <div class="container creator-inner">
+      <div class="creator-text">
+        <span class="section-label">Earn With Us</span>
+        <h2>Are You a Local <em>Content Creator?</em></h2>
+        <p>Shops need great videos. You make them. Get paid. It's that simple. Join our growing network of local video creators and earn by making reels, shop tours, and product highlights for businesses near you.</p>
+        <ul class="creator-perks">
+          <li><i class="fas fa-check-circle"></i> Shops request you directly</li>
+          <li><i class="fas fa-check-circle"></i> Set your own rates</li>
+          <li><i class="fas fa-check-circle"></i> Get featured on area feeds</li>
+          <li><i class="fas fa-check-circle"></i> Secure in-app payment</li>
+        </ul>
+        <a href="register.html?type=creator" class="btn btn-primary">Become a Creator <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="creator-visual">
+        <div class="creator-card">
+          <div class="creator-avatar">🎬</div>
+          <strong>Riya Sharma</strong>
+          <span>Mumbai · 42 Videos Made</span>
+          <div class="creator-earnings">₹ 28,400 <small>earned this month</small></div>
+          <div class="creator-tags">
+            <span>Food</span><span>Fashion</span><span>Reels</span>
+          </div>
+        </div>
+        <div class="creator-card">
+          <div class="creator-avatar">📹</div>
+          <strong>Arjun Mehta</strong>
+          <span>Bandra · 31 Videos Made</span>
+          <div class="creator-earnings">₹ 19,800 <small>earned this month</small></div>
+          <div class="creator-tags">
+            <span>Electronics</span><span>Tours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR SHOPS -->
+  <section class="section shops-promo-section">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">Grow Your Business</span>
+        <h2>List Your Shop on <em>LocalSpot</em></h2>
+      </div>
+      <div class="promo-grid">
+        <div class="promo-card">
+          <i class="fas fa-store"></i>
+          <h3>Free Shop Profile</h3>
+          <p>Create a complete profile with address, hours, photos, and map location. Get discovered for free.</p>
+        </div>
+        <div class="promo-card">
+          <i class="fas fa-images"></i>
+          <h3>Product Gallery</h3>
+          <p>Upload product photos with prices and descriptions. Let customers browse before they visit.</p>
+        </div>
+        <div class="promo-card">
+          <i class="fas fa-video"></i>
+          <h3>Promo Videos</h3>
+          <p>Request professional videos from local creators. Stand out with engaging reels and shop tours.</p>
+        </div>
+        <div class="promo-card">
+          <i class="fas fa-rocket"></i>
+          <h3>Premium Visibility</h3>
+          <p>Get featured listings, sponsored slots, and festival campaigns to reach more customers.</p>
+        </div>
+      </div>
+      <div class="promo-cta">
+        <a href="register.html?type=shop" class="btn btn-primary btn-lg">Register Your Shop Free <i class="fas fa-store"></i></a>
+        <a href="about.html" class="btn btn-outline btn-lg">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div class="section-head centered">
+        <span class="section-label">What People Say</span>
+        <h2>Loved by <em>Shops & Customers</em></h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testi-card">
+          <div class="testi-quote">"</div>
+          <p>LocalSpot helped us reach 3x more customers in just 2 months. The product gallery feature is brilliant!</p>
+          <div class="testi-author">
+            <div class="testi-avatar">RS</div>
+            <div><strong>Ramesh Shah</strong><span>Owner, The Spice Route</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote">"</div>
+          <p>I love that I can see actual product photos and videos before visiting the shop. Saves so much time.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">PK</div>
+            <div><strong>Priya Kulkarni</strong><span>Customer, Bandra</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote">"</div>
+          <p>As a creator, I earned ₹45,000 in my first month making shop videos. Incredible platform!</p>
+          <div class="testi-author">
+            <div class="testi-avatar">AM</div>
+            <div><strong>Arjun Mehta</strong><span>Video Creator, Mumbai</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-light">
+          <span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span>
+        </a>
+        <p>Hyperlocal discovery for famous shops, products, and creators near you.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Discover</h4>
+        <ul>
+          <li><a href="shops.html">Browse Shops</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="shops.html?filter=featured">Featured</a></li>
+          <li><a href="shops.html?filter=trending">Trending</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>For Business</h4>
+        <ul>
+          <li><a href="register.html?type=shop">List Your Shop</a></li>
+          <li><a href="register.html?type=creator">Become a Creator</a></li>
+          <li><a href="about.html#pricing">Pricing</a></li>
+          <li><a href="about.html#advertise">Advertise</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 LocalSpot. All rights reserved. Made with ❤️ for local businesses.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

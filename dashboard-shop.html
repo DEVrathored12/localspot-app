@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop Dashboard — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dashboard-page">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-logo">
+      <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+    </div>
+    <div class="dash-user">
+      <div class="dash-avatar">RS</div>
+      <div><strong>Ramesh Shah</strong><span>Shop Owner</span></div>
+    </div>
+    <nav class="dash-nav">
+      <a href="#" class="dash-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="dash-link"><i class="fas fa-store"></i> Shop Profile</a>
+      <a href="#" class="dash-link"><i class="fas fa-images"></i> Products</a>
+      <a href="#" class="dash-link"><i class="fas fa-video"></i> Videos</a>
+      <a href="#" class="dash-link"><i class="fas fa-percent"></i> Offers</a>
+      <a href="#" class="dash-link"><i class="fas fa-star"></i> Reviews</a>
+      <a href="#" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
+      <a href="#" class="dash-link"><i class="fas fa-rocket"></i> Promote</a>
+      <div class="dash-divider"></div>
+      <a href="#" class="dash-link"><i class="fas fa-cog"></i> Settings</a>
+      <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="dash-main">
+    <!-- TOP BAR -->
+    <header class="dash-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <div class="dash-topbar-title">
+        <h1>Dashboard</h1>
+        <span>Welcome back, Ramesh! 👋</span>
+      </div>
+      <div class="dash-topbar-actions">
+        <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a href="shop-profile.html" class="btn btn-sm btn-outline">View My Shop</a>
+        <a href="register.html?type=shop" class="btn btn-sm btn-primary">Upgrade Plan</a>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="dash-content">
+
+      <!-- STATS CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-eye"></i></div>
+          <div class="stat-info">
+            <span>Profile Views</span>
+            <strong>3,248</strong>
+            <small class="up"><i class="fas fa-arrow-up"></i> 18% this week</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-phone"></i></div>
+          <div class="stat-info">
+            <span>Calls Received</span>
+            <strong>142</strong>
+            <small class="up"><i class="fas fa-arrow-up"></i> 8% this week</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fab fa-whatsapp"></i></div>
+          <div class="stat-info">
+            <span>WhatsApp Taps</span>
+            <strong>89</strong>
+            <small class="up"><i class="fas fa-arrow-up"></i> 24% this week</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-directions"></i></div>
+          <div class="stat-info">
+            <span>Navigations</span>
+            <strong>67</strong>
+            <small class="down"><i class="fas fa-arrow-down"></i> 3% this week</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS + PLAN -->
+      <div class="dash-two-col">
+        <div class="dash-card">
+          <h3>Quick Actions</h3>
+          <div class="quick-actions">
+            <button class="qa-btn" onclick="showTab('products')"><i class="fas fa-plus-circle"></i> Add Product</button>
+            <button class="qa-btn" onclick="showTab('videos')"><i class="fas fa-video"></i> Request Video</button>
+            <button class="qa-btn" onclick="showTab('offers')"><i class="fas fa-percent"></i> Add Offer</button>
+            <button class="qa-btn" onclick="showTab('profile')"><i class="fas fa-edit"></i> Edit Profile</button>
+          </div>
+        </div>
+        <div class="dash-card plan-card">
+          <h3>Your Plan</h3>
+          <div class="plan-info">
+            <div class="plan-badge free">Free Plan</div>
+            <ul class="plan-features">
+              <li class="active"><i class="fas fa-check"></i> Shop Profile</li>
+              <li class="active"><i class="fas fa-check"></i> Up to 5 Products</li>
+              <li class="inactive"><i class="fas fa-times"></i> Featured Listing</li>
+              <li class="inactive"><i class="fas fa-times"></i> Video Showcase</li>
+              <li class="inactive"><i class="fas fa-times"></i> Priority Support</li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-full">Upgrade to Premium</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS SECTION -->
+      <div class="dash-card" id="productsSection">
+        <div class="dash-card-head">
+          <h3>My Products <span class="count-badge">3 / 5</span></h3>
+          <button class="btn btn-sm btn-primary" onclick="document.getElementById('addProductModal').style.display='flex'">
+            <i class="fas fa-plus"></i> Add Product
+          </button>
+        </div>
+        <div class="products-table-wrap">
+          <table class="dash-table">
+            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#ff6b6b">🌶️</div><span>Kashmiri Chilli Powder</span></div></td>
+                <td>Spices</td><td>₹120 / 250g</td>
+                <td><span class="status-badge active">Active</span></td>
+                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#f9ca24">🪁</div><span>Premium Saffron</span></div></td>
+                <td>Spices</td><td>₹850 / 1g</td>
+                <td><span class="status-badge active">Active</span></td>
+                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#6ab04c">🫙</div><span>Garam Masala Blend</span></div></td>
+                <td>Masalas</td><td>₹180 / 200g</td>
+                <td><span class="status-badge pending">Pending Approval</span></td>
+                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VIDEO REQUESTS -->
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <h3>Video Requests</h3>
+          <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Request Video</button>
+        </div>
+        <div class="video-requests">
+          <div class="vreq-item">
+            <div class="vreq-icon"><i class="fas fa-video"></i></div>
+            <div class="vreq-info">
+              <strong>Shop Tour Video</strong>
+              <span>Creator: Riya Sharma · Submitted 2 days ago</span>
+            </div>
+            <div class="vreq-actions">
+              <button class="btn btn-sm btn-primary">Approve & Pay</button>
+              <button class="btn btn-sm btn-outline">Preview</button>
+            </div>
+          </div>
+          <div class="vreq-item">
+            <div class="vreq-icon pending-icon"><i class="fas fa-clock"></i></div>
+            <div class="vreq-info">
+              <strong>Diwali Offer Reel</strong>
+              <span>Creator: In Progress · Requested 5 days ago</span>
+            </div>
+            <div class="vreq-actions">
+              <span class="status-badge pending">In Progress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADD PRODUCT MODAL -->
+  <div class="modal-overlay" id="addProductModal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Add New Product</h3>
+        <button class="close-modal" onclick="document.getElementById('addProductModal').style.display='none'"><i class="fas fa-times"></i></button>
+      </div>
+      <form class="modal-form" onsubmit="event.preventDefault(); document.getElementById('addProductModal').style.display='none';">
+        <div class="form-group">
+          <label>Product Title</label>
+          <input type="text" placeholder="e.g. Kashmiri Saffron Premium"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select><option>Spices</option><option>Dry Fruits</option><option>Masalas</option><option>Herbs</option></select>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <input type="text" placeholder="e.g. ₹120 / 250g"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Product Description</label>
+          <textarea rows="3" placeholder="Brief product description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Availability</label>
+          <select><option>Available</option><option>Limited</option><option>Seasonal</option><option>Custom Order</option></select>
+        </div>
+        <div class="form-group">
+          <label>Product Photo</label>
+          <div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><span>Click or drag photo here</span><small>JPG, PNG up to 5MB</small></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="document.getElementById('addProductModal').style.display='none'">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('dashSidebar').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

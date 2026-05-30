@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creator Dashboard — LocalSpot</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dashboard-page">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-logo">
+      <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
+    </div>
+    <div class="dash-user">
+      <div class="dash-avatar">RS</div>
+      <div><strong>Riya Sharma</strong><span>Video Creator</span></div>
+    </div>
+    <nav class="dash-nav">
+      <a href="#" class="dash-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="dash-link"><i class="fas fa-video"></i> My Videos</a>
+      <a href="#" class="dash-link"><i class="fas fa-briefcase"></i> Job Requests</a>
+      <a href="#" class="dash-link"><i class="fas fa-rupee-sign"></i> Earnings</a>
+      <a href="#" class="dash-link"><i class="fas fa-star"></i> Reviews</a>
+      <a href="#" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
+      <div class="dash-divider"></div>
+      <a href="#" class="dash-link"><i class="fas fa-user"></i> My Profile</a>
+      <a href="#" class="dash-link"><i class="fas fa-cog"></i> Settings</a>
+      <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="dash-main">
+    <header class="dash-topbar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+      <div class="dash-topbar-title">
+        <h1>Creator Dashboard</h1>
+        <span>Welcome back, Riya! 🎬</span>
+      </div>
+      <div class="dash-topbar-actions">
+        <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a href="creators.html" class="btn btn-sm btn-outline">View My Profile</a>
+      </div>
+    </header>
+
+    <div class="dash-content">
+
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-rupee-sign"></i></div>
+          <div class="stat-info">
+            <span>This Month's Earnings</span>
+            <strong>₹28,400</strong>
+            <small class="up"><i class="fas fa-arrow-up"></i> 22% vs last month</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-video"></i></div>
+          <div class="stat-info">
+            <span>Videos Completed</span>
+            <strong>42</strong>
+            <small class="up"><i class="fas fa-arrow-up"></i> 5 this week</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-briefcase"></i></div>
+          <div class="stat-info">
+            <span>Active Jobs</span>
+            <strong>3</strong>
+            <small style="color:var(--grey-400)">2 pending review</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-star"></i></div>
+          <div class="stat-info">
+            <span>Avg. Rating</span>
+            <strong>4.9</strong>
+            <small style="color:var(--grey-400)">From 38 reviews</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB REQUESTS + EARNINGS -->
+      <div class="dash-two-col">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>New Job Requests</h3>
+            <span class="status-badge active">3 New</span>
+          </div>
+          <div class="video-requests">
+            <div class="vreq-item">
+              <div class="vreq-icon"><i class="fas fa-store"></i></div>
+              <div class="vreq-info">
+                <strong>Shop Tour — Meena Jewellers</strong>
+                <span>Colaba · Budget: ₹3,500 · Due in 5 days</span>
+              </div>
+              <div class="vreq-actions">
+                <button class="btn btn-sm btn-primary">Accept</button>
+                <button class="btn btn-sm btn-outline">Decline</button>
+              </div>
+            </div>
+            <div class="vreq-item">
+              <div class="vreq-icon"><i class="fas fa-store"></i></div>
+              <div class="vreq-info">
+                <strong>Product Reel — Glow Studio</strong>
+                <span>Juhu · Budget: ₹2,200 · Due in 7 days</span>
+              </div>
+              <div class="vreq-actions">
+                <button class="btn btn-sm btn-primary">Accept</button>
+                <button class="btn btn-sm btn-outline">Decline</button>
+              </div>
+            </div>
+            <div class="vreq-item">
+              <div class="vreq-icon pending-icon"><i class="fas fa-clock"></i></div>
+              <div class="vreq-info">
+                <strong>Diwali Promo — The Spice Route</strong>
+                <span>Bandra · Budget: ₹4,000 · Due in 3 days</span>
+              </div>
+              <div class="vreq-actions">
+                <button class="btn btn-sm btn-primary">Accept</button>
+                <button class="btn btn-sm btn-outline">Decline</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h3>Earnings Breakdown</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:13px">The Spice Route</strong><br><span style="font-size:11px;color:var(--grey-400)">Shop Tour · Paid</span></div>
+              <span style="font-weight:700;color:#27ae60">+₹4,500</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:13px">Silk & Threads</strong><br><span style="font-size:11px;color:var(--grey-400)">Product Reel · Paid</span></div>
+              <span style="font-weight:700;color:#27ae60">+₹3,200</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:13px">Crystal Electronics</strong><br><span style="font-size:11px;color:var(--grey-400)">Promo Video · Pending</span></div>
+              <span style="font-weight:700;color:#f39c12">₹2,800</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
+              <div><strong style="font-size:13px">Meena Jewellers</strong><br><span style="font-size:11px;color:var(--grey-400)">Shop Tour · Paid</span></div>
+              <span style="font-weight:700;color:#27ae60">+₹5,000</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--grey-100);display:flex;justify-content:space-between">
+            <strong>Total This Month</strong>
+            <strong style="color:var(--red)">₹28,400</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY VIDEOS -->
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <h3>My Recent Videos</h3>
+          <span class="count-badge">42 total</span>
+        </div>
+        <div class="products-table-wrap">
+          <table class="dash-table">
+            <thead><tr><th>Video</th><th>Shop</th><th>Type</th><th>Views</th><th>Status</th><th>Earned</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#b5152b,#e63946)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Shop Tour</span></div></td>
+                <td>The Spice Route</td><td>Tour</td><td>2,400</td>
+                <td><span class="status-badge active">Published</span></td>
+                <td style="font-weight:700;color:#27ae60">₹4,500</td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#8b0000,#c0392b)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Product Reel</span></div></td>
+                <td>Silk & Threads</td><td>Reel</td><td>1,800</td>
+                <td><span class="status-badge active">Published</span></td>
+                <td style="font-weight:700;color:#27ae60">₹3,200</td>
+              </tr>
+              <tr>
+                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#1a1a2e,#e63946)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Promo Video</span></div></td>
+                <td>Crystal Electronics</td><td>Promo</td><td>—</td>
+                <td><span class="status-badge pending">Under Review</span></td>
+                <td style="font-weight:700;color:#f39c12">₹2,800</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('dashSidebar').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
