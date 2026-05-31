@@ -126,43 +126,43 @@
         <h2>What Are You <em>Looking For?</em></h2>
       </div>
       <div class="categories-grid">
-        <a href="shops.html?cat=food" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-utensils" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Food & Spices" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-utensils" style="color:#1a3c6e"></i></div>
           <span>Food & Spices</span>
           <small>148 shops</small>
         </a>
-        <a href="shops.html?cat=clothing" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-tshirt" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Clothing" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-tshirt" style="color:#1a3c6e"></i></div>
           <span>Clothing</span>
           <small>234 shops</small>
         </a>
-        <a href="shops.html?cat=electronics" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-laptop" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Electronics" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-laptop" style="color:#1a3c6e"></i></div>
           <span>Electronics</span>
           <small>89 shops</small>
         </a>
-        <a href="shops.html?cat=beauty" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-spa" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Beauty" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-spa" style="color:#1a3c6e"></i></div>
           <span>Beauty</span>
           <small>112 shops</small>
         </a>
-        <a href="shops.html?cat=gifts" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-gift" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Gifts" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-gift" style="color:#1a3c6e"></i></div>
           <span>Gifts</span>
           <small>67 shops</small>
         </a>
-        <a href="shops.html?cat=services" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-tools" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Services" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-tools" style="color:#1a3c6e"></i></div>
           <span>Services</span>
           <small>95 shops</small>
         </a>
-        <a href="shops.html?cat=jewellery" class="cat-card">
-          <div class="cat-icon" style="background:#fff0f0"><i class="fas fa-gem" style="color:#e63946"></i></div>
+        <a href="shops.html?cat=Jewellery" class="cat-card">
+          <div class="cat-icon" style="background:#eef3fb"><i class="fas fa-gem" style="color:#1a3c6e"></i></div>
           <span>Jewellery</span>
           <small>54 shops</small>
         </a>
         <a href="categories.html" class="cat-card cat-more">
-          <div class="cat-icon" style="background:#e63946"><i class="fas fa-th" style="color:#fff"></i></div>
+          <div class="cat-icon" style="background:#1a3c6e"><i class="fas fa-th" style="color:#fff"></i></div>
           <span>View All</span>
           <small>Categories</small>
         </a>
@@ -181,7 +181,7 @@
       <div class="shops-grid">
         <!-- Shop Card 1 -->
         <div class="shop-card">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#b5152b,#e63946)">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)">
             <span class="shop-badge">⭐ Featured</span>
             <div class="shop-avatar">🌶️</div>
           </div>
@@ -203,7 +203,7 @@
         </div>
         <!-- Shop Card 2 -->
         <div class="shop-card">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#8b0000,#c0392b)">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#0a1e38,#1a3c6e)">
             <span class="shop-badge">🔥 Trending</span>
             <div class="shop-avatar">👗</div>
           </div>
@@ -225,7 +225,7 @@
         </div>
         <!-- Shop Card 3 -->
         <div class="shop-card">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#1a1a2e,#e63946)">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#122d54,#1e4d8c)">
             <span class="shop-badge">✅ Trusted</span>
             <div class="shop-avatar">💻</div>
           </div>
@@ -247,7 +247,7 @@
         </div>
         <!-- Shop Card 4 -->
         <div class="shop-card">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#c0392b,#f39c12)">
+          <div class="shop-cover" style="background:linear-gradient(135deg,#1a3c6e,#c9a84c)">
             <span class="shop-badge">🆕 New</span>
             <div class="shop-avatar">💍</div>
           </div>
@@ -469,5 +469,62 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
+
+    // Hero search
+    document.querySelector('.hero-search .btn').addEventListener('click', doSearch);
+    document.querySelector('.hero-search input').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    function doSearch() {
+      const q    = document.querySelector('.hero-search input').value.trim();
+      const area = document.querySelector('.hero-search select').value;
+      const params = new URLSearchParams();
+      if (q)    params.set('q', q);
+      if (area && area !== 'All Areas') params.set('area', area);
+      window.location.href = `shops.html?${params.toString()}`;
+    }
+
+    // Load featured shops from API into the grid
+    async function loadFeatured() {
+      try {
+        const res  = await fetch(`${API}/shops`);
+        const data = await res.json();
+        if (!data.success || !data.data.length) return;
+        const COLORS = [
+          'linear-gradient(135deg,#1a3c6e,#2d5fa6)',
+          'linear-gradient(135deg,#0a1e38,#1a3c6e)',
+          'linear-gradient(135deg,#122d54,#1e4d8c)',
+          'linear-gradient(135deg,#1a3c6e,#c9a84c)'
+        ];
+        const EMOJI = { 'Food & Spices':'🌶️','Clothing':'👗','Electronics':'💻','Beauty':'💄','Jewellery':'💍','Gifts':'🎁','Services':'🔧','Books':'📚','Health':'💊','Home':'🛋️','Sports':'⚽','Pets':'🐾' };
+        const grid  = document.querySelector('.featured-section .shops-grid');
+        const shops = data.data.slice(0, 4);
+        grid.innerHTML = shops.map((s, i) => `
+          <div class="shop-card">
+            <div class="shop-cover" style="background:${COLORS[i % COLORS.length]}">
+              <span class="shop-badge">⭐ Featured</span>
+              <div class="shop-avatar">${EMOJI[s.category] || '🏪'}</div>
+            </div>
+            <div class="shop-body">
+              <h3>${s.name}</h3>
+              <p class="shop-cat"><i class="fas fa-tag"></i> ${s.category} · ${s.area}</p>
+              <p class="shop-desc">${s.description || ''}</p>
+              <div class="shop-meta">
+                <span><i class="fas fa-star"></i> ${s.rating || '—'}</span>
+              </div>
+              <div class="shop-actions">
+                <a href="shop-profile.html?id=${s._id}" class="btn btn-primary btn-sm">View Shop</a>
+                ${s.whatsapp ? `<button class="icon-btn" onclick="window.open('https://wa.me/${s.whatsapp}','_blank')"><i class="fab fa-whatsapp"></i></button>` : ''}
+                <button class="icon-btn" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(s.name)}','_blank')"><i class="fas fa-directions"></i></button>
+                ${s.phone ? `<button class="icon-btn" onclick="window.location.href='tel:+${s.phone}'"><i class="fas fa-phone"></i></button>` : ''}
+              </div>
+            </div>
+          </div>`).join('');
+      } catch(e) {}
+    }
+    loadFeatured();
+  </script>
 </body>
 </html>
