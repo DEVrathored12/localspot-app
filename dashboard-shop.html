@@ -218,11 +218,16 @@
         </div>
         <div class="form-group">
           <label>Product Photo</label>
-          <div class="upload-zone"><i class="fas fa-cloud-upload-alt"></i><span>Click or drag photo here</span><small>JPG, PNG up to 5MB</small></div>
+          <div class="upload-zone" style="border-color:var(--grey-200);background:var(--grey-50)" onclick="document.getElementById('productPhoto').click()">
+            <i class="fas fa-cloud-upload-alt" style="color:var(--grey-400)"></i>
+            <span style="color:var(--grey-600)">Click to upload photo</span>
+            <small>JPG, PNG up to 5MB</small>
+            <input type="file" id="productPhoto" accept="image/*" style="display:none"/>
+          </div>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('addProductModal').style.display='none'">Cancel</button>
-          <button type="submit" class="btn btn-primary">Add Product</button>
+          <button type="submit" class="btn btn-primary" id="addProductBtn">Add Product</button>
         </div>
       </form>
     </div>
@@ -230,7 +235,9 @@
 
   <script src="js/main.js"></script>
   <script>
-    const API = 'https://localspot-ngn1.onrender.com/api';
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api'
+      : 'https://localspot-ngn1.onrender.com/api';
     const token = localStorage.getItem('token');
     const user  = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -259,21 +266,86 @@
 
     // Load products from API
     async function loadProducts() {
+      const tbody = document.querySelector('.dash-table tbody');
       try {
         const res  = await fetch(`${API}/products`, { headers: { Authorization: `Bearer ${token}` } });
         const data = await res.json();
-        if (!data.success || !data.data.length) return;
-        const tbody = document.querySelector('.dash-table tbody');
+        if (!data.success || !data.data.length) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:24px">No products yet. Add your first product.</td></tr>`;
+          return;
+        }
         tbody.innerHTML = data.data.map(p => `
           <tr>
-            <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#1a3c6e">📦</div><span>${p.name}</span></div></td>
+            <td><div class="prod-name-cell"><div class="prod-thumb" style="background:var(--red-light);color:var(--red)">📦</div><span>${p.name}</span></div></td>
             <td>${p.category || '—'}</td>
             <td>${p.price || '—'}</td>
             <td><span class="status-badge active">Active</span></td>
-            <td><button class="icon-btn"><i class="fas fa-edit"></i></button></td>
+            <td>
+              <button class="icon-btn" onclick="deleteProduct('${p._id}')"><i class="fas fa-trash"></i></button>
+            </td>
           </tr>`).join('');
-      } catch(e) {}
+      } catch(e) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:24px">Could not load products.</td></tr>`;
+      }
     }
+
+    // Add product
+    document.querySelector('.modal-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const btn  = document.getElementById('addProductBtn');
+      const inputs = form.querySelectorAll('input[type=text], select, textarea');
+      const name        = inputs[0].value.trim();
+      const category    = inputs[1].value;
+      const price       = inputs[2].value.trim();
+      const description = form.querySelector('textarea').value.trim();
+
+      if (!name) return;
+      btn.disabled = true; btn.textContent = 'Adding...';
+
+      // Find the shop owned by this user
+      let shopId = localStorage.getItem('shopId');
+      if (!shopId) {
+        try {
+          const sr   = await fetch(`${API}/shops`, { headers: { Authorization: `Bearer ${token}` } });
+          const sd   = await sr.json();
+          const mine = sd.data?.find(s => s.owner?._id === user.id || s.owner === user.id);
+          if (mine) { shopId = mine._id; localStorage.setItem('shopId', shopId); }
+        } catch(e) {}
+      }
+
+      if (!shopId) {
+        alert('Please create your shop profile first.');
+        btn.disabled = false; btn.textContent = 'Add Product';
+        return;
+      }
+
+      try {
+        const res  = await fetch(`${API}/shops/${shopId}/products`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ name, category, price, description })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('addProductModal').style.display = 'none';
+          form.reset();
+          loadProducts();
+        } else {
+          alert(data.message || 'Failed to add product');
+        }
+      } catch(e) { alert('Server error. Try again.'); }
+      btn.disabled = false; btn.textContent = 'Add Product';
+    });
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product?')) return;
+      const shopId = localStorage.getItem('shopId');
+      if (!shopId) return;
+      await fetch(`${API}/shops/${shopId}/products/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      loadProducts();
+    }
+
     loadProducts();
   </script>
 </body>

@@ -9,14 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    .shops-page-hero { background: linear-gradient(135deg,#fff5f5,#fff); padding: 100px 0 40px; }
-    .shops-page-hero h1 { margin-bottom: 8px; }
-    .shops-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
-    .shops-toolbar .search-wrap { flex:1; min-width:260px; }
-    .filter-select { padding:10px 16px; border:1.5px solid var(--grey-200); border-radius:var(--radius-full); font-size:13px; background:var(--white); color:var(--grey-800); cursor:pointer; }
-    .filter-select:focus { border-color:var(--red); outline:none; }
-    .results-count { font-size:13px; color:var(--grey-400); margin-bottom:16px; }
-    .load-more { display:flex; justify-content:center; margin-top:40px; }
+    .shops-hero { background: linear-gradient(135deg, #f4f6fb, #eef3fb); padding: 100px 0 48px; }
+    .shops-hero h1 { margin-bottom: 8px; }
+    .shops-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .shops-toolbar .search-wrap { flex: 1; min-width: 260px; }
+    .filter-select { padding: 10px 16px; border: 1.5px solid var(--grey-200); border-radius: var(--radius-full); font-size: 13px; background: var(--white); color: var(--grey-800); cursor: pointer; transition: border-color var(--transition); }
+    .filter-select:focus { border-color: var(--red); outline: none; }
+    .results-count { font-size: 13px; color: var(--grey-400); margin-bottom: 20px; }
+    .load-more { display: flex; justify-content: center; margin-top: 48px; }
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--grey-400); }
+    .empty-state i { font-size: 48px; margin-bottom: 16px; display: block; color: var(--grey-200); }
+    .empty-state p { font-size: 14px; }
   </style>
 </head>
 <body>
@@ -37,6 +40,7 @@
       <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
+
   <div class="mobile-menu" id="mobileMenu">
     <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
     <ul>
@@ -50,7 +54,7 @@
     </ul>
   </div>
 
-  <section class="shops-page-hero">
+  <section class="shops-hero">
     <div class="container">
       <span class="section-label">Explore LocalSpot</span>
       <h1>Browse <em>Local Shops</em></h1>
@@ -58,12 +62,12 @@
     </div>
   </section>
 
-  <section class="section" style="padding-top:32px">
+  <section class="section" style="padding-top:36px">
     <div class="container">
       <div class="shops-toolbar">
         <div class="search-wrap">
           <i class="fas fa-search"></i>
-          <input type="text" id="shopSearch" placeholder="Search shops or products..." oninput="filterShops()"/>
+          <input type="text" id="shopSearch" placeholder="Search shops..." oninput="filterShops()"/>
           <select id="areaFilter" onchange="filterShops()">
             <option value="">All Areas</option>
             <option>Bandra West</option>
@@ -83,6 +87,11 @@
           <option>Jewellery</option>
           <option>Gifts</option>
           <option>Services</option>
+          <option>Books</option>
+          <option>Health</option>
+          <option>Home</option>
+          <option>Sports</option>
+          <option>Pets</option>
         </select>
         <select class="filter-select" id="sortFilter" onchange="filterShops()">
           <option value="featured">Featured First</option>
@@ -90,139 +99,13 @@
           <option value="newest">Newest</option>
         </select>
       </div>
-      <p class="results-count" id="resultsCount">Showing 8 shops</p>
-      <div class="shops-grid" id="shopsGrid">
-        <div class="shop-card" data-cat="Food & Spices" data-area="Bandra West" data-badge="featured">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#b5152b,#e63946)">
-            <span class="shop-badge">⭐ Featured</span><div class="shop-avatar">🌶️</div>
-          </div>
-          <div class="shop-body">
-            <h3>The Spice Route</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Food & Spices · Bandra West</p>
-            <p class="shop-desc">Premium hand-picked spices, masalas, and dry fruits since 1978.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.8</span><span><i class="far fa-clock"></i> 9am–9pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn" onclick="window.open('https://wa.me/919876543210','_blank')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn" onclick="window.open('https://maps.google.com/?q=The+Spice+Route+Bandra+West','_blank')" title="Navigate"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn" onclick="window.location.href='tel:+919876543210'" title="Call"><i class="fas fa-phone"></i></button> data-area="Linking Road" data-badge="trending">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#8b0000,#c0392b)">
-            <span class="shop-badge">🔥 Trending</span><div class="shop-avatar">👗</div>
-          </div>
-          <div class="shop-body">
-            <h3>Silk & Threads</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Clothing · Linking Road</p>
-            <p class="shop-desc">Traditional and designer ethnic wear for every occasion.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.6</span><span><i class="far fa-clock"></i> 10am–8pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn" onclick="window.open('https://wa.me/919876543211','_blank')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn" onclick="window.open('https://maps.google.com/?q=Silk+Threads+Linking+Road','_blank')" title="Navigate"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn" onclick="window.location.href='tel:+919876543211'" title="Call"><i class="fas fa-phone"></i></button> data-area="Andheri" data-badge="trusted">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#1a1a2e,#e63946)">
-            <span class="shop-badge">✅ Trusted</span><div class="shop-avatar">💻</div>
-          </div>
-          <div class="shop-body">
-            <h3>Crystal Electronics</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Electronics · Andheri</p>
-            <p class="shop-desc">Mobiles, laptops, accessories, and repairs. 10-year legacy.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.7</span><span><i class="far fa-clock"></i> 10am–9pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="shop-card" data-cat="Jewellery" data-area="Colaba" data-badge="new">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#c0392b,#f39c12)">
-            <span class="shop-badge">🆕 New</span><div class="shop-avatar">💍</div>
-          </div>
-          <div class="shop-body">
-            <h3>Meena Jewellers</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Jewellery · Colaba</p>
-            <p class="shop-desc">Fine gold, silver & diamond jewellery. Custom designs, bridal collections.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.9</span><span><i class="far fa-clock"></i> 11am–7pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="shop-card" data-cat="Beauty" data-area="Juhu" data-badge="featured">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#fd79a8,#e84393)">
-            <span class="shop-badge">⭐ Featured</span><div class="shop-avatar">💄</div>
-          </div>
-          <div class="shop-body">
-            <h3>Glow Studio</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Beauty · Juhu</p>
-            <p class="shop-desc">Premium skincare, makeup, and beauty treatments by certified experts.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.5</span><span><i class="far fa-clock"></i> 10am–8pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="shop-card" data-cat="Gifts" data-area="Bandra West" data-badge="trending">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)">
-            <span class="shop-badge">🔥 Trending</span><div class="shop-avatar">🎁</div>
-          </div>
-          <div class="shop-body">
-            <h3>The Gift Box</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Gifts · Bandra West</p>
-            <p class="shop-desc">Curated gift hampers, personalised items, and luxury packaging.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.4</span><span><i class="far fa-clock"></i> 11am–9pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="shop-card" data-cat="Food & Spices" data-area="Colaba" data-badge="trusted">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#00b894,#00cec9)">
-            <span class="shop-badge">✅ Trusted</span><div class="shop-avatar">🍰</div>
-          </div>
-          <div class="shop-body">
-            <h3>Colaba Bakehouse</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Food & Spices · Colaba</p>
-            <p class="shop-desc">Artisan breads, cakes, and pastries baked fresh every morning.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.7</span><span><i class="far fa-clock"></i> 7am–10pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="shop-card" data-cat="Services" data-area="Andheri" data-badge="new">
-          <div class="shop-cover" style="background:linear-gradient(135deg,#0984e3,#74b9ff)">
-            <span class="shop-badge">🆕 New</span><div class="shop-avatar">🔧</div>
-          </div>
-          <div class="shop-body">
-            <h3>FixIt Pro</h3>
-            <p class="shop-cat"><i class="fas fa-tag"></i> Services · Andheri</p>
-            <p class="shop-desc">Home appliance repair, plumbing, and electrical services on demand.</p>
-            <div class="shop-meta"><span><i class="fas fa-star"></i> 4.3</span><span><i class="far fa-clock"></i> 8am–8pm</span></div>
-            <div class="shop-actions">
-              <a href="shop-profile.html" class="btn btn-primary btn-sm">View Shop</a>
-              <button class="icon-btn"><i class="fab fa-whatsapp"></i></button>
-              <button class="icon-btn"><i class="fas fa-directions"></i></button>
-              <button class="icon-btn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <p class="results-count" id="resultsCount">Loading shops...</p>
+      <div class="shops-grid" id="shopsGrid"></div>
       <div class="load-more">
-        <button class="btn btn-outline btn-lg"><i class="fas fa-sync-alt"></i> Load More Shops</button>
+        <button class="btn btn-outline btn-lg" id="loadMoreBtn" style="display:none" onclick="loadMore()">
+          <i class="fas fa-sync-alt"></i> Load More
+        </button>
       </div>
     </div>
   </section>
@@ -242,31 +125,131 @@
 
   <script src="js/main.js"></script>
   <script>
-    function filterShops() {
-      const q = document.getElementById('shopSearch').value.toLowerCase();
-      const cat = document.getElementById('catFilter').value;
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
+
+    const COVER_COLORS = [
+      'linear-gradient(135deg,#1a3c6e,#2d5fa6)',
+      'linear-gradient(135deg,#0a1e38,#1a3c6e)',
+      'linear-gradient(135deg,#122d54,#1e4d8c)',
+      'linear-gradient(135deg,#1a3c6e,#c9a84c)',
+      'linear-gradient(135deg,#0a1e38,#c9a84c)',
+      'linear-gradient(135deg,#2d5fa6,#c9a84c)',
+    ];
+
+    const CATEGORY_EMOJI = {
+      'Food & Spices': '🌶️', 'Clothing': '👗', 'Electronics': '💻',
+      'Beauty': '💄', 'Jewellery': '💍', 'Gifts': '🎁', 'Services': '🔧',
+      'Books': '📚', 'Health': '💊', 'Home': '🛋️', 'Sports': '⚽', 'Pets': '🐾'
+    };
+
+    let allShops = [];
+    let visibleCount = 9;
+
+    async function loadShops() {
+      try {
+        const res  = await fetch(`${API}/shops`);
+        const data = await res.json();
+        if (data.success && data.data.length) allShops = data.data;
+      } catch (e) {}
+
+      if (!allShops.length) allShops = getStaticShops();
+
+      // Apply URL params AFTER shops are loaded
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('cat'))  document.getElementById('catFilter').value  = p.get('cat');
+      if (p.get('area')) document.getElementById('areaFilter').value = p.get('area');
+
+      renderShops();
+    }
+
+    function getStaticShops() {
+      return [
+        { _id:'s1',  name:'The Spice Route',      category:'Food & Spices', area:'Bandra West',  description:'Premium hand-picked spices, masalas, and dry fruits since 1978.',      rating:4.8, hours:'9am–9pm',  phone:'919876543210', whatsapp:'919876543210', badge:'Featured', color:COVER_COLORS[0] },
+        { _id:'s2',  name:'Silk & Threads',        category:'Clothing',      area:'Linking Road', description:'Traditional and designer ethnic wear for every occasion.',              rating:4.6, hours:'10am–8pm', phone:'919876543211', whatsapp:'919876543211', badge:'Trending', color:COVER_COLORS[1] },
+        { _id:'s3',  name:'Crystal Electronics',   category:'Electronics',   area:'Andheri',      description:'Mobiles, laptops, accessories, and repairs. 10-year legacy.',           rating:4.7, hours:'10am–9pm', phone:'919876543212', whatsapp:'919876543212', badge:'Trusted',  color:COVER_COLORS[2] },
+        { _id:'s4',  name:'Meena Jewellers',       category:'Jewellery',     area:'Colaba',       description:'Fine gold, silver & diamond jewellery. Custom designs available.',      rating:4.9, hours:'11am–7pm', phone:'919876543213', whatsapp:'919876543213', badge:'New',      color:COVER_COLORS[3] },
+        { _id:'s5',  name:'Glow Studio',           category:'Beauty',        area:'Juhu',         description:'Premium skincare, makeup, and beauty treatments by experts.',           rating:4.5, hours:'10am–8pm', phone:'919876543214', whatsapp:'919876543214', badge:'Featured', color:COVER_COLORS[4] },
+        { _id:'s6',  name:'The Gift Box',          category:'Gifts',         area:'Bandra West',  description:'Curated gift hampers, personalised items, and luxury packaging.',       rating:4.4, hours:'11am–9pm', phone:'919876543215', whatsapp:'919876543215', badge:'Trending', color:COVER_COLORS[5] },
+        { _id:'s7',  name:'Colaba Bakehouse',      category:'Food & Spices', area:'Colaba',       description:'Artisan breads, cakes, and pastries baked fresh every morning.',       rating:4.7, hours:'7am–10pm', phone:'919876543216', whatsapp:'919876543216', badge:'Trusted',  color:COVER_COLORS[0] },
+        { _id:'s8',  name:'FixIt Pro',             category:'Services',      area:'Andheri',      description:'Home appliance repair, plumbing, and electrical services.',             rating:4.3, hours:'8am–8pm',  phone:'919876543217', whatsapp:'919876543217', badge:'New',      color:COVER_COLORS[1] },
+        { _id:'s9',  name:'PageTurner Books',      category:'Books',         area:'Bandra West',  description:'Curated bookstore with fiction, non-fiction, and rare editions.',       rating:4.6, hours:'10am–9pm', phone:'919876543218', whatsapp:'919876543218', badge:'Featured', color:COVER_COLORS[2] },
+        { _id:'s10', name:'MediCare Pharmacy',     category:'Health',        area:'Andheri',      description:'24/7 pharmacy with medicines, supplements, and health products.',       rating:4.8, hours:'24 hours', phone:'919876543219', whatsapp:'919876543219', badge:'Trusted',  color:COVER_COLORS[3] },
+        { _id:'s11', name:'Casa Decor',            category:'Home',          area:'Juhu',         description:'Modern furniture, home decor, and interior design solutions.',          rating:4.5, hours:'10am–8pm', phone:'919876543220', whatsapp:'919876543220', badge:'New',      color:COVER_COLORS[4] },
+        { _id:'s12', name:'SportZone',             category:'Sports',        area:'Linking Road', description:'Sports equipment, gym gear, and outdoor activity essentials.',          rating:4.4, hours:'9am–9pm',  phone:'919876543221', whatsapp:'919876543221', badge:'Trending', color:COVER_COLORS[5] },
+        { _id:'s13', name:'Paws & Claws',          category:'Pets',          area:'Colaba',       description:'Pet food, accessories, grooming services, and vet consultations.',     rating:4.7, hours:'9am–8pm',  phone:'919876543222', whatsapp:'919876543222', badge:'Featured', color:COVER_COLORS[0] },
+        { _id:'s14', name:'Ethnic Weaves',         category:'Clothing',      area:'Colaba',       description:'Handloom sarees, kurtas, and traditional Indian wear.',                 rating:4.5, hours:'10am–7pm', phone:'919876543223', whatsapp:'919876543223', badge:'Trusted',  color:COVER_COLORS[1] },
+        { _id:'s15', name:'TechHub',               category:'Electronics',   area:'Bandra West',  description:'Latest gadgets, smart home devices, and tech accessories.',             rating:4.6, hours:'10am–9pm', phone:'919876543224', whatsapp:'919876543224', badge:'New',      color:COVER_COLORS[2] },
+        { _id:'s16', name:'Aroma Beauty Lounge',   category:'Beauty',        area:'Linking Road', description:'Luxury salon services, facials, and organic beauty treatments.',        rating:4.8, hours:'9am–8pm',  phone:'919876543225', whatsapp:'919876543225', badge:'Featured', color:COVER_COLORS[3] },
+      ];
+    }
+
+    function renderShops() {
+      const q    = document.getElementById('shopSearch').value.toLowerCase();
+      const cat  = document.getElementById('catFilter').value;
       const area = document.getElementById('areaFilter').value;
-      const cards = document.querySelectorAll('#shopsGrid .shop-card');
-      let count = 0;
-      cards.forEach(card => {
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        const cardCat = card.dataset.cat;
-        const cardArea = card.dataset.area;
-        const match = (!q || name.includes(q)) && (!cat || cardCat === cat) && (!area || cardArea === area);
-        card.style.display = match ? '' : 'none';
-        if (match) count++;
+      const sort = document.getElementById('sortFilter').value;
+
+      let filtered = allShops.filter(s => {
+        const matchQ    = !q    || s.name.toLowerCase().includes(q) || (s.description||'').toLowerCase().includes(q);
+        const matchCat  = !cat  || s.category === cat;
+        const matchArea = !area || s.area === area;
+        return matchQ && matchCat && matchArea;
       });
-      document.getElementById('resultsCount').textContent = `Showing ${count} shop${count !== 1 ? 's' : ''}`;
+
+      if (sort === 'rating') filtered.sort((a,b) => (b.rating||0) - (a.rating||0));
+      else if (sort === 'newest') filtered.sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+
+      document.getElementById('resultsCount').textContent = `Showing ${Math.min(visibleCount, filtered.length)} of ${filtered.length} shop${filtered.length !== 1 ? 's' : ''}`;
+
+      const grid = document.getElementById('shopsGrid');
+      const visible = filtered.slice(0, visibleCount);
+
+      if (!visible.length) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-store-slash"></i><p>No shops found. Try a different search.</p></div>`;
+        document.getElementById('loadMoreBtn').style.display = 'none';
+        return;
+      }
+
+      grid.innerHTML = visible.map(s => {
+        const color = s.color || COVER_COLORS[Math.floor(Math.random() * COVER_COLORS.length)];
+        const emoji = CATEGORY_EMOJI[s.category] || '🏪';
+        const badge = s.badge || (s.featured ? 'Featured' : s.trending ? 'Trending' : '');
+        const badgeIcon = badge === 'Featured' ? '⭐' : badge === 'Trending' ? '🔥' : badge === 'Trusted' ? '✅' : badge === 'New' ? '🆕' : '';
+        const wa   = s.whatsapp || s.phone || '';
+        const maps = s.mapLink  || `https://maps.google.com/?q=${encodeURIComponent(s.name + ' ' + s.area)}`;
+        return `
+        <div class="shop-card">
+          <div class="shop-cover" style="background:${color}">
+            ${badge ? `<span class="shop-badge">${badgeIcon} ${badge}</span>` : '<span></span>'}
+            <div class="shop-avatar">${emoji}</div>
+          </div>
+          <div class="shop-body">
+            <h3>${s.name}</h3>
+            <p class="shop-cat"><i class="fas fa-tag"></i> ${s.category} · ${s.area}</p>
+            <p class="shop-desc">${s.description || ''}</p>
+            <div class="shop-meta">
+              <span><i class="fas fa-star"></i> ${s.rating || '—'}</span>
+              ${s.hours ? `<span><i class="far fa-clock"></i> ${s.hours}</span>` : ''}
+            </div>
+            <div class="shop-actions">
+              <a href="shop-profile.html?id=${s._id}" class="btn btn-primary btn-sm">View Shop</a>
+              ${wa ? `<button class="icon-btn" onclick="window.open('https://wa.me/${wa}','_blank')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>` : ''}
+              <button class="icon-btn" onclick="window.open('${maps}','_blank')" title="Navigate"><i class="fas fa-directions"></i></button>
+              ${s.phone ? `<button class="icon-btn" onclick="window.location.href='tel:+${s.phone}'" title="Call"><i class="fas fa-phone"></i></button>` : ''}
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      document.getElementById('loadMoreBtn').style.display = filtered.length > visibleCount ? 'inline-flex' : 'none';
     }
-    // Pre-filter from URL params
-    const p = new URLSearchParams(window.location.search);
-    if (p.get('cat')) { document.getElementById('catFilter').value = p.get('cat'); filterShops(); }
-    if (p.get('filter')) {
-      const badge = p.get('filter');
-      document.querySelectorAll('#shopsGrid .shop-card').forEach(c => {
-        if (c.dataset.badge !== badge) c.style.display = 'none';
-      });
-    }
+
+    function filterShops() { visibleCount = 9; renderShops(); }
+    function loadMore() { visibleCount += 9; renderShops(); }
+
+    // Pre-filter from URL params applied inside loadShops() after data is ready
+    loadShops();
   </script>
 </body>
 </html>

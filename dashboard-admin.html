@@ -226,7 +226,9 @@
 
   <script src="js/main.js"></script>
   <script>
-    const API = 'https://localspot-ngn1.onrender.com/api';
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api'
+      : 'https://localspot-ngn1.onrender.com/api';
     const token = localStorage.getItem('token');
     const user  = JSON.parse(localStorage.getItem('user') || '{}');
 

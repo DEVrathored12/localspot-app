@@ -5,18 +5,17 @@ const path = require('path');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB();
+connectDB().catch(err => { console.error('❌ DB connection failed:', err.message); process.exit(1); });
 
 const app = express();
 
-app.use(cors({ origin: ['https://localspot-app.vercel.app', 'http://localhost:5500', 'http://localhost:3000'], credentials: true }));
-
-app.get('/api/health', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.json({ status: 'ok', message: 'LocalSpot API is running', timestamp: new Date().toISOString() });
-});
+app.use(cors({ origin: ['https://localspot-app.vercel.app', 'http://localhost:5500', 'http://localhost:5502', 'http://127.0.0.1:5500', 'http://127.0.0.1:5502'], credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'LocalSpot API is running', timestamp: new Date().toISOString() });
+});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes

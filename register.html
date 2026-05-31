@@ -141,15 +141,71 @@
           <button type="submit" class="btn btn-primary btn-full">
             Create Account <i class="fas fa-arrow-right"></i>
           </button>
+          <div class="divider"><span>or continue with</span></div>
+          <div class="social-auth">
+            <button type="button" class="social-btn google" onclick="registerWithGoogle()"><i class="fab fa-google"></i> Google</button>
+            <button type="button" class="social-btn instagram" onclick="registerWithInstagram()"><i class="fab fa-instagram"></i> Instagram</button>
+          </div>
 
         </form>
       </div>
     </div>
   </div>
 
+  <!-- Instagram Setup Modal -->
+  <div id="instaModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:480px;width:100%;position:relative;max-height:90vh;overflow-y:auto">
+      <button onclick="document.getElementById('instaModal').style.display='none'" style="position:absolute;top:16px;right:16px;background:var(--grey-100);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--grey-600)"><i class="fas fa-times"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center">
+          <i class="fab fa-instagram" style="color:#fff;font-size:20px"></i>
+        </div>
+        <div>
+          <h3 style="font-size:1rem;margin:0">Instagram Login Setup</h3>
+          <p style="font-size:12px;color:var(--grey-400);margin:0">One-time developer configuration</p>
+        </div>
+      </div>
+      <div style="background:var(--grey-50);border-radius:10px;padding:16px;margin-bottom:16px;font-size:13px;color:var(--grey-600);border-left:3px solid #dc2743">
+        Instagram login requires a <strong>Meta Developer App</strong>. Follow these steps to enable it.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">1</div>
+          <div style="font-size:13px"><strong>Create a Meta Developer App</strong><br><span style="color:var(--grey-600)">Go to <a href="https://developers.facebook.com/apps" target="_blank" style="color:#dc2743">developers.facebook.com/apps</a> → Click <em>Create App</em> → Choose <em>Consumer</em> type.</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">2</div>
+          <div style="font-size:13px"><strong>Add Instagram Basic Display</strong><br><span style="color:var(--grey-600)">In your app dashboard → <em>Add Product</em> → Select <em>Instagram Basic Display</em> → Click <em>Set Up</em>.</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">3</div>
+          <div style="font-size:13px"><strong>Set Redirect URI</strong><br><span style="color:var(--grey-600)">Under <em>Instagram Basic Display → Basic Display</em>, add this as Valid OAuth Redirect URI:</span><br><code style="background:var(--grey-100);padding:4px 8px;border-radius:6px;font-size:12px;display:inline-block;margin-top:4px">https://localspot-app.vercel.app/register.html</code></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">4</div>
+          <div style="font-size:13px"><strong>Copy your Instagram App ID</strong><br><span style="color:var(--grey-600)">From <em>Instagram Basic Display → Basic Display</em>, copy the <em>Instagram App ID</em>.</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">5</div>
+          <div style="font-size:13px"><strong>Paste App ID in register.html</strong><br><span style="color:var(--grey-600)">Replace <code style="background:var(--grey-100);padding:2px 6px;border-radius:4px">YOUR_INSTAGRAM_APP_ID</code> with your copied App ID.</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2743,#bc1888);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">6</div>
+          <div style="font-size:13px"><strong>Add backend route</strong><br><span style="color:var(--grey-600)">Add <code style="background:var(--grey-100);padding:2px 6px;border-radius:4px">POST /api/auth/instagram</code> in your backend to exchange the code for a token using your <em>App Secret</em>.</span></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--grey-100);display:flex;gap:10px">
+        <a href="https://developers.facebook.com/apps" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center"><i class="fab fa-instagram"></i> Open Meta Developer</a>
+        <button onclick="document.getElementById('instaModal').style.display='none'" class="btn btn-outline">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
   <script>
-    const API = 'https://localspot-ngn1.onrender.com/api';
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api'
+      : 'https://localspot-ngn1.onrender.com/api';
     const roleTabs = document.querySelectorAll('.role-tab');
     roleTabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -214,6 +270,25 @@
       const el = document.getElementById(id);
       el.type = el.type === 'password' ? 'text' : 'password';
     }
+    function registerWithGoogle() {
+      const clientId    = '1008674868759-i3okbul0v5806rcj4lnp916ovmce5a50.apps.googleusercontent.com';
+      const redirectUri = encodeURIComponent('https://localspot-app.vercel.app/register.html');
+      const scope       = encodeURIComponent('openid email profile');
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+    }
+
+    function registerWithInstagram() {
+      const appId       = 'YOUR_INSTAGRAM_APP_ID';
+      const redirectUri = encodeURIComponent('https://localspot-app.vercel.app/register.html');
+      const scope       = encodeURIComponent('user_profile,user_media');
+      if (appId === 'YOUR_INSTAGRAM_APP_ID') { showInstaSetupModal(); return; }
+      window.location.href = `https://api.instagram.com/oauth/authorize?client_id=${appId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+    }
+
+    function showInstaSetupModal() {
+      document.getElementById('instaModal').style.display = 'flex';
+    }
+
     // Pre-select role from URL param
     const params = new URLSearchParams(window.location.search);
     const typeParam = params.get('type');

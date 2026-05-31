@@ -8,6 +8,82 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── Saved Shops Drawer ── */
+    .drawer-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 1100; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .saved-drawer {
+      position: fixed; top: 0; right: -380px; width: 360px; max-width: 95vw;
+      height: 100vh; background: var(--white); z-index: 1200;
+      box-shadow: var(--shadow-lg); transition: right 0.3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+    }
+    .saved-drawer.open { right: 0; }
+
+    .drawer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--grey-200);
+    }
+    .drawer-head h3 { font-size: 1rem; font-family: var(--font-body); font-weight: 700; }
+    .drawer-close {
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: var(--grey-100); color: var(--grey-600); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+
+    .drawer-body { flex: 1; overflow-y: auto; padding: 16px; }
+
+    .saved-shop-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px; border-radius: var(--radius-sm);
+      border: 1px solid var(--grey-200); margin-bottom: 10px;
+      transition: all var(--transition);
+    }
+    .saved-shop-item:hover { border-color: var(--red); background: var(--red-light); }
+    .saved-shop-thumb {
+      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .saved-shop-info { flex: 1; }
+    .saved-shop-info strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .saved-shop-info span { font-size: 11px; color: var(--grey-400); }
+    .saved-remove {
+      width: 28px; height: 28px; border-radius: 50%; border: none;
+      background: none; color: var(--grey-400); cursor: pointer; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .saved-remove:hover { background: #ffe5e5; color: #e63946; }
+
+    .drawer-empty {
+      text-align: center; padding: 48px 20px; color: var(--grey-400);
+    }
+    .drawer-empty i { font-size: 40px; color: var(--grey-200); display: block; margin-bottom: 12px; }
+    .drawer-empty p { font-size: 13px; }
+
+    /* Save btn active state */
+    .action-btn-mini.save.saved { background: #ffe5e5; color: #e63946; }
+
+    /* Saved nav btn in navbar */
+    .saved-nav-btn {
+      position: relative; background: none; border: none; cursor: pointer;
+      font-size: 18px; color: var(--grey-600); padding: 6px 8px;
+      transition: color var(--transition);
+    }
+    .saved-nav-btn:hover { color: var(--red); }
+    .saved-count-dot {
+      position: absolute; top: 2px; right: 2px;
+      width: 16px; height: 16px; background: var(--red); color: #fff;
+      border-radius: 50%; font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--white);
+    }
+  </style>
 </head>
 <body>
 
@@ -22,6 +98,10 @@
         <li><a href="creators.html">Creators</a></li>
       </ul>
       <div class="nav-actions">
+        <button class="saved-nav-btn" onclick="openDrawer()" title="Saved Shops">
+          <i class="far fa-heart"></i>
+          <span class="saved-count-dot" id="savedCountDot" style="display:none">0</span>
+        </button>
         <a href="login.html" class="btn btn-outline">Login</a>
         <a href="register.html" class="btn btn-primary">Get Started</a>
       </div>
@@ -29,8 +109,18 @@
     </div>
   </nav>
 
+  <!-- SAVED SHOPS DRAWER -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="saved-drawer" id="savedDrawer">
+    <div class="drawer-head">
+      <h3><i class="fas fa-heart" style="color:#e63946;margin-right:8px"></i> Saved Shops</h3>
+      <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+
   <!-- SHOP COVER -->
-  <div class="shop-cover-hero" style="background:linear-gradient(135deg,#b5152b 0%,#e63946 60%,#ff6b6b 100%)">
+  <div class="shop-cover-hero" style="background:linear-gradient(135deg,#1a3c6e 0%,#2d5fa6 60%,#1e4d8c 100%)">
     <div class="shop-cover-overlay"></div>
     <div class="shop-cover-content">
       <div class="shop-profile-avatar">🌶️</div>
@@ -56,18 +146,18 @@
     <div class="container">
       <div class="action-bar-inner">
         <div class="action-tabs-nav">
-          <a href="#about" class="atab active">About</a>
+          <a href="#about"    class="atab active">About</a>
           <a href="#products" class="atab">Products</a>
-          <a href="#videos" class="atab">Videos</a>
-          <a href="#reviews" class="atab">Reviews</a>
+          <a href="#videos"   class="atab">Videos</a>
+          <a href="#reviews"  class="atab">Reviews</a>
           <a href="#location" class="atab">Location</a>
         </div>
         <div class="action-btns-row">
-          <a href="tel:+919876543210" class="action-btn-mini call"><i class="fas fa-phone"></i> Call</a>
-          <a href="https://wa.me/919876543210" class="action-btn-mini whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-          <a href="#location" class="action-btn-mini navigate"><i class="fas fa-directions"></i> Navigate</a>
+          <a href="tel:+919876543210"          class="action-btn-mini call"><i class="fas fa-phone"></i> Call</a>
+          <a href="https://wa.me/919876543210" class="action-btn-mini whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a href="#location"                  class="action-btn-mini navigate"><i class="fas fa-directions"></i> Navigate</a>
           <button class="action-btn-mini save" id="saveBtn" onclick="toggleSave()"><i class="far fa-heart"></i> Save</button>
-          <button class="action-btn-mini share"><i class="fas fa-share-alt"></i> Share</button>
+          <button class="action-btn-mini share" onclick="shareShop()"><i class="fas fa-share-alt"></i> Share</button>
         </div>
       </div>
     </div>
@@ -80,8 +170,8 @@
       <!-- ABOUT -->
       <section id="about" class="profile-section">
         <h2 class="profile-section-title">About the Shop</h2>
-        <p>The Spice Route is Mumbai's most trusted spice and dry fruit store, serving over 10,000 families since 1978. We source our spices directly from farms across India — cardamom from Kerala, saffron from Kashmir, black pepper from Wayanad — ensuring authenticity and freshness in every packet.</p>
-        <p>Our product range includes over 200 varieties of spices, masalas, dry fruits, seeds, herbs, and natural food colours. All products are hygienically packed and lab-tested for quality.</p>
+        <p>The Spice Route is Mumbai's most trusted spice and dry fruit store, serving over 10,000 families since 1978. We source our spices directly from farms across India — cardamom from Kerala, saffron from Kashmir, black pepper from Wayanad.</p>
+        <p>Our range includes over 200 varieties of spices, masalas, dry fruits, seeds, and herbs. All products are hygienically packed and lab-tested for quality.</p>
         <div class="info-grid">
           <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Address</strong><span>14, Hill Road, Bandra West, Mumbai – 400050</span></div></div>
           <div class="info-item"><i class="far fa-clock"></i><div><strong>Hours</strong><span>Mon–Sat: 9:00 AM – 9:00 PM<br>Sunday: 10:00 AM – 6:00 PM</span></div></div>
@@ -92,13 +182,13 @@
         </div>
         <div class="offer-banner">
           <i class="fas fa-percent"></i>
-          <div><strong>Festival Offer:</strong> 20% off on all dry fruits this Diwali season! Offer valid till Oct 31.</div>
+          <div><strong>Festival Offer:</strong> 20% off on all dry fruits this Diwali season! Valid till Oct 31.</div>
         </div>
       </section>
 
-      <!-- PRODUCT GALLERY -->
+      <!-- PRODUCTS -->
       <section id="products" class="profile-section">
-        <h2 class="profile-section-title">Products <span class="count-badge">24 items</span></h2>
+        <h2 class="profile-section-title">Products <span class="count-badge">6 items</span></h2>
         <div class="product-filters">
           <button class="pfilt active">All</button>
           <button class="pfilt">Spices</button>
@@ -108,75 +198,69 @@
         </div>
         <div class="products-grid">
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24)"><span class="prod-emoji">🌶️</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)"><span class="prod-emoji">🌶️</span></div>
             <div class="product-body">
               <h4>Kashmiri Chilli Powder</h4>
-              <p>Pure, vibrant red chilli powder for authentic colour and mild heat in curries.</p>
+              <p>Pure, vibrant red chilli powder for authentic colour and mild heat.</p>
               <div class="product-footer">
                 <span class="prod-price">₹120 / 250g</span>
                 <span class="prod-tag available">Available</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#f9ca24,#f0932b)"><span class="prod-emoji">🪁</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#0a1e38,#1a3c6e)"><span class="prod-emoji">🪁</span></div>
             <div class="product-body">
               <h4>Premium Saffron</h4>
-              <p>Authentic Grade A Kashmiri saffron — rich aroma, deep colour, certified pure.</p>
+              <p>Authentic Grade A Kashmiri saffron — rich aroma, deep colour.</p>
               <div class="product-footer">
                 <span class="prod-price">₹850 / 1g</span>
                 <span class="prod-tag available">Available</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#6ab04c,#badc58)"><span class="prod-emoji">🫙</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#122d54,#1e4d8c)"><span class="prod-emoji">🫙</span></div>
             <div class="product-body">
               <h4>Garam Masala Blend</h4>
-              <p>Secret family recipe masala blend with 18 spices. Makes every dish extraordinary.</p>
+              <p>Secret family recipe with 18 spices. Makes every dish extraordinary.</p>
               <div class="product-footer">
                 <span class="prod-price">₹180 / 200g</span>
                 <span class="prod-tag available">Available</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#a29bfe,#6c5ce7)"><span class="prod-emoji">🫐</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#1a3c6e,#c9a84c)"><span class="prod-emoji">🫐</span></div>
             <div class="product-body">
               <h4>Premium Blueberries</h4>
-              <p>Imported dried blueberries — perfect for baking, smoothies, and snacking.</p>
+              <p>Imported dried blueberries — perfect for baking and smoothies.</p>
               <div class="product-footer">
                 <span class="prod-price">₹420 / 200g</span>
                 <span class="prod-tag limited">Limited</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#d4a574,#a0714f)"><span class="prod-emoji">🥜</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#0a1e38,#c9a84c)"><span class="prod-emoji">🥜</span></div>
             <div class="product-body">
               <h4>Premium Cashews</h4>
-              <p>W240 grade whole cashews sourced directly from Goa. Freshly packed weekly.</p>
+              <p>W240 grade whole cashews sourced directly from Goa. Freshly packed.</p>
               <div class="product-footer">
                 <span class="prod-price">₹750 / 500g</span>
                 <span class="prod-tag available">Available</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
           <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#fd79a8,#e84393)"><span class="prod-emoji">🌸</span></div>
+            <div class="product-img" style="background:linear-gradient(135deg,#2d5fa6,#c9a84c)"><span class="prod-emoji">🌸</span></div>
             <div class="product-body">
               <h4>Rose Cardamom Mix</h4>
-              <p>Aromatic blend of green cardamom and rose petals for teas and desserts.</p>
+              <p>Aromatic blend of green cardamom and rose petals for teas.</p>
               <div class="product-footer">
                 <span class="prod-price">₹240 / 100g</span>
                 <span class="prod-tag seasonal">Seasonal</span>
               </div>
-              <button class="btn btn-sm btn-outline prod-ask"><i class="fas fa-comment"></i> Ask Shop</button>
             </div>
           </div>
         </div>
@@ -187,21 +271,21 @@
         <h2 class="profile-section-title">Shop Videos</h2>
         <div class="videos-grid">
           <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#b5152b,#e63946)">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)">
               <div class="play-btn"><i class="fas fa-play"></i></div>
               <span class="video-duration">1:24</span>
             </div>
             <div class="video-info"><strong>Shop Tour — The Spice Route</strong><span>2.4K views · 3 days ago</span></div>
           </div>
           <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#ff6b6b,#f39c12)">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#0a1e38,#1a3c6e)">
               <div class="play-btn"><i class="fas fa-play"></i></div>
               <span class="video-duration">0:45</span>
             </div>
             <div class="video-info"><strong>Diwali Dry Fruit Offers</strong><span>1.8K views · 1 week ago</span></div>
           </div>
           <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#2d3436,#636e72)">
+            <div class="video-thumb" style="background:linear-gradient(135deg,#122d54,#1e4d8c)">
               <div class="play-btn"><i class="fas fa-play"></i></div>
               <span class="video-duration">2:10</span>
             </div>
@@ -226,15 +310,15 @@
         <div class="reviews-list">
           <div class="review-item">
             <div class="review-author"><div class="rev-avatar">PK</div><div><strong>Priya Kulkarni</strong><span>2 days ago</span></div><div class="rev-stars">★★★★★</div></div>
-            <p>Best spice shop in Mumbai! The saffron is absolutely authentic and the masala blends are legendary. Been coming here for 10 years.</p>
+            <p>Best spice shop in Mumbai! The saffron is absolutely authentic and the masala blends are legendary.</p>
           </div>
           <div class="review-item">
             <div class="review-author"><div class="rev-avatar">RS</div><div><strong>Rahul Shah</strong><span>1 week ago</span></div><div class="rev-stars">★★★★★</div></div>
-            <p>Amazing quality and very reasonable prices. The shop staff is knowledgeable and helpful. Highly recommended!</p>
+            <p>Amazing quality and very reasonable prices. The shop staff is knowledgeable and helpful.</p>
           </div>
           <div class="review-item">
             <div class="review-author"><div class="rev-avatar">SM</div><div><strong>Sneha Mehta</strong><span>2 weeks ago</span></div><div class="rev-stars">★★★★☆</div></div>
-            <p>Great variety of dry fruits. Packaging is neat. Prices are a bit high for some items but the quality justifies it.</p>
+            <p>Great variety of dry fruits. Packaging is neat. Prices are a bit high but quality justifies it.</p>
           </div>
         </div>
       </section>
@@ -245,7 +329,7 @@
         <div class="map-placeholder">
           <i class="fas fa-map-marked-alt"></i>
           <p>14, Hill Road, Bandra West, Mumbai – 400050</p>
-          <a href="https://maps.google.com" class="btn btn-primary" target="_blank"><i class="fas fa-directions"></i> Get Directions</a>
+          <a href="https://maps.google.com/?q=The+Spice+Route+Bandra+West+Mumbai" class="btn btn-primary" target="_blank"><i class="fas fa-directions"></i> Get Directions</a>
         </div>
       </section>
 
@@ -253,12 +337,12 @@
 
     <!-- SIDEBAR -->
     <aside class="profile-sidebar">
-      <div class="sidebar-card contact-card">
+      <div class="sidebar-card">
         <h3>Contact Shop</h3>
-        <a href="tel:+919876543210" class="contact-btn call-btn"><i class="fas fa-phone"></i> Call Now</a>
-        <a href="https://wa.me/919876543210" class="contact-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="#location" class="contact-btn navigate-btn"><i class="fas fa-directions"></i> Navigate</a>
-        <a href="#" class="contact-btn share-btn"><i class="fas fa-share-alt"></i> Share Shop</a>
+        <a href="tel:+919876543210"          class="contact-btn call-btn"><i class="fas fa-phone"></i> Call Now</a>
+        <a href="https://wa.me/919876543210" class="contact-btn whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://maps.google.com/?q=The+Spice+Route+Bandra+West+Mumbai" class="contact-btn navigate-btn" target="_blank"><i class="fas fa-directions"></i> Navigate</a>
+        <button class="contact-btn share-btn" onclick="shareShop()"><i class="fas fa-share-alt"></i> Share Shop</button>
       </div>
       <div class="sidebar-card">
         <h3>Business Hours</h3>
@@ -298,19 +382,130 @@
 
   <script src="js/main.js"></script>
   <script>
-    function toggleSave() {
-      const btn = document.getElementById('saveBtn');
+    const SHOP_ID   = 'spice-route';
+    const SHOP_DATA = { id: SHOP_ID, name: 'The Spice Route', category: 'Food & Spices', area: 'Bandra West', emoji: '🌶️', color: 'linear-gradient(135deg,#1a3c6e,#2d5fa6)' };
+
+    // ── Saved Shops (localStorage) ──
+    function getSaved() { return JSON.parse(localStorage.getItem('savedShops') || '[]'); }
+    function setSaved(arr) { localStorage.setItem('savedShops', JSON.stringify(arr)); }
+
+    function updateSaveBtn() {
+      const saved = getSaved();
+      const isSaved = saved.some(s => s.id === SHOP_ID);
+      const btn  = document.getElementById('saveBtn');
       const icon = btn.querySelector('i');
-      icon.classList.toggle('far');
-      icon.classList.toggle('fas');
-      btn.style.color = icon.classList.contains('fas') ? '#e63946' : '';
+      if (isSaved) {
+        icon.className = 'fas fa-heart';
+        btn.classList.add('saved');
+        btn.innerHTML = '<i class="fas fa-heart"></i> Saved';
+      } else {
+        icon.className = 'far fa-heart';
+        btn.classList.remove('saved');
+        btn.innerHTML = '<i class="far fa-heart"></i> Save';
+      }
     }
+
+    function updateCountDot() {
+      const count = getSaved().length;
+      const dot   = document.getElementById('savedCountDot');
+      dot.style.display = count > 0 ? 'flex' : 'none';
+      dot.textContent   = count;
+    }
+
+    function toggleSave() {
+      let saved = getSaved();
+      const idx = saved.findIndex(s => s.id === SHOP_ID);
+      if (idx === -1) {
+        saved.push(SHOP_DATA);
+      } else {
+        saved.splice(idx, 1);
+      }
+      setSaved(saved);
+      updateSaveBtn();
+      updateCountDot();
+      renderDrawer();
+    }
+
+    // ── Drawer ──
+    function openDrawer() {
+      renderDrawer();
+      document.getElementById('savedDrawer').classList.add('open');
+      document.getElementById('drawerOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      document.getElementById('savedDrawer').classList.remove('open');
+      document.getElementById('drawerOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function removeFromDrawer(id) {
+      let saved = getSaved();
+      saved = saved.filter(s => s.id !== id);
+      setSaved(saved);
+      updateSaveBtn();
+      updateCountDot();
+      renderDrawer();
+    }
+
+    function renderDrawer() {
+      const saved = getSaved();
+      const body  = document.getElementById('drawerBody');
+      if (!saved.length) {
+        body.innerHTML = `<div class="drawer-empty"><i class="far fa-heart"></i><p>No saved shops yet.<br>Tap <strong>Save</strong> on any shop to add it here.</p></div>`;
+        return;
+      }
+      body.innerHTML = saved.map(s => `
+        <div class="saved-shop-item">
+          <div class="saved-shop-thumb" style="background:${s.color || 'var(--red-light)'}">${s.emoji || '🏪'}</div>
+          <div class="saved-shop-info">
+            <strong>${s.name}</strong>
+            <span>${s.category} · ${s.area}</span>
+          </div>
+          <button class="saved-remove" onclick="removeFromDrawer('${s.id}')" title="Remove"><i class="fas fa-times"></i></button>
+        </div>`).join('');
+    }
+
+    // ── Share ──
+    function shareShop() {
+      const data = { title: 'The Spice Route — LocalSpot', text: 'Check out The Spice Route on LocalSpot!', url: window.location.href };
+      if (navigator.share) {
+        navigator.share(data).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          showToast('Link copied to clipboard!');
+        }).catch(() => {
+          prompt('Copy this link:', window.location.href);
+        });
+      }
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+      let t = document.getElementById('toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'toast';
+        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity 0.3s';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity = '1';
+      setTimeout(() => { t.style.opacity = '0'; }, 2500);
+    }
+
+    // ── Product filters ──
     document.querySelectorAll('.pfilt').forEach(f => {
       f.addEventListener('click', () => {
         document.querySelectorAll('.pfilt').forEach(b => b.classList.remove('active'));
         f.classList.add('active');
       });
     });
+
+    // ── Init ──
+    updateSaveBtn();
+    updateCountDot();
   </script>
 </body>
 </html>
