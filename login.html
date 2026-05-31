@@ -66,11 +66,7 @@
           <button type="submit" class="btn btn-primary btn-full">
             Sign In <i class="fas fa-arrow-right"></i>
           </button>
-          <div class="divider"><span>or continue with</span></div>
-          <div class="social-auth">
-            <button type="button" class="social-btn google" onclick="loginWithGoogle()"><i class="fab fa-google"></i> Google</button>
-            <button type="button" class="social-btn instagram" onclick="loginWithInstagram()"><i class="fab fa-instagram"></i> Instagram</button>
-          </div>
+
         </form>
 
         <p class="auth-footer-note">By signing in you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
@@ -151,28 +147,6 @@
       el.type = el.type === 'password' ? 'text' : 'password';
     }
 
-    function loginWithGoogle() {
-      // Google OAuth — replace YOUR_GOOGLE_CLIENT_ID with actual client ID from Google Cloud Console
-      const clientId    = 'YOUR_GOOGLE_CLIENT_ID';
-      const redirectUri = encodeURIComponent(window.location.origin + '/auth-callback.html');
-      const scope       = encodeURIComponent('openid email profile');
-      if (clientId === 'YOUR_GOOGLE_CLIENT_ID') {
-        alert('Google login: Add your Google Client ID in login.html\n\nGet it from: https://console.cloud.google.com/');
-        return;
-      }
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
-    }
-
-    function loginWithInstagram() {
-      // Instagram OAuth — replace YOUR_INSTAGRAM_APP_ID with actual app ID from Meta Developer Console
-      const appId       = 'YOUR_INSTAGRAM_APP_ID';
-      const redirectUri = encodeURIComponent(window.location.origin + '/auth-callback.html');
-      if (appId === 'YOUR_INSTAGRAM_APP_ID') {
-        alert('Instagram login: Add your Instagram App ID in login.html\n\nGet it from: https://developers.facebook.com/');
-        return;
-      }
-      window.location.href = `https://api.instagram.com/oauth/authorize?client_id=${appId}&redirect_uri=${redirectUri}&scope=user_profile,user_media&response_type=code`;
-    }
   </script>
 </body>
 </html>
