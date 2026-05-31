@@ -82,6 +82,20 @@
   <script>
     const API = 'https://localspot-ngn1.onrender.com/api';
 
+    // Wake up Render backend on page load
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Connecting... <i class="fas fa-spinner fa-spin"></i>';
+    fetch(`${API}/health`)
+      .then(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
+      })
+      .catch(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
+      });
+
     // Role tab switching
     document.querySelectorAll('.role-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -129,7 +143,7 @@
         window.location.href = redirectMap[data.user.role] || 'index.html';
 
       } catch (err) {
-        showError('Server error. Make sure the backend is running.');
+        showError('Connection failed. Please wait a moment and try again.');
         btn.disabled = false;
         btn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
       }
