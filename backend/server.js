@@ -9,7 +9,17 @@ connectDB().catch(err => { console.error('❌ DB connection failed:', err.messag
 
 const app = express();
 
-app.use(cors({ origin: ['https://localspot-app.vercel.app', 'http://localhost:5500', 'http://localhost:5502', 'http://127.0.0.1:5500', 'http://127.0.0.1:5502'], credentials: true }));
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow any localhost/127.0.0.1 port + production
+    if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) || origin === 'https://localspot-app.vercel.app') {
+      cb(null, true);
+    } else {
+      cb(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
