@@ -273,78 +273,77 @@
       return res.json();
     }
 
-    // ── Load stats (single source of truth for all 4 cards) ──
+    // ── Load stats ──
     async function loadStats() {
-      const data = await authFetch(`${API}/admin/stats`);
-      if (!data.success) return;
-      const { users, shops, creators, revenue } = data.data;
-      document.getElementById('statUsers').textContent    = users;
-      document.getElementById('statShops').textContent    = shops;
-      document.getElementById('statCreators').textContent = creators;
-      document.getElementById('statRevenue').textContent  = '₹' + (revenue || 0).toLocaleString('en-IN');
-      document.getElementById('analyticsUsers').textContent = users;
-      document.getElementById('analyticsShops').textContent = shops;
+      try {
+        const data = await authFetch(`${API}/admin/stats`);
+        if (!data.success) return;
+        const { users, shops, creators, revenue } = data.data;
+        document.getElementById('statUsers').textContent    = users;
+        document.getElementById('statShops').textContent    = shops;
+        document.getElementById('statCreators').textContent = creators;
+        document.getElementById('statRevenue').textContent  = '₹' + (revenue || 0).toLocaleString('en-IN');
+        document.getElementById('analyticsUsers').textContent = users;
+        document.getElementById('analyticsShops').textContent = shops;
+      } catch(e) {
+        console.warn('Stats load failed, retrying...', e);
+        setTimeout(loadStats, 3000);
+      }
     }
 
     // ── Load users table ──
     async function loadUsers() {
-      const data = await authFetch(`${API}/admin/users`);
       const tbody = document.getElementById('usersTableBody');
-      if (!data.success) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:red">${data.message}</td></tr>`;
-        return;
-      }
-      document.getElementById('usersCount').textContent = data.count;
-      tbody.innerHTML = data.data.map(u => `
-        <tr>
-          <td><div class="prod-name-cell">
-            <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${u.name.slice(0,2).toUpperCase()}</div>
-            <span>${u.name}</span>
-          </div></td>
-          <td>${u.email}</td>
-          <td><span class="status-badge ${u.role === 'admin' ? 'active' : 'pending'}">${u.role}</span></td>
-          <td>${new Date(u.createdAt).toLocaleDateString()}</td>
-          <td><button class="icon-btn red" onclick="deleteUser('${u._id}')"><i class="fas fa-trash"></i></button></td>
-        </tr>`).join('');
+      try {
+        const data = await authFetch(`${API}/admin/users`);
+        if (!data.success) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">${data.message}</td></tr>`; return; }
+        document.getElementById('usersCount').textContent = data.count;
+        tbody.innerHTML = data.data.map(u => `
+          <tr>
+            <td><div class="prod-name-cell">
+              <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${u.name.slice(0,2).toUpperCase()}</div>
+              <span>${u.name}</span>
+            </div></td>
+            <td>${u.email}</td>
+            <td><span class="status-badge ${u.role === 'admin' ? 'active' : 'pending'}">${u.role}</span></td>
+            <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+            <td><button class="icon-btn red" onclick="deleteUser('${u._id}')"><i class="fas fa-trash"></i></button></td>
+          </tr>`).join('');
+      } catch(e) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">Loading...</td></tr>`; }
     }
 
     // ── Load shops table ──
     async function loadShops() {
-      const data = await fetch(`${API}/shops`).then(r => r.json());
       const tbody = document.getElementById('shopsTableBody');
-      if (!data.success || !data.count) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">No shops yet</td></tr>`;
-        return;
-      }
-      document.getElementById('shopsCount').textContent = data.count;
-      tbody.innerHTML = data.data.map(s => `
-        <tr>
-          <td>${s.name}</td>
-          <td>${s.category}</td>
-          <td>${s.area}</td>
-          <td>${s.rating || '—'}</td>
-          <td><button class="icon-btn red" onclick="deleteShop('${s._id}')"><i class="fas fa-trash"></i></button></td>
-        </tr>`).join('');
+      try {
+        const data = await fetch(`${API}/shops`).then(r => r.json());
+        if (!data.success || !data.count) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">No shops yet</td></tr>`; return; }
+        document.getElementById('shopsCount').textContent = data.count;
+        tbody.innerHTML = data.data.map(s => `
+          <tr>
+            <td>${s.name}</td><td>${s.category}</td><td>${s.area}</td><td>${s.rating || '—'}</td>
+            <td><button class="icon-btn red" onclick="deleteShop('${s._id}')"><i class="fas fa-trash"></i></button></td>
+          </tr>`).join('');
+      } catch(e) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400)">No shops yet</td></tr>`; }
     }
 
     // ── Load creators table ──
     async function loadCreators() {
-      const data = await fetch(`${API}/creators`).then(r => r.json());
       const tbody = document.getElementById('creatorsTableBody');
-      if (!data.success || !data.count) {
-        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--grey-400)">No creators yet</td></tr>`;
-        return;
-      }
-      document.getElementById('creatorsCount').textContent = data.count;
-      tbody.innerHTML = data.data.map(c => `
-        <tr>
-          <td><div class="prod-name-cell">
-            <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${c.name.slice(0,2).toUpperCase()}</div>
-            <span>${c.name}</span>
-          </div></td>
-          <td>${c.email}</td>
-          <td>${new Date(c.createdAt).toLocaleDateString()}</td>
-        </tr>`).join('');
+      try {
+        const data = await fetch(`${API}/creators`).then(r => r.json());
+        if (!data.success || !data.count) { tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--grey-400)">No creators yet</td></tr>`; return; }
+        document.getElementById('creatorsCount').textContent = data.count;
+        tbody.innerHTML = data.data.map(c => `
+          <tr>
+            <td><div class="prod-name-cell">
+              <div class="dash-avatar" style="width:32px;height:32px;font-size:11px">${c.name.slice(0,2).toUpperCase()}</div>
+              <span>${c.name}</span>
+            </div></td>
+            <td>${c.email}</td>
+            <td>${new Date(c.createdAt).toLocaleDateString()}</td>
+          </tr>`).join('');
+      } catch(e) { tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--grey-400)">No creators yet</td></tr>`; }
     }
 
     // ── Delete actions ──
