@@ -9,7 +9,12 @@ connectDB();
 
 const app = express();
 
-app.use(cors({ origin: ['https://localspot-app.vercel.app', 'http://localhost:5500'], credentials: true }));
+app.use(cors({ origin: ['https://localspot-app.vercel.app', 'http://localhost:5500', 'http://localhost:3000'], credentials: true }));
+
+app.get('/api/health', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.json({ status: 'ok', message: 'LocalSpot API is running', timestamp: new Date().toISOString() });
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -25,10 +30,6 @@ app.use('/api/videos',                      require('./routes/videos'));
 app.use('/api/reviews',                     require('./routes/reviews'));
 app.use('/api/creators',                    require('./routes/creators'));
 app.use('/api/admin',                       require('./routes/admin'));
-
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'LocalSpot API is running', timestamp: new Date().toISOString() });
-});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

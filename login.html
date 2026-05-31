@@ -86,12 +86,14 @@
     const submitBtn = document.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.innerHTML = 'Connecting... <i class="fas fa-spinner fa-spin"></i>';
-    fetch(`${API}/health`)
+    fetch(`${API}/health`, { mode: 'cors' })
+      .then(r => r.json())
       .then(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
       })
       .catch(() => {
+        // Even if ping fails, still enable the button
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
       });
