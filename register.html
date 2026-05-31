@@ -45,14 +45,14 @@
               <label>First Name</label>
               <div class="input-icon-wrap">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="First name" required/>
+                <input type="text" id="firstName" placeholder="First name" required/>
               </div>
             </div>
             <div class="form-group">
               <label>Last Name</label>
               <div class="input-icon-wrap">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Last name" required/>
+                <input type="text" id="lastName" placeholder="Last name" required/>
               </div>
             </div>
           </div>
@@ -60,14 +60,14 @@
             <label>Email Address</label>
             <div class="input-icon-wrap">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="you@example.com" required/>
+              <input type="email" id="regEmail" placeholder="you@example.com" required/>
             </div>
           </div>
           <div class="form-group">
             <label>Phone Number</label>
             <div class="input-icon-wrap">
               <i class="fas fa-phone"></i>
-              <input type="tel" placeholder="+91 98765 43210" required/>
+              <input type="tel" id="regPhone" placeholder="+91 98765 43210" required/>
             </div>
           </div>
 
@@ -164,10 +164,10 @@
       e.preventDefault();
       const form = e.target;
       const role      = document.querySelector('.role-tab.active').dataset.role;
-      const firstName = form.querySelectorAll('input[type="text"]')[0].value.trim();
-      const lastName  = form.querySelectorAll('input[type="text"]')[1].value.trim();
-      const email     = form.querySelector('input[type="email"]').value.trim();
-      const phone     = form.querySelector('input[type="tel"]').value.trim();
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName  = document.getElementById('lastName').value.trim();
+      const email     = document.getElementById('regEmail').value.trim();
+      const phone     = document.getElementById('regPhone').value.trim();
       const password  = document.getElementById('regPassword').value;
       const btn       = form.querySelector('button[type="submit"]');
 
