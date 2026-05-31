@@ -66,6 +66,10 @@
           <button type="submit" class="btn btn-primary btn-full">
             Sign In <i class="fas fa-arrow-right"></i>
           </button>
+          <div class="divider"><span>or continue with</span></div>
+          <div class="social-auth">
+            <button type="button" class="social-btn google" onclick="loginWithGoogle()"><i class="fab fa-google"></i> Google</button>
+          </div>
 
         </form>
 
@@ -145,6 +149,47 @@
     function togglePass(id) {
       const el = document.getElementById(id);
       el.type = el.type === 'password' ? 'text' : 'password';
+    }
+
+    function loginWithGoogle() {
+      const clientId    = '1008674868759-i3okbul0v5806rcj4lnp916ovmce5a50.apps.googleusercontent.com';
+      const redirectUri = encodeURIComponent('https://localspot-tawny.vercel.app/login.html');
+      const scope       = encodeURIComponent('openid email profile');
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+    }
+
+    // Handle Google OAuth token on page load
+    const hash = window.location.hash;
+    if (hash.includes('access_token')) {
+      const token = new URLSearchParams(hash.replace('#', '?')).get('access_token');
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.json())
+        .then(async profile => {
+          const res  = await fetch(`${API}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: profile.name, email: profile.email, password: profile.sub, role: 'customer' })
+          });
+          const data = await res.json();
+          if (data.success) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            window.location.href = 'shops.html';
+          } else {
+            // Already registered, try login
+            const res2  = await fetch(`${API}/auth/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: profile.email, password: profile.sub })
+            });
+            const data2 = await res2.json();
+            if (data2.success) {
+              localStorage.setItem('token', data2.token);
+              localStorage.setItem('user', JSON.stringify(data2.user));
+              window.location.href = 'shops.html';
+            }
+          }
+        });
     }
 
   </script>
