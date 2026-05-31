@@ -82,23 +82,7 @@
   <script>
     const API = 'https://localspot-ngn1.onrender.com/api';
 
-    // Wake up Render backend on page load
-    const submitBtn = document.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Connecting... <i class="fas fa-spinner fa-spin"></i>';
-    fetch(`${API}/health`, { mode: 'cors' })
-      .then(r => r.json())
-      .then(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
-      })
-      .catch(() => {
-        // Even if ping fails, still enable the button
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
-      });
-
-    // Role tab switching
+    // Role tabs
     document.querySelectorAll('.role-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
@@ -108,47 +92,47 @@
 
     async function handleLogin(e) {
       e.preventDefault();
-      const form = e.target;
+      const form     = e.target;
       const email    = form.querySelector('input[type="email"]').value.trim();
       const password = document.getElementById('loginPassword').value;
       const btn      = form.querySelector('button[type="submit"]');
 
       btn.disabled = true;
       btn.innerHTML = 'Signing in... <i class="fas fa-spinner fa-spin"></i>';
+      clearError();
 
+      let res, data;
       try {
-        const res  = await fetch(`${API}/auth/login`, {
+        res  = await fetch(`${API}/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
-        const data = await res.json();
-
-        if (!data.success) {
-          showError(data.message || 'Invalid credentials');
-          btn.disabled = false;
-          btn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
-          return;
-        }
-
-        // Save token and user
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-
-        // Redirect based on actual role from server
-        const redirectMap = {
-          customer : 'shops.html',
-          shop     : 'dashboard-shop.html',
-          creator  : 'dashboard-creator.html',
-          admin    : 'dashboard-admin.html'
-        };
-        window.location.href = redirectMap[data.user.role] || 'index.html';
-
+        data = await res.json();
       } catch (err) {
-        showError('Connection failed. Please wait a moment and try again.');
+        showError('Cannot reach server. Please try again in a few seconds.');
         btn.disabled = false;
         btn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
+        return;
       }
+
+      if (!data.success) {
+        showError(data.message || 'Invalid credentials');
+        btn.disabled = false;
+        btn.innerHTML = 'Sign In <i class="fas fa-arrow-right"></i>';
+        return;
+      }
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      const redirectMap = {
+        customer : 'shops.html',
+        shop     : 'dashboard-shop.html',
+        creator  : 'dashboard-creator.html',
+        admin    : 'dashboard-admin.html'
+      };
+      window.location.href = redirectMap[data.user.role] || 'index.html';
     }
 
     function showError(msg) {
@@ -156,10 +140,16 @@
       if (!el) {
         el = document.createElement('div');
         el.id = 'loginError';
-        el.style.cssText = 'background:#fff0f0;color:#e63946;border:1px solid #fcc;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px';
+        el.style.cssText = 'background:#eef3fb;color:#1a3c6e;border:1px solid #c8d8f0;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px';
         document.getElementById('loginForm').prepend(el);
       }
       el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    function clearError() {
+      const el = document.getElementById('loginError');
+      if (el) el.style.display = 'none';
     }
 
     function togglePass(id) {
@@ -177,8 +167,8 @@
     // Handle Google OAuth token on page load
     const hash = window.location.hash;
     if (hash.includes('access_token')) {
-      const token = new URLSearchParams(hash.replace('#', '?')).get('access_token');
-      fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${token}` } })
+      const accessToken = new URLSearchParams(hash.replace('#', '?')).get('access_token');
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } })
         .then(r => r.json())
         .then(async profile => {
           const res  = await fetch(`${API}/auth/register`, {
@@ -187,27 +177,18 @@
             body: JSON.stringify({ name: profile.name, email: profile.email, password: profile.sub, role: 'customer' })
           });
           const data = await res.json();
-          if (data.success) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+          const loginData = data.success ? data : await fetch(`${API}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: profile.email, password: profile.sub })
+          }).then(r => r.json());
+          if (loginData.success) {
+            localStorage.setItem('token', loginData.token);
+            localStorage.setItem('user', JSON.stringify(loginData.user));
             window.location.href = 'shops.html';
-          } else {
-            // Already registered, try login
-            const res2  = await fetch(`${API}/auth/login`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: profile.email, password: profile.sub })
-            });
-            const data2 = await res2.json();
-            if (data2.success) {
-              localStorage.setItem('token', data2.token);
-              localStorage.setItem('user', JSON.stringify(data2.user));
-              window.location.href = 'shops.html';
-            }
           }
-        });
+        }).catch(() => showError('Google login failed. Please try again.'));
     }
-
   </script>
 </body>
 </html>
