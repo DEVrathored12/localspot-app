@@ -8,177 +8,192 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .stat-icon { background: var(--red-light) !important; color: var(--red) !important; }
+    .section-page { display: none; }
+    .section-page.active { display: block; }
+    .shop-setup-banner {
+      background: linear-gradient(135deg, #1a3c6e, #2d5fa6);
+      color: #fff; border-radius: var(--radius); padding: 24px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .shop-setup-banner h3 { color: #fff; font-size: 1rem; margin-bottom: 4px; }
+    .shop-setup-banner p { color: rgba(255,255,255,0.75); font-size: 13px; margin: 0; }
+    .profile-form { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+    .profile-form input, .profile-form select, .profile-form textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-200);
+      border-radius: var(--radius-sm); font-size: 14px; font-family: inherit;
+      color: var(--black); transition: border-color var(--transition); background: var(--white);
+    }
+    .profile-form input:focus, .profile-form select:focus, .profile-form textarea:focus { border-color: var(--red); outline: none; }
+    .profile-form label { font-size: 13px; font-weight: 600; color: var(--grey-800); margin-bottom: 4px; display: block; }
+  </style>
 </head>
 <body class="dashboard-page">
 
-  <!-- SIDEBAR -->
   <aside class="dash-sidebar" id="dashSidebar">
     <div class="dash-logo">
       <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
     </div>
     <div class="dash-user">
-      <div class="dash-avatar">RS</div>
-      <div><strong>Ramesh Shah</strong><span>Shop Owner</span></div>
+      <div class="dash-avatar" id="sideAvatar">S</div>
+      <div><strong id="sideName">Shop Owner</strong><span>Shop Owner</span></div>
     </div>
     <nav class="dash-nav">
-      <a href="#" class="dash-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="#" class="dash-link"><i class="fas fa-store"></i> Shop Profile</a>
-      <a href="#" class="dash-link"><i class="fas fa-images"></i> Products</a>
-      <a href="#" class="dash-link"><i class="fas fa-video"></i> Videos</a>
-      <a href="#" class="dash-link"><i class="fas fa-percent"></i> Offers</a>
-      <a href="#" class="dash-link"><i class="fas fa-star"></i> Reviews</a>
-      <a href="#" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
-      <a href="#" class="dash-link"><i class="fas fa-rocket"></i> Promote</a>
+      <a class="dash-link active" data-section="overview"  onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i> Overview</a>
+      <a class="dash-link"        data-section="profile"   onclick="showSection('profile')"><i class="fas fa-store"></i> Shop Profile</a>
+      <a class="dash-link"        data-section="products"  onclick="showSection('products')"><i class="fas fa-images"></i> Products</a>
+      <a class="dash-link"        data-section="videos"    onclick="showSection('videos')"><i class="fas fa-video"></i> Videos</a>
+      <a class="dash-link"        data-section="reviews"   onclick="showSection('reviews')"><i class="fas fa-star"></i> Reviews</a>
       <div class="dash-divider"></div>
-      <a href="#" class="dash-link"><i class="fas fa-cog"></i> Settings</a>
-      <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a class="dash-link logout" href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
 
-  <!-- MAIN -->
   <div class="dash-main">
-    <!-- TOP BAR -->
     <header class="dash-topbar">
       <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
       <div class="dash-topbar-title">
-        <h1>Dashboard</h1>
-        <span>Welcome back, Ramesh! 👋</span>
+        <h1 id="pageTitle">Overview</h1>
+        <span id="pageWelcome">Welcome back! 👋</span>
       </div>
       <div class="dash-topbar-actions">
         <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
         <a href="shop-profile.html" class="btn btn-sm btn-outline">View My Shop</a>
-        <a href="register.html?type=shop" class="btn btn-sm btn-primary">Upgrade Plan</a>
       </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="dash-content">
 
-      <!-- STATS CARDS -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-eye"></i></div>
-          <div class="stat-info">
-            <span>Profile Views</span>
-            <strong>3,248</strong>
-            <small class="up"><i class="fas fa-arrow-up"></i> 18% this week</small>
+      <!-- ── OVERVIEW ── -->
+      <div id="section-overview" class="section-page active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-eye"></i></div>
+            <div class="stat-info"><span>Profile Views</span><strong id="statViews">—</strong><small class="up"><i class="fas fa-arrow-up"></i> This week</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-images"></i></div>
+            <div class="stat-info"><span>Products Listed</span><strong id="statProducts">—</strong><small style="color:var(--grey-400)">In your shop</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="stat-info"><span>WhatsApp Taps</span><strong>—</strong><small style="color:var(--grey-400)">This month</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-info"><span>Avg. Rating</span><strong id="statRating">—</strong><small style="color:var(--grey-400)">Customer reviews</small></div>
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-phone"></i></div>
-          <div class="stat-info">
-            <span>Calls Received</span>
-            <strong>142</strong>
-            <small class="up"><i class="fas fa-arrow-up"></i> 8% this week</small>
+
+        <div class="dash-two-col">
+          <div class="dash-card">
+            <div class="dash-card-head"><h3>Your Shop</h3></div>
+            <div id="shopSummary" style="color:var(--grey-400);font-size:13px;padding:8px 0">Loading...</div>
           </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fab fa-whatsapp"></i></div>
-          <div class="stat-info">
-            <span>WhatsApp Taps</span>
-            <strong>89</strong>
-            <small class="up"><i class="fas fa-arrow-up"></i> 24% this week</small>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0; color:#e63946"><i class="fas fa-directions"></i></div>
-          <div class="stat-info">
-            <span>Navigations</span>
-            <strong>67</strong>
-            <small class="down"><i class="fas fa-arrow-down"></i> 3% this week</small>
+          <div class="dash-card plan-card">
+            <h3>Your Plan</h3>
+            <div class="plan-info">
+              <div class="plan-badge free">Free Plan</div>
+              <ul class="plan-features">
+                <li class="active"><i class="fas fa-check"></i> Shop Profile</li>
+                <li class="active"><i class="fas fa-check"></i> Up to 5 Products</li>
+                <li class="inactive"><i class="fas fa-times"></i> Featured Listing</li>
+                <li class="inactive"><i class="fas fa-times"></i> Video Showcase</li>
+                <li class="inactive"><i class="fas fa-times"></i> Priority Support</li>
+              </ul>
+              <a href="#" class="btn btn-primary btn-full">Upgrade to Premium</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- QUICK ACTIONS + PLAN -->
-      <div class="dash-two-col">
+      <!-- ── SHOP PROFILE ── -->
+      <div id="section-profile" class="section-page">
         <div class="dash-card">
-          <h3>Quick Actions</h3>
-          <div class="quick-actions">
-            <button class="qa-btn" onclick="showTab('products')"><i class="fas fa-plus-circle"></i> Add Product</button>
-            <button class="qa-btn" onclick="showTab('videos')"><i class="fas fa-video"></i> Request Video</button>
-            <button class="qa-btn" onclick="showTab('offers')"><i class="fas fa-percent"></i> Add Offer</button>
-            <button class="qa-btn" onclick="showTab('profile')"><i class="fas fa-edit"></i> Edit Profile</button>
+          <div class="dash-card-head">
+            <h3>Shop Profile</h3>
+            <span id="profileStatus" class="status-badge pending">Not Created</span>
           </div>
-        </div>
-        <div class="dash-card plan-card">
-          <h3>Your Plan</h3>
-          <div class="plan-info">
-            <div class="plan-badge free">Free Plan</div>
-            <ul class="plan-features">
-              <li class="active"><i class="fas fa-check"></i> Shop Profile</li>
-              <li class="active"><i class="fas fa-check"></i> Up to 5 Products</li>
-              <li class="inactive"><i class="fas fa-times"></i> Featured Listing</li>
-              <li class="inactive"><i class="fas fa-times"></i> Video Showcase</li>
-              <li class="inactive"><i class="fas fa-times"></i> Priority Support</li>
-            </ul>
-            <a href="#" class="btn btn-primary btn-full">Upgrade to Premium</a>
+          <div id="profileFormWrap">
+            <div class="shop-setup-banner">
+              <div>
+                <h3>Set up your shop profile</h3>
+                <p>Fill in your shop details so customers can find and contact you.</p>
+              </div>
+            </div>
+            <form class="profile-form" id="shopProfileForm" onsubmit="saveShopProfile(event)">
+              <div class="form-row">
+                <div><label>Shop Name *</label><input type="text" id="pName" placeholder="e.g. The Spice Route" required/></div>
+                <div><label>Category *</label>
+                  <select id="pCategory" required>
+                    <option value="">Select category</option>
+                    <option>Food & Spices</option><option>Clothing</option><option>Electronics</option>
+                    <option>Beauty</option><option>Jewellery</option><option>Gifts</option>
+                    <option>Services</option><option>Books</option><option>Health</option>
+                    <option>Home</option><option>Sports</option><option>Pets</option>
+                  </select>
+                </div>
+              </div>
+              <div><label>Description</label><textarea id="pDesc" rows="3" placeholder="Tell customers about your shop..."></textarea></div>
+              <div class="form-row">
+                <div><label>Area / Locality *</label><input type="text" id="pArea" placeholder="e.g. Bandra West" required/></div>
+                <div><label>Full Address</label><input type="text" id="pAddress" placeholder="Street, City, PIN"/></div>
+              </div>
+              <div class="form-row">
+                <div><label>Phone</label><input type="tel" id="pPhone" placeholder="+91 98765 43210"/></div>
+                <div><label>WhatsApp</label><input type="tel" id="pWhatsapp" placeholder="+91 98765 43210"/></div>
+              </div>
+              <div><label>Google Maps Link</label><input type="url" id="pMapLink" placeholder="https://maps.google.com/..."/></div>
+              <div style="display:flex;gap:10px;margin-top:8px">
+                <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Shop Profile <i class="fas fa-save"></i></button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
 
-      <!-- PRODUCTS SECTION -->
-      <div class="dash-card" id="productsSection">
-        <div class="dash-card-head">
-          <h3>My Products <span class="count-badge">3 / 5</span></h3>
-          <button class="btn btn-sm btn-primary" onclick="document.getElementById('addProductModal').style.display='flex'">
-            <i class="fas fa-plus"></i> Add Product
-          </button>
-        </div>
-        <div class="products-table-wrap">
-          <table class="dash-table">
-            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#ff6b6b">🌶️</div><span>Kashmiri Chilli Powder</span></div></td>
-                <td>Spices</td><td>₹120 / 250g</td>
-                <td><span class="status-badge active">Active</span></td>
-                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
-              </tr>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#f9ca24">🪁</div><span>Premium Saffron</span></div></td>
-                <td>Spices</td><td>₹850 / 1g</td>
-                <td><span class="status-badge active">Active</span></td>
-                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
-              </tr>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:#6ab04c">🫙</div><span>Garam Masala Blend</span></div></td>
-                <td>Masalas</td><td>₹180 / 200g</td>
-                <td><span class="status-badge pending">Pending Approval</span></td>
-                <td><button class="icon-btn"><i class="fas fa-edit"></i></button> <button class="icon-btn red"><i class="fas fa-trash"></i></button></td>
-              </tr>
-            </tbody>
-          </table>
+      <!-- ── PRODUCTS ── -->
+      <div id="section-products" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>My Products <span class="count-badge" id="productCount">0</span></h3>
+            <button class="btn btn-sm btn-primary" onclick="document.getElementById('addProductModal').style.display='flex'">
+              <i class="fas fa-plus"></i> Add Product
+            </button>
+          </div>
+          <div class="products-table-wrap">
+            <table class="dash-table">
+              <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+              <tbody id="productsTableBody">
+                <tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:32px">Loading products...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- VIDEO REQUESTS -->
-      <div class="dash-card">
-        <div class="dash-card-head">
-          <h3>Video Requests</h3>
-          <button class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Request Video</button>
-        </div>
-        <div class="video-requests">
-          <div class="vreq-item">
-            <div class="vreq-icon"><i class="fas fa-video"></i></div>
-            <div class="vreq-info">
-              <strong>Shop Tour Video</strong>
-              <span>Creator: Riya Sharma · Submitted 2 days ago</span>
-            </div>
-            <div class="vreq-actions">
-              <button class="btn btn-sm btn-primary">Approve & Pay</button>
-              <button class="btn btn-sm btn-outline">Preview</button>
-            </div>
+      <!-- ── VIDEOS ── -->
+      <div id="section-videos" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Video Requests</h3></div>
+          <div style="text-align:center;padding:48px 20px;color:var(--grey-400)">
+            <i class="fas fa-video" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
+            <p style="font-size:14px;margin-bottom:16px">No video requests yet.</p>
+            <p style="font-size:13px">Upgrade to Premium to request promo videos from local creators.</p>
+            <a href="#" class="btn btn-primary" style="margin-top:16px">Upgrade Plan</a>
           </div>
-          <div class="vreq-item">
-            <div class="vreq-icon pending-icon"><i class="fas fa-clock"></i></div>
-            <div class="vreq-info">
-              <strong>Diwali Offer Reel</strong>
-              <span>Creator: In Progress · Requested 5 days ago</span>
-            </div>
-            <div class="vreq-actions">
-              <span class="status-badge pending">In Progress</span>
-            </div>
+        </div>
+      </div>
+
+      <!-- ── REVIEWS ── -->
+      <div id="section-reviews" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Customer Reviews</h3></div>
+          <div id="reviewsList" style="text-align:center;padding:48px 20px;color:var(--grey-400)">
+            <i class="fas fa-star" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
+            <p style="font-size:14px">No reviews yet. Reviews will appear here once customers rate your shop.</p>
           </div>
         </div>
       </div>
@@ -193,37 +208,28 @@
         <h3>Add New Product</h3>
         <button class="close-modal" onclick="document.getElementById('addProductModal').style.display='none'"><i class="fas fa-times"></i></button>
       </div>
-      <form class="modal-form" onsubmit="event.preventDefault(); document.getElementById('addProductModal').style.display='none';">
+      <form class="modal-form" id="addProductForm" onsubmit="addProduct(event)">
         <div class="form-group">
-          <label>Product Title</label>
-          <input type="text" placeholder="e.g. Kashmiri Saffron Premium"/>
+          <label>Product Name *</label>
+          <input type="text" id="prodName" placeholder="e.g. Kashmiri Saffron" required/>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Category</label>
-            <select><option>Spices</option><option>Dry Fruits</option><option>Masalas</option><option>Herbs</option></select>
+            <select id="prodCategory">
+              <option>Spices</option><option>Dry Fruits</option><option>Masalas</option>
+              <option>Clothing</option><option>Electronics</option><option>Beauty</option>
+              <option>Jewellery</option><option>Gifts</option><option>Other</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Price</label>
-            <input type="text" placeholder="e.g. ₹120 / 250g"/>
+            <input type="text" id="prodPrice" placeholder="e.g. ₹120 / 250g"/>
           </div>
         </div>
         <div class="form-group">
-          <label>Product Description</label>
-          <textarea rows="3" placeholder="Brief product description..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Availability</label>
-          <select><option>Available</option><option>Limited</option><option>Seasonal</option><option>Custom Order</option></select>
-        </div>
-        <div class="form-group">
-          <label>Product Photo</label>
-          <div class="upload-zone" style="border-color:var(--grey-200);background:var(--grey-50)" onclick="document.getElementById('productPhoto').click()">
-            <i class="fas fa-cloud-upload-alt" style="color:var(--grey-400)"></i>
-            <span style="color:var(--grey-600)">Click to upload photo</span>
-            <small>JPG, PNG up to 5MB</small>
-            <input type="file" id="productPhoto" accept="image/*" style="display:none"/>
-          </div>
+          <label>Description</label>
+          <textarea id="prodDesc" rows="3" placeholder="Brief product description..."></textarea>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('addProductModal').style.display='none'">Cancel</button>
@@ -235,118 +241,229 @@
 
   <script src="js/main.js"></script>
   <script>
-    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:5000/api'
-      : 'https://localspot-ngn1.onrender.com/api';
+    const API   = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                  ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
     const token = localStorage.getItem('token');
     const user  = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // Redirect if not logged in or wrong role
     if (!token || user.role !== 'shop') window.location.href = 'login.html';
 
-    // Load user info into sidebar
-    document.querySelector('.dash-avatar').textContent = (user.name || 'S').slice(0,2).toUpperCase();
-    document.querySelector('.dash-user strong').textContent = user.name || 'Shop Owner';
-
-    // Welcome message
-    document.querySelector('.dash-topbar-title span').textContent = `Welcome back, ${(user.name||'').split(' ')[0]}! 👋`;
+    // Init user info
+    document.getElementById('sideAvatar').textContent  = (user.name || 'S').slice(0,2).toUpperCase();
+    document.getElementById('sideName').textContent     = user.name || 'Shop Owner';
+    document.getElementById('pageWelcome').textContent  = `Welcome back, ${(user.name||'').split(' ')[0]}! 👋`;
 
     // Sidebar toggle
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-      document.getElementById('dashSidebar').classList.toggle('open');
-    });
+    document.getElementById('sidebarToggle').addEventListener('click', () =>
+      document.getElementById('dashSidebar').classList.toggle('open'));
 
     // Logout
     document.querySelector('.dash-link.logout').addEventListener('click', (e) => {
       e.preventDefault();
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.clear();
       window.location.href = 'login.html';
     });
 
-    // Load products from API
-    async function loadProducts() {
-      const tbody = document.querySelector('.dash-table tbody');
+    // Section switching
+    function showSection(name) {
+      document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.dash-link[data-section]').forEach(l => l.classList.remove('active'));
+      document.getElementById('section-' + name).classList.add('active');
+      document.querySelector(`.dash-link[data-section="${name}"]`).classList.add('active');
+      const titles = { overview:'Overview', profile:'Shop Profile', products:'Products', videos:'Videos', reviews:'Reviews' };
+      document.getElementById('pageTitle').textContent = titles[name] || name;
+      document.getElementById('dashSidebar').classList.remove('open');
+      if (name === 'products') loadProducts();
+      if (name === 'reviews')  loadReviews();
+    }
+
+    // ── Shop Profile ──
+    let myShopId = localStorage.getItem('shopId') || null;
+
+    async function loadMyShop() {
       try {
-        const res  = await fetch(`${API}/products`, { headers: { Authorization: `Bearer ${token}` } });
+        const res  = await fetch(`${API}/shops`, { headers: { Authorization: `Bearer ${token}` } });
         const data = await res.json();
+        if (!data.success) return;
+        const mine = data.data.find(s => s.owner?._id === user.id || s.owner === user.id);
+        if (mine) {
+          myShopId = mine._id;
+          localStorage.setItem('shopId', myShopId);
+          populateProfileForm(mine);
+          updateOverviewShop(mine);
+          document.getElementById('profileStatus').textContent  = 'Active';
+          document.getElementById('profileStatus').className    = 'status-badge active';
+          document.getElementById('statRating').textContent     = mine.rating || '—';
+        } else {
+          document.getElementById('shopSummary').innerHTML =
+            `<p style="margin-bottom:12px">You haven't created your shop profile yet.</p>
+             <button class="btn btn-primary btn-sm" onclick="showSection('profile')"><i class="fas fa-store"></i> Create Shop Profile</button>`;
+        }
+      } catch(e) {}
+    }
+
+    function populateProfileForm(s) {
+      document.getElementById('pName').value     = s.name        || '';
+      document.getElementById('pCategory').value = s.category    || '';
+      document.getElementById('pDesc').value     = s.description || '';
+      document.getElementById('pArea').value     = s.area        || '';
+      document.getElementById('pAddress').value  = s.address     || '';
+      document.getElementById('pPhone').value    = s.phone       || '';
+      document.getElementById('pWhatsapp').value = s.whatsapp    || '';
+      document.getElementById('pMapLink').value  = s.mapLink     || '';
+      document.querySelector('.shop-setup-banner').style.display = 'none';
+    }
+
+    function updateOverviewShop(s) {
+      document.getElementById('shopSummary').innerHTML = `
+        <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏪</div>
+          <div>
+            <strong style="display:block;font-size:14px">${s.name}</strong>
+            <span style="font-size:12px;color:var(--grey-400)">${s.category} · ${s.area}</span>
+          </div>
+          <a href="shop-profile.html" class="btn btn-sm btn-outline" style="margin-left:auto">View</a>
+        </div>`;
+    }
+
+    async function saveShopProfile(e) {
+      e.preventDefault();
+      const btn  = document.getElementById('saveProfileBtn');
+      btn.disabled = true; btn.innerHTML = 'Saving... <i class="fas fa-spinner fa-spin"></i>';
+      const body = {
+        name: document.getElementById('pName').value.trim(),
+        category: document.getElementById('pCategory').value,
+        description: document.getElementById('pDesc').value.trim(),
+        area: document.getElementById('pArea').value.trim(),
+        address: document.getElementById('pAddress').value.trim(),
+        phone: document.getElementById('pPhone').value.trim(),
+        whatsapp: document.getElementById('pWhatsapp').value.trim(),
+        mapLink: document.getElementById('pMapLink').value.trim(),
+      };
+      try {
+        const url    = myShopId ? `${API}/shops/${myShopId}` : `${API}/shops`;
+        const method = myShopId ? 'PUT' : 'POST';
+        const res    = await fetch(url, {
+          method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.success) {
+          myShopId = data.data._id;
+          localStorage.setItem('shopId', myShopId);
+          document.getElementById('profileStatus').textContent = 'Active';
+          document.getElementById('profileStatus').className   = 'status-badge active';
+          document.querySelector('.shop-setup-banner').style.display = 'none';
+          updateOverviewShop(data.data);
+          showToast('Shop profile saved!');
+        } else { showToast(data.message || 'Failed to save'); }
+      } catch(e) { showToast('Server error. Try again.'); }
+      btn.disabled = false; btn.innerHTML = 'Save Shop Profile <i class="fas fa-save"></i>';
+    }
+
+    // ── Products ──
+    async function loadProducts() {
+      const tbody = document.getElementById('productsTableBody');
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">Loading...</td></tr>`;
+      if (!myShopId) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">
+          Create your shop profile first. <button class="btn btn-sm btn-primary" style="margin-left:8px" onclick="showSection('profile')">Create Profile</button>
+        </td></tr>`;
+        return;
+      }
+      try {
+        const res  = await fetch(`${API}/shops/${myShopId}/products`, { headers: { Authorization: `Bearer ${token}` } });
+        const data = await res.json();
+        document.getElementById('productCount').textContent = data.count || 0;
+        document.getElementById('statProducts').textContent = data.count || 0;
         if (!data.success || !data.data.length) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:24px">No products yet. Add your first product.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:32px">No products yet. Add your first product.</td></tr>`;
           return;
         }
         tbody.innerHTML = data.data.map(p => `
           <tr>
-            <td><div class="prod-name-cell"><div class="prod-thumb" style="background:var(--red-light);color:var(--red)">📦</div><span>${p.name}</span></div></td>
-            <td>${p.category || '—'}</td>
+            <td><div class="prod-name-cell">
+              <div class="prod-thumb" style="background:var(--red-light);color:var(--red)">📦</div>
+              <div><span style="font-weight:600">${p.name}</span>${p.description ? `<br><small style="color:var(--grey-400)">${p.description.slice(0,40)}...</small>` : ''}</div>
+            </div></td>
             <td>${p.price || '—'}</td>
-            <td><span class="status-badge active">Active</span></td>
+            <td><span class="status-badge ${p.inStock !== false ? 'active' : 'pending'}">${p.inStock !== false ? 'In Stock' : 'Out of Stock'}</span></td>
             <td>
-              <button class="icon-btn" onclick="deleteProduct('${p._id}')"><i class="fas fa-trash"></i></button>
+              <button class="icon-btn red" onclick="deleteProduct('${p._id}')" title="Delete"><i class="fas fa-trash"></i></button>
             </td>
           </tr>`).join('');
       } catch(e) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:24px">Could not load products.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">Could not load products.</td></tr>`;
       }
     }
 
-    // Add product
-    document.querySelector('.modal-form').addEventListener('submit', async (e) => {
+    async function addProduct(e) {
       e.preventDefault();
-      const form = e.target;
+      if (!myShopId) { showToast('Create your shop profile first.'); return; }
       const btn  = document.getElementById('addProductBtn');
-      const inputs = form.querySelectorAll('input[type=text], select, textarea');
-      const name        = inputs[0].value.trim();
-      const category    = inputs[1].value;
-      const price       = inputs[2].value.trim();
-      const description = form.querySelector('textarea').value.trim();
-
-      if (!name) return;
       btn.disabled = true; btn.textContent = 'Adding...';
-
-      // Find the shop owned by this user
-      let shopId = localStorage.getItem('shopId');
-      if (!shopId) {
-        try {
-          const sr   = await fetch(`${API}/shops`, { headers: { Authorization: `Bearer ${token}` } });
-          const sd   = await sr.json();
-          const mine = sd.data?.find(s => s.owner?._id === user.id || s.owner === user.id);
-          if (mine) { shopId = mine._id; localStorage.setItem('shopId', shopId); }
-        } catch(e) {}
-      }
-
-      if (!shopId) {
-        alert('Please create your shop profile first.');
-        btn.disabled = false; btn.textContent = 'Add Product';
-        return;
-      }
-
+      const body = {
+        name: document.getElementById('prodName').value.trim(),
+        category: document.getElementById('prodCategory').value,
+        price: document.getElementById('prodPrice').value.trim(),
+        description: document.getElementById('prodDesc').value.trim(),
+      };
       try {
-        const res  = await fetch(`${API}/shops/${shopId}/products`, {
+        const res  = await fetch(`${API}/shops/${myShopId}/products`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ name, category, price, description })
+          body: JSON.stringify(body)
         });
         const data = await res.json();
         if (data.success) {
           document.getElementById('addProductModal').style.display = 'none';
-          form.reset();
+          document.getElementById('addProductForm').reset();
           loadProducts();
-        } else {
-          alert(data.message || 'Failed to add product');
-        }
-      } catch(e) { alert('Server error. Try again.'); }
+          showToast('Product added!');
+        } else { showToast(data.message || 'Failed to add product'); }
+      } catch(e) { showToast('Server error. Try again.'); }
       btn.disabled = false; btn.textContent = 'Add Product';
-    });
+    }
 
     async function deleteProduct(id) {
       if (!confirm('Delete this product?')) return;
-      const shopId = localStorage.getItem('shopId');
-      if (!shopId) return;
-      await fetch(`${API}/shops/${shopId}/products/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      await fetch(`${API}/shops/${myShopId}/products/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       loadProducts();
     }
 
-    loadProducts();
+    // ── Reviews ──
+    async function loadReviews() {
+      if (!myShopId) return;
+      try {
+        const res  = await fetch(`${API}/shops/${myShopId}/reviews`);
+        const data = await res.json();
+        if (!data.success || !data.data.length) return;
+        document.getElementById('reviewsList').innerHTML = data.data.map(r => `
+          <div class="review-item">
+            <div class="review-author">
+              <div class="rev-avatar">${(r.user?.name || 'U').slice(0,2).toUpperCase()}</div>
+              <div><strong>${r.user?.name || 'Customer'}</strong><span>${new Date(r.createdAt).toLocaleDateString()}</span></div>
+              <div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+            </div>
+            <p>${r.comment || ''}</p>
+          </div>`).join('');
+      } catch(e) {}
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+      let t = document.getElementById('toast');
+      if (!t) {
+        t = document.createElement('div'); t.id = 'toast';
+        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity 0.3s';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg; t.style.opacity = '1';
+      setTimeout(() => t.style.opacity = '0', 2500);
+    }
+
+    // Init
+    loadMyShop();
   </script>
 </body>
 </html>

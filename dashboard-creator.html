@@ -8,39 +8,58 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .stat-icon { background: var(--red-light) !important; color: var(--red) !important; }
+    .section-page { display: none; }
+    .section-page.active { display: block; }
+    .earning-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px; background: var(--grey-50); border-radius: var(--radius-sm); margin-bottom: 8px;
+    }
+    .earning-row strong { font-size: 13px; display: block; }
+    .earning-row span { font-size: 11px; color: var(--grey-400); }
+    .profile-form { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+    .profile-form input, .profile-form select, .profile-form textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-200);
+      border-radius: var(--radius-sm); font-size: 14px; font-family: inherit;
+      color: var(--black); transition: border-color var(--transition); background: var(--white);
+    }
+    .profile-form input:focus, .profile-form select:focus, .profile-form textarea:focus { border-color: var(--red); outline: none; }
+    .profile-form label { font-size: 13px; font-weight: 600; color: var(--grey-800); margin-bottom: 4px; display: block; }
+    .video-thumb-mini {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0;
+    }
+  </style>
 </head>
 <body class="dashboard-page">
 
-  <!-- SIDEBAR -->
   <aside class="dash-sidebar" id="dashSidebar">
     <div class="dash-logo">
       <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
     </div>
     <div class="dash-user">
-      <div class="dash-avatar">RS</div>
-      <div><strong>Riya Sharma</strong><span>Video Creator</span></div>
+      <div class="dash-avatar" id="sideAvatar">C</div>
+      <div><strong id="sideName">Creator</strong><span>Video Creator</span></div>
     </div>
     <nav class="dash-nav">
-      <a href="#" class="dash-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="#" class="dash-link"><i class="fas fa-video"></i> My Videos</a>
-      <a href="#" class="dash-link"><i class="fas fa-briefcase"></i> Job Requests</a>
-      <a href="#" class="dash-link"><i class="fas fa-rupee-sign"></i> Earnings</a>
-      <a href="#" class="dash-link"><i class="fas fa-star"></i> Reviews</a>
-      <a href="#" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
+      <a class="dash-link active" data-section="overview"  onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i> Overview</a>
+      <a class="dash-link"        data-section="jobs"      onclick="showSection('jobs')"><i class="fas fa-briefcase"></i> Job Requests</a>
+      <a class="dash-link"        data-section="videos"    onclick="showSection('videos')"><i class="fas fa-video"></i> My Videos</a>
+      <a class="dash-link"        data-section="earnings"  onclick="showSection('earnings')"><i class="fas fa-rupee-sign"></i> Earnings</a>
+      <a class="dash-link"        data-section="profile"   onclick="showSection('profile')"><i class="fas fa-user"></i> My Profile</a>
       <div class="dash-divider"></div>
-      <a href="#" class="dash-link"><i class="fas fa-user"></i> My Profile</a>
-      <a href="#" class="dash-link"><i class="fas fa-cog"></i> Settings</a>
-      <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a class="dash-link logout" href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
 
-  <!-- MAIN -->
   <div class="dash-main">
     <header class="dash-topbar">
       <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
       <div class="dash-topbar-title">
-        <h1>Creator Dashboard</h1>
-        <span>Welcome back, Riya! 🎬</span>
+        <h1 id="pageTitle">Overview</h1>
+        <span id="pageWelcome">Welcome back! 🎬</span>
       </div>
       <div class="dash-topbar-actions">
         <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
@@ -50,143 +69,115 @@
 
     <div class="dash-content">
 
-      <!-- STATS -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-rupee-sign"></i></div>
-          <div class="stat-info">
-            <span>This Month's Earnings</span>
-            <strong>₹28,400</strong>
-            <small class="up"><i class="fas fa-arrow-up"></i> 22% vs last month</small>
+      <!-- ── OVERVIEW ── -->
+      <div id="section-overview" class="section-page active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
+            <div class="stat-info"><span>Total Earnings</span><strong id="statEarnings">₹0</strong><small class="up"><i class="fas fa-arrow-up"></i> All time</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-video"></i></div>
+            <div class="stat-info"><span>Videos Made</span><strong id="statVideos">0</strong><small style="color:var(--grey-400)">Completed</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="stat-info"><span>Active Jobs</span><strong id="statJobs">0</strong><small style="color:var(--grey-400)">In progress</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-info"><span>Avg. Rating</span><strong id="statRating">—</strong><small style="color:var(--grey-400)">From reviews</small></div>
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-video"></i></div>
-          <div class="stat-info">
-            <span>Videos Completed</span>
-            <strong>42</strong>
-            <small class="up"><i class="fas fa-arrow-up"></i> 5 this week</small>
+
+        <div class="dash-two-col">
+          <div class="dash-card">
+            <div class="dash-card-head"><h3>Recent Job Requests</h3><span class="status-badge active" id="jobsBadge">0 New</span></div>
+            <div id="overviewJobs" style="color:var(--grey-400);font-size:13px;padding:8px 0">Loading...</div>
           </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-briefcase"></i></div>
-          <div class="stat-info">
-            <span>Active Jobs</span>
-            <strong>3</strong>
-            <small style="color:var(--grey-400)">2 pending review</small>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-star"></i></div>
-          <div class="stat-info">
-            <span>Avg. Rating</span>
-            <strong>4.9</strong>
-            <small style="color:var(--grey-400)">From 38 reviews</small>
+          <div class="dash-card">
+            <div class="dash-card-head"><h3>Earnings This Month</h3></div>
+            <div id="overviewEarnings" style="color:var(--grey-400);font-size:13px;padding:8px 0">
+              <div style="text-align:center;padding:24px;color:var(--grey-400)">
+                <i class="fas fa-rupee-sign" style="font-size:32px;color:var(--grey-200);display:block;margin-bottom:8px"></i>
+                <p style="font-size:13px">No earnings recorded yet.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- JOB REQUESTS + EARNINGS -->
-      <div class="dash-two-col">
+      <!-- ── JOB REQUESTS ── -->
+      <div id="section-jobs" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Job Requests</h3></div>
+          <div id="jobsList">
+            <div style="text-align:center;padding:48px 20px;color:var(--grey-400)">
+              <i class="fas fa-briefcase" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
+              <p style="font-size:14px">No job requests yet.</p>
+              <p style="font-size:13px;margin-top:8px">Shop owners will send you video requests once you complete your profile.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MY VIDEOS ── -->
+      <div id="section-videos" class="section-page">
         <div class="dash-card">
           <div class="dash-card-head">
-            <h3>New Job Requests</h3>
-            <span class="status-badge active">3 New</span>
+            <h3>My Videos</h3>
+            <span class="count-badge" id="videoCount">0</span>
           </div>
-          <div class="video-requests">
-            <div class="vreq-item">
-              <div class="vreq-icon"><i class="fas fa-store"></i></div>
-              <div class="vreq-info">
-                <strong>Shop Tour — Meena Jewellers</strong>
-                <span>Colaba · Budget: ₹3,500 · Due in 5 days</span>
-              </div>
-              <div class="vreq-actions">
-                <button class="btn btn-sm btn-primary">Accept</button>
-                <button class="btn btn-sm btn-outline">Decline</button>
-              </div>
+          <div id="videosList">
+            <div style="text-align:center;padding:48px 20px;color:var(--grey-400)">
+              <i class="fas fa-video" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
+              <p style="font-size:14px">No videos yet.</p>
+              <p style="font-size:13px;margin-top:8px">Accept job requests to start creating videos for shops.</p>
             </div>
-            <div class="vreq-item">
-              <div class="vreq-icon"><i class="fas fa-store"></i></div>
-              <div class="vreq-info">
-                <strong>Product Reel — Glow Studio</strong>
-                <span>Juhu · Budget: ₹2,200 · Due in 7 days</span>
-              </div>
-              <div class="vreq-actions">
-                <button class="btn btn-sm btn-primary">Accept</button>
-                <button class="btn btn-sm btn-outline">Decline</button>
-              </div>
-            </div>
-            <div class="vreq-item">
-              <div class="vreq-icon pending-icon"><i class="fas fa-clock"></i></div>
-              <div class="vreq-info">
-                <strong>Diwali Promo — The Spice Route</strong>
-                <span>Bandra · Budget: ₹4,000 · Due in 3 days</span>
-              </div>
-              <div class="vreq-actions">
-                <button class="btn btn-sm btn-primary">Accept</button>
-                <button class="btn btn-sm btn-outline">Decline</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="dash-card">
-          <h3>Earnings Breakdown</h3>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
-              <div><strong style="font-size:13px">The Spice Route</strong><br><span style="font-size:11px;color:var(--grey-400)">Shop Tour · Paid</span></div>
-              <span style="font-weight:700;color:#27ae60">+₹4,500</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
-              <div><strong style="font-size:13px">Silk & Threads</strong><br><span style="font-size:11px;color:var(--grey-400)">Product Reel · Paid</span></div>
-              <span style="font-weight:700;color:#27ae60">+₹3,200</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
-              <div><strong style="font-size:13px">Crystal Electronics</strong><br><span style="font-size:11px;color:var(--grey-400)">Promo Video · Pending</span></div>
-              <span style="font-weight:700;color:#f39c12">₹2,800</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
-              <div><strong style="font-size:13px">Meena Jewellers</strong><br><span style="font-size:11px;color:var(--grey-400)">Shop Tour · Paid</span></div>
-              <span style="font-weight:700;color:#27ae60">+₹5,000</span>
-            </div>
-          </div>
-          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--grey-100);display:flex;justify-content:space-between">
-            <strong>Total This Month</strong>
-            <strong style="color:var(--red)">₹28,400</strong>
           </div>
         </div>
       </div>
 
-      <!-- MY VIDEOS -->
-      <div class="dash-card">
-        <div class="dash-card-head">
-          <h3>My Recent Videos</h3>
-          <span class="count-badge">42 total</span>
+      <!-- ── EARNINGS ── -->
+      <div id="section-earnings" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head"><h3>Earnings</h3></div>
+          <div style="text-align:center;padding:48px 20px;color:var(--grey-400)">
+            <i class="fas fa-rupee-sign" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
+            <p style="font-size:14px">No earnings yet.</p>
+            <p style="font-size:13px;margin-top:8px">Complete video jobs to start earning. Payments are processed within 3 business days.</p>
+          </div>
         </div>
-        <div class="products-table-wrap">
-          <table class="dash-table">
-            <thead><tr><th>Video</th><th>Shop</th><th>Type</th><th>Views</th><th>Status</th><th>Earned</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#b5152b,#e63946)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Shop Tour</span></div></td>
-                <td>The Spice Route</td><td>Tour</td><td>2,400</td>
-                <td><span class="status-badge active">Published</span></td>
-                <td style="font-weight:700;color:#27ae60">₹4,500</td>
-              </tr>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#8b0000,#c0392b)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Product Reel</span></div></td>
-                <td>Silk & Threads</td><td>Reel</td><td>1,800</td>
-                <td><span class="status-badge active">Published</span></td>
-                <td style="font-weight:700;color:#27ae60">₹3,200</td>
-              </tr>
-              <tr>
-                <td><div class="prod-name-cell"><div class="prod-thumb" style="background:linear-gradient(135deg,#1a1a2e,#e63946)"><i class="fas fa-play" style="color:#fff;font-size:10px"></i></div><span>Promo Video</span></div></td>
-                <td>Crystal Electronics</td><td>Promo</td><td>—</td>
-                <td><span class="status-badge pending">Under Review</span></td>
-                <td style="font-weight:700;color:#f39c12">₹2,800</td>
-              </tr>
-            </tbody>
-          </table>
+      </div>
+
+      <!-- ── MY PROFILE ── -->
+      <div id="section-profile" class="section-page">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <h3>Creator Profile</h3>
+          </div>
+          <form class="profile-form" id="creatorProfileForm" onsubmit="saveCreatorProfile(event)">
+            <div class="form-row">
+              <div><label>Full Name</label><input type="text" id="cName" placeholder="Your name"/></div>
+              <div><label>Speciality</label>
+                <select id="cSpeciality">
+                  <option>Reels / Short Videos</option>
+                  <option>Shop Tours</option>
+                  <option>Product Highlights</option>
+                  <option>All Types</option>
+                </select>
+              </div>
+            </div>
+            <div><label>Bio</label><textarea id="cBio" rows="3" placeholder="Tell shops about your style and experience..."></textarea></div>
+            <div class="form-row">
+              <div><label>City / Area</label><input type="text" id="cCity" placeholder="e.g. Mumbai"/></div>
+              <div><label>Rate per Video (₹)</label><input type="number" id="cRate" placeholder="e.g. 3500"/></div>
+            </div>
+            <div><label>Instagram Handle</label><input type="text" id="cInsta" placeholder="@yourhandle"/></div>
+            <div style="margin-top:8px">
+              <button type="submit" class="btn btn-primary" id="saveCreatorBtn">Save Profile <i class="fas fa-save"></i></button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -195,32 +186,71 @@
 
   <script src="js/main.js"></script>
   <script>
-    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:5000/api'
-      : 'https://localspot-ngn1.onrender.com/api';
+    const API   = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                  ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
     const token = localStorage.getItem('token');
     const user  = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // Redirect if not logged in or wrong role
     if (!token || user.role !== 'creator') window.location.href = 'login.html';
 
-    // Load user info into sidebar
-    document.querySelector('.dash-avatar').textContent = (user.name || 'C').slice(0,2).toUpperCase();
-    document.querySelector('.dash-user strong').textContent = user.name || 'Creator';
-    document.querySelector('.dash-topbar-title span').textContent = `Welcome back, ${(user.name||'').split(' ')[0]}! 🎥`;
+    document.getElementById('sideAvatar').textContent = (user.name || 'C').slice(0,2).toUpperCase();
+    document.getElementById('sideName').textContent   = user.name || 'Creator';
+    document.getElementById('pageWelcome').textContent = `Welcome back, ${(user.name||'').split(' ')[0]}! 🎬`;
+    document.getElementById('cName').value = user.name || '';
 
-    // Sidebar toggle
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-      document.getElementById('dashSidebar').classList.toggle('open');
-    });
+    document.getElementById('sidebarToggle').addEventListener('click', () =>
+      document.getElementById('dashSidebar').classList.toggle('open'));
 
-    // Logout
     document.querySelector('.dash-link.logout').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
+      e.preventDefault(); localStorage.clear(); window.location.href = 'login.html';
     });
+
+    function showSection(name) {
+      document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.dash-link[data-section]').forEach(l => l.classList.remove('active'));
+      document.getElementById('section-' + name).classList.add('active');
+      document.querySelector(`.dash-link[data-section="${name}"]`).classList.add('active');
+      const titles = { overview:'Overview', jobs:'Job Requests', videos:'My Videos', earnings:'Earnings', profile:'My Profile' };
+      document.getElementById('pageTitle').textContent = titles[name] || name;
+      document.getElementById('dashSidebar').classList.remove('open');
+    }
+
+    async function saveCreatorProfile(e) {
+      e.preventDefault();
+      const btn = document.getElementById('saveCreatorBtn');
+      btn.disabled = true; btn.innerHTML = 'Saving... <i class="fas fa-spinner fa-spin"></i>';
+      // Save to localStorage for now (backend creator profile endpoint can be added later)
+      const profile = {
+        name: document.getElementById('cName').value,
+        speciality: document.getElementById('cSpeciality').value,
+        bio: document.getElementById('cBio').value,
+        city: document.getElementById('cCity').value,
+        rate: document.getElementById('cRate').value,
+        instagram: document.getElementById('cInsta').value,
+      };
+      localStorage.setItem('creatorProfile', JSON.stringify(profile));
+      showToast('Profile saved!');
+      btn.disabled = false; btn.innerHTML = 'Save Profile <i class="fas fa-save"></i>';
+    }
+
+    // Load saved profile
+    const saved = JSON.parse(localStorage.getItem('creatorProfile') || '{}');
+    if (saved.speciality) document.getElementById('cSpeciality').value = saved.speciality;
+    if (saved.bio)        document.getElementById('cBio').value        = saved.bio;
+    if (saved.city)       document.getElementById('cCity').value       = saved.city;
+    if (saved.rate)       document.getElementById('cRate').value       = saved.rate;
+    if (saved.instagram)  document.getElementById('cInsta').value      = saved.instagram;
+
+    function showToast(msg) {
+      let t = document.getElementById('toast');
+      if (!t) {
+        t = document.createElement('div'); t.id = 'toast';
+        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity 0.3s';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg; t.style.opacity = '1';
+      setTimeout(() => t.style.opacity = '0', 2500);
+    }
   </script>
 </body>
 </html>
