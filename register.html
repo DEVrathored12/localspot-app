@@ -153,6 +153,7 @@
 
   <script src="js/main.js"></script>
   <script>
+    const API = 'https://localspot-ngn1.onrender.com/api';
     const roleTabs = document.querySelectorAll('.role-tab');
     roleTabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -163,11 +164,55 @@
         document.querySelector('.creator-fields').style.display = role === 'creator' ? 'block' : 'none';
       });
     });
-    function handleRegister(e) {
+    async function handleRegister(e) {
       e.preventDefault();
-      const role = document.querySelector('.role-tab.active').dataset.role;
-      const map = { customer: 'shops.html', shop: 'dashboard-shop.html', creator: 'dashboard-creator.html' };
-      window.location.href = map[role] || 'index.html';
+      const form = e.target;
+      const role      = document.querySelector('.role-tab.active').dataset.role;
+      const firstName = form.querySelectorAll('input[type="text"]')[0].value.trim();
+      const lastName  = form.querySelectorAll('input[type="text"]')[1].value.trim();
+      const email     = form.querySelector('input[type="email"]').value.trim();
+      const phone     = form.querySelector('input[type="tel"]').value.trim();
+      const password  = document.getElementById('regPassword').value;
+      const btn       = form.querySelector('button[type="submit"]');
+
+      btn.disabled = true;
+      btn.innerHTML = 'Creating Account... <i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const res  = await fetch(`${API}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: `${firstName} ${lastName}`, email, phone, password, role })
+        });
+        const data = await res.json();
+
+        if (!data.success) {
+          showError(data.message || 'Registration failed');
+          btn.disabled = false;
+          btn.innerHTML = 'Create Account <i class="fas fa-arrow-right"></i>';
+          return;
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        const map = { customer: 'shops.html', shop: 'dashboard-shop.html', creator: 'dashboard-creator.html' };
+        window.location.href = map[role] || 'index.html';
+
+      } catch (err) {
+        showError('Server error. Please try again.');
+        btn.disabled = false;
+        btn.innerHTML = 'Create Account <i class="fas fa-arrow-right"></i>';
+      }
+    }
+    function showError(msg) {
+      let el = document.getElementById('regError');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'regError';
+        el.style.cssText = 'background:#eef3fb;color:#1a3c6e;border:1px solid #c8d8f0;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px';
+        document.getElementById('registerForm').prepend(el);
+      }
+      el.textContent = msg;
     }
     function togglePass(id) {
       const el = document.getElementById(id);
