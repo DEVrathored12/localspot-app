@@ -1,6 +1,9 @@
 /* LocalSpot — Main JavaScript */
 const API_BASE = 'https://localspot-ngn1.onrender.com/api';
 
+// Keep Render backend alive
+setInterval(() => fetch(`${API_BASE}/health`).catch(() => {}), 10 * 60 * 1000);
+
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 if (navbar) {
