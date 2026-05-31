@@ -195,8 +195,29 @@
 
   <script src="js/main.js"></script>
   <script>
+    const API = 'https://localspot-ngn1.onrender.com/api';
+    const token = localStorage.getItem('token');
+    const user  = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // Redirect if not logged in or wrong role
+    if (!token || user.role !== 'creator') window.location.href = 'login.html';
+
+    // Load user info into sidebar
+    document.querySelector('.dash-avatar').textContent = (user.name || 'C').slice(0,2).toUpperCase();
+    document.querySelector('.dash-user strong').textContent = user.name || 'Creator';
+    document.querySelector('.dash-topbar-title span').textContent = `Welcome back, ${(user.name||'').split(' ')[0]}! 🎥`;
+
+    // Sidebar toggle
     document.getElementById('sidebarToggle').addEventListener('click', () => {
       document.getElementById('dashSidebar').classList.toggle('open');
+    });
+
+    // Logout
+    document.querySelector('.dash-link.logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
     });
   </script>
 </body>
