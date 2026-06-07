@@ -17,14 +17,13 @@
       <a href="index.html" class="logo">
         <span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span>
       </a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="navLinks" style="display:none">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="shops.html">Shops</a></li>
         <li><a href="categories.html">Categories</a></li>
-        <li><a href="creators.html">Creators</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
-      <div class="nav-actions">
+      <div class="nav-actions" id="navActions">
         <a href="login.html" class="btn btn-outline">Login</a>
         <a href="register.html" class="btn btn-primary">Get Started</a>
       </div>
@@ -32,17 +31,15 @@
     </div>
   </nav>
 
-  <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
-    <ul>
+    <ul id="mobileLinks">
       <li><a href="index.html">Home</a></li>
       <li><a href="shops.html">Shops</a></li>
       <li><a href="categories.html">Categories</a></li>
-      <li><a href="creators.html">Creators</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="login.html">Login</a></li>
-      <li><a href="register.html">Register</a></li>
+      <li id="mobileLoginItem"><a href="login.html">Login</a></li>
+      <li id="mobileRegisterItem"><a href="register.html">Register</a></li>
     </ul>
   </div>
 
@@ -460,6 +457,26 @@
   <script>
     const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
+
+    const _token = localStorage.getItem('token');
+    const _user  = JSON.parse(localStorage.getItem('user') || 'null');
+
+    if (_token && _user) {
+      // Show nav links
+      document.getElementById('navLinks').style.display = '';
+      // Hide login/register from mobile menu
+      document.getElementById('mobileLoginItem').style.display    = 'none';
+      document.getElementById('mobileRegisterItem').style.display = 'none';
+      // Replace nav actions with avatar
+      const initials = (_user.name || 'U').slice(0,2).toUpperCase();
+      const dashMap  = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
+      document.getElementById('navActions').innerHTML = `
+        <a href="${dashMap[_user.role]||'shops.html'}" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--black);font-size:13px;font-weight:600;padding:4px 8px;border-radius:var(--radius-full);transition:background 0.2s" onmouseover="this.style.background='var(--grey-100)'" onmouseout="this.style.background='none'">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${initials}</div>
+          <span>${_user.name.split(' ')[0]}</span>
+        </a>
+        <button onclick="localStorage.clear();window.location.href='login.html'" class="btn btn-outline btn-sm">Logout</button>`;
+    }
 
     // Hero search
     document.querySelector('.hero-search .btn').addEventListener('click', doSearch);
