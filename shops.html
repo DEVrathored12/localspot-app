@@ -33,9 +33,9 @@
         <li><a href="creators.html">Creators</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
-      <div class="nav-actions">
-        <a href="login.html" class="btn btn-outline">Login</a>
-        <a href="register.html" class="btn btn-primary">Get Started</a>
+      <div class="nav-actions" id="navActions">
+        <a href="login.html" class="btn btn-outline" id="navLogin">Login</a>
+        <a href="register.html" class="btn btn-primary" id="navRegister">Get Started</a>
       </div>
       <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
     </div>
@@ -127,6 +127,22 @@
   <script>
     const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
+
+    // ── Navbar user state ──
+    const _token = localStorage.getItem('token');
+    const _user  = JSON.parse(localStorage.getItem('user') || 'null');
+    if (_token && _user) {
+      const initials = (_user.name || 'U').slice(0,2).toUpperCase();
+      const dashMap  = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
+      document.getElementById('navActions').innerHTML = `
+        <a href="${dashMap[_user.role] || 'shops.html'}" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--black);font-size:13px;font-weight:600">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${initials}</div>
+          <span>${_user.name.split(' ')[0]}</span>
+        </a>
+        <button onclick="logoutUser()" class="btn btn-outline btn-sm">Logout</button>`;
+    }
+    function logoutUser() { localStorage.clear(); window.location.href = 'login.html'; }
+  </script>
 
     const COVER_COLORS = [
       'linear-gradient(135deg,#1a3c6e,#2d5fa6)',

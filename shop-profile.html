@@ -3,91 +3,40 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Spice Route — LocalSpot</title>
+  <title>Shop — LocalSpot</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    /* ── Saved Shops Drawer ── */
-    .drawer-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-      z-index: 1100; opacity: 0; pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .drawer-overlay.open { opacity: 1; pointer-events: all; }
-
-    .saved-drawer {
-      position: fixed; top: 0; right: -380px; width: 360px; max-width: 95vw;
-      height: 100vh; background: var(--white); z-index: 1200;
-      box-shadow: var(--shadow-lg); transition: right 0.3s cubic-bezier(.4,0,.2,1);
-      display: flex; flex-direction: column;
-    }
-    .saved-drawer.open { right: 0; }
-
-    .drawer-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; border-bottom: 1px solid var(--grey-200);
-    }
-    .drawer-head h3 { font-size: 1rem; font-family: var(--font-body); font-weight: 700; }
-    .drawer-close {
-      width: 32px; height: 32px; border-radius: 50%; border: none;
-      background: var(--grey-100); color: var(--grey-600); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; font-size: 14px;
-    }
-
-    .drawer-body { flex: 1; overflow-y: auto; padding: 16px; }
-
-    .saved-shop-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 12px; border-radius: var(--radius-sm);
-      border: 1px solid var(--grey-200); margin-bottom: 10px;
-      transition: all var(--transition);
-    }
-    .saved-shop-item:hover { border-color: var(--red); background: var(--red-light); }
-    .saved-shop-thumb {
-      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 20px;
-    }
-    .saved-shop-info { flex: 1; }
-    .saved-shop-info strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-    .saved-shop-info span { font-size: 11px; color: var(--grey-400); }
-    .saved-remove {
-      width: 28px; height: 28px; border-radius: 50%; border: none;
-      background: none; color: var(--grey-400); cursor: pointer; font-size: 13px;
-      display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition);
-    }
-    .saved-remove:hover { background: #ffe5e5; color: #e63946; }
-
-    .drawer-empty {
-      text-align: center; padding: 48px 20px; color: var(--grey-400);
-    }
-    .drawer-empty i { font-size: 40px; color: var(--grey-200); display: block; margin-bottom: 12px; }
-    .drawer-empty p { font-size: 13px; }
-
-    /* Save btn active state */
-    .action-btn-mini.save.saved { background: #ffe5e5; color: #e63946; }
-
-    /* Saved nav btn in navbar */
-    .saved-nav-btn {
-      position: relative; background: none; border: none; cursor: pointer;
-      font-size: 18px; color: var(--grey-600); padding: 6px 8px;
-      transition: color var(--transition);
-    }
-    .saved-nav-btn:hover { color: var(--red); }
-    .saved-count-dot {
-      position: absolute; top: 2px; right: 2px;
-      width: 16px; height: 16px; background: var(--red); color: #fff;
-      border-radius: 50%; font-size: 9px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      border: 2px solid var(--white);
-    }
+    .drawer-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.25s; }
+    .drawer-overlay.open { opacity:1;pointer-events:all; }
+    .saved-drawer { position:fixed;top:0;right:-380px;width:360px;max-width:95vw;height:100vh;background:var(--white);z-index:1200;box-shadow:var(--shadow-lg);transition:right 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column; }
+    .saved-drawer.open { right:0; }
+    .drawer-head { display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--grey-200); }
+    .drawer-head h3 { font-size:1rem;font-family:var(--font-body);font-weight:700; }
+    .drawer-close { width:32px;height:32px;border-radius:50%;border:none;background:var(--grey-100);color:var(--grey-600);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px; }
+    .drawer-body { flex:1;overflow-y:auto;padding:16px; }
+    .saved-shop-item { display:flex;align-items:center;gap:14px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--grey-200);margin-bottom:10px;transition:all var(--transition); }
+    .saved-shop-item:hover { border-color:var(--red);background:var(--red-light); }
+    .saved-shop-thumb { width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px; }
+    .saved-shop-info { flex:1; }
+    .saved-shop-info strong { display:block;font-size:13px;font-weight:700;margin-bottom:2px; }
+    .saved-shop-info span { font-size:11px;color:var(--grey-400); }
+    .saved-remove { width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--grey-400);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all var(--transition); }
+    .saved-remove:hover { background:#ffe5e5;color:#e63946; }
+    .drawer-empty { text-align:center;padding:48px 20px;color:var(--grey-400); }
+    .drawer-empty i { font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px; }
+    .action-btn-mini.save.saved { background:#ffe5e5;color:#e63946; }
+    .saved-nav-btn { position:relative;background:none;border:none;cursor:pointer;font-size:18px;color:var(--grey-600);padding:6px 8px;transition:color var(--transition); }
+    .saved-nav-btn:hover { color:var(--red); }
+    .saved-count-dot { position:absolute;top:2px;right:2px;width:16px;height:16px;background:var(--red);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--white); }
+    .skeleton { background:linear-gradient(90deg,var(--grey-100) 25%,var(--grey-50) 50%,var(--grey-100) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite; border-radius:6px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="logo"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
@@ -97,7 +46,7 @@
         <li><a href="categories.html">Categories</a></li>
         <li><a href="creators.html">Creators</a></li>
       </ul>
-      <div class="nav-actions">
+      <div class="nav-actions" id="navActions">
         <button class="saved-nav-btn" onclick="openDrawer()" title="Saved Shops">
           <i class="far fa-heart"></i>
           <span class="saved-count-dot" id="savedCountDot" style="display:none">0</span>
@@ -109,7 +58,6 @@
     </div>
   </nav>
 
-  <!-- SAVED SHOPS DRAWER -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="saved-drawer" id="savedDrawer">
     <div class="drawer-head">
@@ -120,28 +68,20 @@
   </div>
 
   <!-- SHOP COVER -->
-  <div class="shop-cover-hero" style="background:linear-gradient(135deg,#1a3c6e 0%,#2d5fa6 60%,#1e4d8c 100%)">
+  <div class="shop-cover-hero" id="shopCover" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)">
     <div class="shop-cover-overlay"></div>
     <div class="shop-cover-content">
-      <div class="shop-profile-avatar">🌶️</div>
+      <div class="shop-profile-avatar" id="shopEmoji">🏪</div>
       <div class="shop-profile-info">
-        <div class="shop-badges-row">
-          <span class="badge-pill badge-featured"><i class="fas fa-star"></i> Featured</span>
-          <span class="badge-pill badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-          <span class="badge-pill badge-open">Open Now</span>
-        </div>
-        <h1>The Spice Route</h1>
-        <p class="shop-subtitle"><i class="fas fa-tag"></i> Food & Spices &nbsp;·&nbsp; <i class="fas fa-map-marker-alt"></i> Bandra West, Mumbai</p>
-        <div class="shop-quick-stats">
-          <span><i class="fas fa-star"></i> 4.8 (342 reviews)</span>
-          <span><i class="far fa-clock"></i> 9:00 AM – 9:00 PM</span>
-          <span><i class="fas fa-calendar-alt"></i> Est. 1978</span>
-        </div>
+        <div class="shop-badges-row" id="shopBadges"></div>
+        <h1 id="shopName">Loading...</h1>
+        <p class="shop-subtitle" id="shopSubtitle"></p>
+        <div class="shop-quick-stats" id="shopStats"></div>
       </div>
     </div>
   </div>
 
-  <!-- QUICK ACTION BAR -->
+  <!-- ACTION BAR -->
   <div class="action-bar-sticky">
     <div class="container">
       <div class="action-bar-inner">
@@ -153,9 +93,9 @@
           <a href="#location" class="atab">Location</a>
         </div>
         <div class="action-btns-row">
-          <a href="tel:+919876543210"          class="action-btn-mini call"><i class="fas fa-phone"></i> Call</a>
-          <a href="https://wa.me/919876543210" class="action-btn-mini whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-          <a href="#location"                  class="action-btn-mini navigate"><i class="fas fa-directions"></i> Navigate</a>
+          <a id="callBtn"      class="action-btn-mini call"     href="#"><i class="fas fa-phone"></i> Call</a>
+          <a id="whatsappBtn"  class="action-btn-mini whatsapp" href="#" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a id="navigateBtn"  class="action-btn-mini navigate" href="#location"><i class="fas fa-directions"></i> Navigate</a>
           <button class="action-btn-mini save" id="saveBtn" onclick="toggleSave()"><i class="far fa-heart"></i> Save</button>
           <button class="action-btn-mini share" onclick="shareShop()"><i class="fas fa-share-alt"></i> Share</button>
         </div>
@@ -163,212 +103,74 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <div class="profile-layout container">
     <div class="profile-main">
 
-      <!-- ABOUT -->
       <section id="about" class="profile-section">
         <h2 class="profile-section-title">About the Shop</h2>
-        <p>The Spice Route is Mumbai's most trusted spice and dry fruit store, serving over 10,000 families since 1978. We source our spices directly from farms across India — cardamom from Kerala, saffron from Kashmir, black pepper from Wayanad.</p>
-        <p>Our range includes over 200 varieties of spices, masalas, dry fruits, seeds, and herbs. All products are hygienically packed and lab-tested for quality.</p>
-        <div class="info-grid">
-          <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Address</strong><span>14, Hill Road, Bandra West, Mumbai – 400050</span></div></div>
-          <div class="info-item"><i class="far fa-clock"></i><div><strong>Hours</strong><span>Mon–Sat: 9:00 AM – 9:00 PM<br>Sunday: 10:00 AM – 6:00 PM</span></div></div>
-          <div class="info-item"><i class="fas fa-phone"></i><div><strong>Phone</strong><span>+91 98765 43210</span></div></div>
-          <div class="info-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><span>+91 98765 43210</span></div></div>
-          <div class="info-item"><i class="fas fa-tag"></i><div><strong>Category</strong><span>Food & Spices</span></div></div>
-          <div class="info-item"><i class="fas fa-rupee-sign"></i><div><strong>Price Range</strong><span>₹50 – ₹2,000</span></div></div>
-        </div>
-        <div class="offer-banner">
-          <i class="fas fa-percent"></i>
-          <div><strong>Festival Offer:</strong> 20% off on all dry fruits this Diwali season! Valid till Oct 31.</div>
-        </div>
+        <p id="shopDesc" style="margin-bottom:16px">Loading...</p>
+        <div class="info-grid" id="shopInfoGrid"></div>
       </section>
 
-      <!-- PRODUCTS -->
       <section id="products" class="profile-section">
-        <h2 class="profile-section-title">Products <span class="count-badge">6 items</span></h2>
-        <div class="product-filters">
-          <button class="pfilt active">All</button>
-          <button class="pfilt">Spices</button>
-          <button class="pfilt">Dry Fruits</button>
-          <button class="pfilt">Masalas</button>
-          <button class="pfilt">Herbs</button>
-        </div>
-        <div class="products-grid">
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)"><span class="prod-emoji">🌶️</span></div>
-            <div class="product-body">
-              <h4>Kashmiri Chilli Powder</h4>
-              <p>Pure, vibrant red chilli powder for authentic colour and mild heat.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹120 / 250g</span>
-                <span class="prod-tag available">Available</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#0a1e38,#1a3c6e)"><span class="prod-emoji">🪁</span></div>
-            <div class="product-body">
-              <h4>Premium Saffron</h4>
-              <p>Authentic Grade A Kashmiri saffron — rich aroma, deep colour.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹850 / 1g</span>
-                <span class="prod-tag available">Available</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#122d54,#1e4d8c)"><span class="prod-emoji">🫙</span></div>
-            <div class="product-body">
-              <h4>Garam Masala Blend</h4>
-              <p>Secret family recipe with 18 spices. Makes every dish extraordinary.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹180 / 200g</span>
-                <span class="prod-tag available">Available</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#1a3c6e,#c9a84c)"><span class="prod-emoji">🫐</span></div>
-            <div class="product-body">
-              <h4>Premium Blueberries</h4>
-              <p>Imported dried blueberries — perfect for baking and smoothies.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹420 / 200g</span>
-                <span class="prod-tag limited">Limited</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#0a1e38,#c9a84c)"><span class="prod-emoji">🥜</span></div>
-            <div class="product-body">
-              <h4>Premium Cashews</h4>
-              <p>W240 grade whole cashews sourced directly from Goa. Freshly packed.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹750 / 500g</span>
-                <span class="prod-tag available">Available</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-img" style="background:linear-gradient(135deg,#2d5fa6,#c9a84c)"><span class="prod-emoji">🌸</span></div>
-            <div class="product-body">
-              <h4>Rose Cardamom Mix</h4>
-              <p>Aromatic blend of green cardamom and rose petals for teas.</p>
-              <div class="product-footer">
-                <span class="prod-price">₹240 / 100g</span>
-                <span class="prod-tag seasonal">Seasonal</span>
-              </div>
-            </div>
-          </div>
+        <h2 class="profile-section-title">Products <span class="count-badge" id="prodCount">0</span></h2>
+        <div class="products-grid" id="productsGrid">
+          <p style="color:var(--grey-400);font-size:13px">Loading products...</p>
         </div>
       </section>
 
-      <!-- VIDEOS -->
       <section id="videos" class="profile-section">
         <h2 class="profile-section-title">Shop Videos</h2>
-        <div class="videos-grid">
-          <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#1a3c6e,#2d5fa6)">
-              <div class="play-btn"><i class="fas fa-play"></i></div>
-              <span class="video-duration">1:24</span>
-            </div>
-            <div class="video-info"><strong>Shop Tour — The Spice Route</strong><span>2.4K views · 3 days ago</span></div>
-          </div>
-          <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#0a1e38,#1a3c6e)">
-              <div class="play-btn"><i class="fas fa-play"></i></div>
-              <span class="video-duration">0:45</span>
-            </div>
-            <div class="video-info"><strong>Diwali Dry Fruit Offers</strong><span>1.8K views · 1 week ago</span></div>
-          </div>
-          <div class="video-card">
-            <div class="video-thumb" style="background:linear-gradient(135deg,#122d54,#1e4d8c)">
-              <div class="play-btn"><i class="fas fa-play"></i></div>
-              <span class="video-duration">2:10</span>
-            </div>
-            <div class="video-info"><strong>Saffron Sourcing Story</strong><span>5.1K views · 2 weeks ago</span></div>
-          </div>
+        <div id="videosWrap" style="color:var(--grey-400);font-size:13px;padding:20px 0;text-align:center">
+          <i class="fas fa-video" style="font-size:32px;color:var(--grey-200);display:block;margin-bottom:8px"></i>
+          No videos yet.
         </div>
       </section>
 
-      <!-- REVIEWS -->
       <section id="reviews" class="profile-section">
-        <h2 class="profile-section-title">Customer Reviews <span class="count-badge">342 reviews</span></h2>
-        <div class="rating-summary">
-          <div class="rating-big">4.8</div>
-          <div class="rating-bars">
-            <div class="rbar"><span>5★</span><div class="bar"><div style="width:72%"></div></div><small>72%</small></div>
-            <div class="rbar"><span>4★</span><div class="bar"><div style="width:18%"></div></div><small>18%</small></div>
-            <div class="rbar"><span>3★</span><div class="bar"><div style="width:6%"></div></div><small>6%</small></div>
-            <div class="rbar"><span>2★</span><div class="bar"><div style="width:2%"></div></div><small>2%</small></div>
-            <div class="rbar"><span>1★</span><div class="bar"><div style="width:2%"></div></div><small>2%</small></div>
-          </div>
-        </div>
-        <div class="reviews-list">
-          <div class="review-item">
-            <div class="review-author"><div class="rev-avatar">PK</div><div><strong>Priya Kulkarni</strong><span>2 days ago</span></div><div class="rev-stars">★★★★★</div></div>
-            <p>Best spice shop in Mumbai! The saffron is absolutely authentic and the masala blends are legendary.</p>
-          </div>
-          <div class="review-item">
-            <div class="review-author"><div class="rev-avatar">RS</div><div><strong>Rahul Shah</strong><span>1 week ago</span></div><div class="rev-stars">★★★★★</div></div>
-            <p>Amazing quality and very reasonable prices. The shop staff is knowledgeable and helpful.</p>
-          </div>
-          <div class="review-item">
-            <div class="review-author"><div class="rev-avatar">SM</div><div><strong>Sneha Mehta</strong><span>2 weeks ago</span></div><div class="rev-stars">★★★★☆</div></div>
-            <p>Great variety of dry fruits. Packaging is neat. Prices are a bit high but quality justifies it.</p>
-          </div>
+        <h2 class="profile-section-title">Customer Reviews <span class="count-badge" id="reviewCount">0</span></h2>
+        <div id="reviewsWrap" style="color:var(--grey-400);font-size:13px;padding:20px 0;text-align:center">
+          <i class="fas fa-star" style="font-size:32px;color:var(--grey-200);display:block;margin-bottom:8px"></i>
+          No reviews yet.
         </div>
       </section>
 
-      <!-- LOCATION -->
       <section id="location" class="profile-section">
         <h2 class="profile-section-title">Location & Directions</h2>
-        <div class="map-placeholder">
+        <div class="map-placeholder" id="mapWrap">
           <i class="fas fa-map-marked-alt"></i>
-          <p>14, Hill Road, Bandra West, Mumbai – 400050</p>
-          <a href="https://maps.google.com/?q=The+Spice+Route+Bandra+West+Mumbai" class="btn btn-primary" target="_blank"><i class="fas fa-directions"></i> Get Directions</a>
+          <p id="mapAddress">—</p>
+          <a id="mapsLink" href="#" class="btn btn-primary" target="_blank"><i class="fas fa-directions"></i> Get Directions</a>
         </div>
       </section>
 
     </div>
 
-    <!-- SIDEBAR -->
     <aside class="profile-sidebar">
       <div class="sidebar-card">
         <h3>Contact Shop</h3>
-        <a href="tel:+919876543210"          class="contact-btn call-btn"><i class="fas fa-phone"></i> Call Now</a>
-        <a href="https://wa.me/919876543210" class="contact-btn whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="https://maps.google.com/?q=The+Spice+Route+Bandra+West+Mumbai" class="contact-btn navigate-btn" target="_blank"><i class="fas fa-directions"></i> Navigate</a>
+        <a id="sideCall"      class="contact-btn call-btn"      href="#"><i class="fas fa-phone"></i> Call Now</a>
+        <a id="sideWhatsapp"  class="contact-btn whatsapp-btn"  href="#" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a id="sideNavigate"  class="contact-btn navigate-btn"  href="#location"><i class="fas fa-directions"></i> Navigate</a>
         <button class="contact-btn share-btn" onclick="shareShop()"><i class="fas fa-share-alt"></i> Share Shop</button>
       </div>
       <div class="sidebar-card">
         <h3>Business Hours</h3>
         <div class="hours-list">
-          <div class="hour-row"><span>Mon – Fri</span><span class="open">9:00 AM – 9:00 PM</span></div>
-          <div class="hour-row"><span>Saturday</span><span class="open">9:00 AM – 9:00 PM</span></div>
+          <div class="hour-row"><span>Mon – Sat</span><span class="open">9:00 AM – 9:00 PM</span></div>
           <div class="hour-row"><span>Sunday</span><span class="open">10:00 AM – 6:00 PM</span></div>
         </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>Current Offers</h3>
-        <div class="offer-mini"><i class="fas fa-tag"></i> 20% off dry fruits this Diwali</div>
-        <div class="offer-mini"><i class="fas fa-tag"></i> Buy 500g get 50g free on masalas</div>
       </div>
       <div class="sidebar-card">
         <h3>Social Media</h3>
         <div class="social-links-shop">
           <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
           <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-          <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
         </div>
       </div>
     </aside>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -382,130 +184,208 @@
 
   <script src="js/main.js"></script>
   <script>
-    const SHOP_ID   = 'spice-route';
-    const SHOP_DATA = { id: SHOP_ID, name: 'The Spice Route', category: 'Food & Spices', area: 'Bandra West', emoji: '🌶️', color: 'linear-gradient(135deg,#1a3c6e,#2d5fa6)' };
+    const API   = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                  ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
 
-    // ── Saved Shops (localStorage) ──
+    const EMOJI = { 'Food & Spices':'🌶️','Clothing':'👗','Electronics':'💻','Beauty':'💄','Jewellery':'💍','Gifts':'🎁','Services':'🔧','Books':'📚','Health':'💊','Home':'🛋️','Sports':'⚽','Pets':'🐾' };
+    const COLORS = ['linear-gradient(135deg,#1a3c6e,#2d5fa6)','linear-gradient(135deg,#0a1e38,#1a3c6e)','linear-gradient(135deg,#122d54,#1e4d8c)','linear-gradient(135deg,#1a3c6e,#c9a84c)'];
+
+    let shopData = null;
+    const shopId = new URLSearchParams(window.location.search).get('id');
+
+    // ── Navbar user ──
+    const _token = localStorage.getItem('token');
+    const _user  = JSON.parse(localStorage.getItem('user') || 'null');
+    if (_token && _user) {
+      const initials = (_user.name || 'U').slice(0,2).toUpperCase();
+      const dashMap  = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
+      const navEl = document.getElementById('navActions');
+      navEl.innerHTML = `
+        <button class="saved-nav-btn" onclick="openDrawer()" title="Saved Shops">
+          <i class="far fa-heart"></i>
+          <span class="saved-count-dot" id="savedCountDot" style="display:none">0</span>
+        </button>
+        <a href="${dashMap[_user.role]||'shops.html'}" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--black);font-size:13px;font-weight:600">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${initials}</div>
+          <span>${_user.name.split(' ')[0]}</span>
+        </a>
+        <button onclick="logoutUser()" class="btn btn-outline btn-sm">Logout</button>`;
+    }
+    function logoutUser() { localStorage.clear(); window.location.href = 'login.html'; }
+
+    // ── Load shop data ──
+    async function loadShop() {
+      if (!shopId) { showStaticFallback(); return; }
+      try {
+        const res  = await fetch(`${API}/shops/${shopId}`);
+        const data = await res.json();
+        if (data.success && data.data) {
+          shopData = data.data;
+          renderShop(shopData);
+          loadProducts(shopId);
+          loadReviews(shopId);
+        } else { showStaticFallback(); }
+      } catch(e) { showStaticFallback(); }
+    }
+
+    function renderShop(s) {
+      const emoji = EMOJI[s.category] || '🏪';
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+      document.title = `${s.name} — LocalSpot`;
+      document.getElementById('shopCover').style.background = color;
+      document.getElementById('shopEmoji').textContent = emoji;
+      document.getElementById('shopName').textContent  = s.name;
+      document.getElementById('shopSubtitle').innerHTML =
+        `<i class="fas fa-tag"></i> ${s.category} &nbsp;·&nbsp; <i class="fas fa-map-marker-alt"></i> ${s.area}`;
+      document.getElementById('shopStats').innerHTML =
+        `${s.rating ? `<span><i class="fas fa-star"></i> ${s.rating}</span>` : ''}
+         ${s.phone  ? `<span><i class="fas fa-phone"></i> ${s.phone}</span>` : ''}`;
+      document.getElementById('shopBadges').innerHTML =
+        `<span class="badge-pill badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+         <span class="badge-pill badge-open">Active</span>`;
+      document.getElementById('shopDesc').textContent = s.description || 'No description available.';
+
+      // Info grid
+      document.getElementById('shopInfoGrid').innerHTML = `
+        ${s.address  ? `<div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Address</strong><span>${s.address}</span></div></div>` : ''}
+        ${s.phone    ? `<div class="info-item"><i class="fas fa-phone"></i><div><strong>Phone</strong><span>${s.phone}</span></div></div>` : ''}
+        ${s.whatsapp ? `<div class="info-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><span>${s.whatsapp}</span></div></div>` : ''}
+        <div class="info-item"><i class="fas fa-tag"></i><div><strong>Category</strong><span>${s.category}</span></div></div>
+        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Area</strong><span>${s.area}</span></div></div>`;
+
+      // Action buttons
+      if (s.phone)    { document.getElementById('callBtn').href     = `tel:+${s.phone}`;          document.getElementById('sideCall').href     = `tel:+${s.phone}`; }
+      if (s.whatsapp) { document.getElementById('whatsappBtn').href = `https://wa.me/${s.whatsapp}`; document.getElementById('sideWhatsapp').href = `https://wa.me/${s.whatsapp}`; }
+      const mapsUrl = s.mapLink || `https://maps.google.com/?q=${encodeURIComponent(s.name + ' ' + s.area)}`;
+      document.getElementById('navigateBtn').href  = mapsUrl;
+      document.getElementById('sideNavigate').href = mapsUrl;
+      document.getElementById('mapsLink').href     = mapsUrl;
+      document.getElementById('mapAddress').textContent = s.address || `${s.name}, ${s.area}`;
+    }
+
+    async function loadProducts(id) {
+      try {
+        const res  = await fetch(`${API}/shops/${id}/products`);
+        const data = await res.json();
+        document.getElementById('prodCount').textContent = data.count || 0;
+        if (!data.success || !data.data.length) {
+          document.getElementById('productsGrid').innerHTML =
+            `<p style="color:var(--grey-400);font-size:13px;grid-column:1/-1;text-align:center;padding:24px">No products listed yet.</p>`;
+          return;
+        }
+        document.getElementById('productsGrid').innerHTML = data.data.map((p, i) => `
+          <div class="product-card">
+            <div class="product-img" style="background:${COLORS[i % COLORS.length]}">
+              <span class="prod-emoji">${EMOJI[p.category] || '📦'}</span>
+            </div>
+            <div class="product-body">
+              <h4>${p.name}</h4>
+              <p>${p.description || ''}</p>
+              <div class="product-footer">
+                <span class="prod-price">${p.price || '—'}</span>
+                <span class="prod-tag ${p.inStock !== false ? 'available' : 'limited'}">${p.inStock !== false ? 'Available' : 'Limited'}</span>
+              </div>
+            </div>
+          </div>`).join('');
+      } catch(e) {}
+    }
+
+    async function loadReviews(id) {
+      try {
+        const res  = await fetch(`${API}/shops/${id}/reviews`);
+        const data = await res.json();
+        document.getElementById('reviewCount').textContent = data.count || 0;
+        if (!data.success || !data.data.length) return;
+        document.getElementById('reviewsWrap').innerHTML = data.data.map(r => `
+          <div class="review-item">
+            <div class="review-author">
+              <div class="rev-avatar">${(r.user?.name||'U').slice(0,2).toUpperCase()}</div>
+              <div><strong>${r.user?.name||'Customer'}</strong><span>${new Date(r.createdAt).toLocaleDateString()}</span></div>
+              <div class="rev-stars">${'★'.repeat(r.rating||5)}${'☆'.repeat(5-(r.rating||5))}</div>
+            </div>
+            <p>${r.comment||''}</p>
+          </div>`).join('');
+      } catch(e) {}
+    }
+
+    function showStaticFallback() {
+      // Show a generic placeholder when no ID or shop not found
+      document.getElementById('shopName').textContent = 'Shop Not Found';
+      document.getElementById('shopDesc').textContent = 'This shop could not be loaded. Please go back and try again.';
+      document.getElementById('shopInfoGrid').innerHTML = '';
+      document.getElementById('productsGrid').innerHTML = `<p style="color:var(--grey-400);font-size:13px;grid-column:1/-1;text-align:center;padding:24px">No products available.</p>`;
+    }
+
+    // ── Saved Shops ──
     function getSaved() { return JSON.parse(localStorage.getItem('savedShops') || '[]'); }
     function setSaved(arr) { localStorage.setItem('savedShops', JSON.stringify(arr)); }
 
     function updateSaveBtn() {
-      const saved = getSaved();
-      const isSaved = saved.some(s => s.id === SHOP_ID);
-      const btn  = document.getElementById('saveBtn');
-      const icon = btn.querySelector('i');
-      if (isSaved) {
-        icon.className = 'fas fa-heart';
-        btn.classList.add('saved');
-        btn.innerHTML = '<i class="fas fa-heart"></i> Saved';
-      } else {
-        icon.className = 'far fa-heart';
-        btn.classList.remove('saved');
-        btn.innerHTML = '<i class="far fa-heart"></i> Save';
-      }
+      if (!shopData) return;
+      const isSaved = getSaved().some(s => s.id === shopId);
+      const btn = document.getElementById('saveBtn');
+      btn.innerHTML = isSaved ? '<i class="fas fa-heart"></i> Saved' : '<i class="far fa-heart"></i> Save';
+      isSaved ? btn.classList.add('saved') : btn.classList.remove('saved');
     }
 
     function updateCountDot() {
       const count = getSaved().length;
       const dot   = document.getElementById('savedCountDot');
-      dot.style.display = count > 0 ? 'flex' : 'none';
-      dot.textContent   = count;
+      if (dot) { dot.style.display = count > 0 ? 'flex' : 'none'; dot.textContent = count; }
     }
 
     function toggleSave() {
+      if (!shopData) return;
       let saved = getSaved();
-      const idx = saved.findIndex(s => s.id === SHOP_ID);
+      const idx = saved.findIndex(s => s.id === shopId);
       if (idx === -1) {
-        saved.push(SHOP_DATA);
-      } else {
-        saved.splice(idx, 1);
-      }
-      setSaved(saved);
-      updateSaveBtn();
-      updateCountDot();
-      renderDrawer();
+        saved.push({ id: shopId, name: shopData.name, category: shopData.category, area: shopData.area,
+          emoji: EMOJI[shopData.category]||'🏪', color: COLORS[0] });
+      } else { saved.splice(idx, 1); }
+      setSaved(saved); updateSaveBtn(); updateCountDot(); renderDrawer();
     }
 
-    // ── Drawer ──
-    function openDrawer() {
-      renderDrawer();
-      document.getElementById('savedDrawer').classList.add('open');
-      document.getElementById('drawerOverlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeDrawer() {
-      document.getElementById('savedDrawer').classList.remove('open');
-      document.getElementById('drawerOverlay').classList.remove('open');
-      document.body.style.overflow = '';
-    }
+    function openDrawer()  { renderDrawer(); document.getElementById('savedDrawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeDrawer() { document.getElementById('savedDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); document.body.style.overflow=''; }
 
     function removeFromDrawer(id) {
-      let saved = getSaved();
-      saved = saved.filter(s => s.id !== id);
-      setSaved(saved);
-      updateSaveBtn();
-      updateCountDot();
-      renderDrawer();
+      setSaved(getSaved().filter(s => s.id !== id));
+      updateSaveBtn(); updateCountDot(); renderDrawer();
     }
 
     function renderDrawer() {
       const saved = getSaved();
       const body  = document.getElementById('drawerBody');
-      if (!saved.length) {
-        body.innerHTML = `<div class="drawer-empty"><i class="far fa-heart"></i><p>No saved shops yet.<br>Tap <strong>Save</strong> on any shop to add it here.</p></div>`;
-        return;
-      }
-      body.innerHTML = saved.map(s => `
-        <div class="saved-shop-item">
-          <div class="saved-shop-thumb" style="background:${s.color || 'var(--red-light)'}">${s.emoji || '🏪'}</div>
-          <div class="saved-shop-info">
-            <strong>${s.name}</strong>
-            <span>${s.category} · ${s.area}</span>
-          </div>
-          <button class="saved-remove" onclick="removeFromDrawer('${s.id}')" title="Remove"><i class="fas fa-times"></i></button>
-        </div>`).join('');
+      body.innerHTML = !saved.length
+        ? `<div class="drawer-empty"><i class="far fa-heart"></i><p>No saved shops yet.<br>Tap <strong>Save</strong> on any shop.</p></div>`
+        : saved.map(s => `
+          <div class="saved-shop-item">
+            <div class="saved-shop-thumb" style="background:${s.color||'var(--red-light)'}">${s.emoji||'🏪'}</div>
+            <div class="saved-shop-info"><strong>${s.name}</strong><span>${s.category} · ${s.area}</span></div>
+            <button class="saved-remove" onclick="removeFromDrawer('${s.id}')"><i class="fas fa-times"></i></button>
+          </div>`).join('');
     }
 
-    // ── Share ──
     function shareShop() {
-      const data = { title: 'The Spice Route — LocalSpot', text: 'Check out The Spice Route on LocalSpot!', url: window.location.href };
-      if (navigator.share) {
-        navigator.share(data).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          showToast('Link copied to clipboard!');
-        }).catch(() => {
-          prompt('Copy this link:', window.location.href);
-        });
-      }
+      const d = { title: shopData?.name || 'LocalSpot', text: `Check out ${shopData?.name||'this shop'} on LocalSpot!`, url: window.location.href };
+      if (navigator.share) { navigator.share(d).catch(()=>{}); }
+      else { navigator.clipboard.writeText(window.location.href).then(()=>showToast('Link copied!')).catch(()=>{}); }
     }
 
-    // ── Toast ──
     function showToast(msg) {
       let t = document.getElementById('toast');
-      if (!t) {
-        t = document.createElement('div');
-        t.id = 'toast';
-        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity 0.3s';
-        document.body.appendChild(t);
-      }
-      t.textContent = msg;
-      t.style.opacity = '1';
-      setTimeout(() => { t.style.opacity = '0'; }, 2500);
+      if (!t) { t = document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;transition:opacity 0.3s'; document.body.appendChild(t); }
+      t.textContent = msg; t.style.opacity = '1';
+      setTimeout(() => t.style.opacity = '0', 2500);
     }
 
-    // ── Product filters ──
     document.querySelectorAll('.pfilt').forEach(f => {
-      f.addEventListener('click', () => {
-        document.querySelectorAll('.pfilt').forEach(b => b.classList.remove('active'));
-        f.classList.add('active');
-      });
+      f.addEventListener('click', () => { document.querySelectorAll('.pfilt').forEach(b=>b.classList.remove('active')); f.classList.add('active'); });
     });
 
-    // ── Init ──
-    updateSaveBtn();
     updateCountDot();
+    loadShop();
   </script>
 </body>
 </html>
