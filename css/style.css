@@ -280,8 +280,8 @@ p { color: var(--grey-600); }
    SECTIONS
    ============================================================ */
 .section { padding: 80px 0; }
-.section-head { margin-bottom: 48px; }
-.section-head.centered { text-align: center; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+.section-head.centered { display: block; text-align: center; }
 .section-label {
   display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: var(--red); margin-bottom: 12px;
