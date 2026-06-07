@@ -5,42 +5,37 @@ const path = require('path');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB().catch(err => { console.error('❌ DB connection failed:', err.message); process.exit(1); });
+connectDB();
 
 const app = express();
 
-app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) || origin === 'https://localspot-app.vercel.app') {
-      cb(null, true);
-    } else {
-      cb(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization']
-}));
-app.options('*', cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://localspot-app.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'LocalSpot API is running', timestamp: new Date().toISOString() });
 });
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
-app.use('/api/auth',                        require('./routes/auth'));
-app.use('/api/shops',                       require('./routes/shops'));
-app.use('/api/shops/:shopId/products',      require('./routes/products'));
-app.use('/api/shops/:shopId/videos',        require('./routes/videos'));
-app.use('/api/shops/:shopId/reviews',       require('./routes/reviews'));
-app.use('/api/products',                    require('./routes/products'));
-app.use('/api/videos',                      require('./routes/videos'));
-app.use('/api/reviews',                     require('./routes/reviews'));
-app.use('/api/creators',                    require('./routes/creators'));
-app.use('/api/admin',                       require('./routes/admin'));
+app.use('/api/auth',                    require('./routes/auth'));
+app.use('/api/shops',                   require('./routes/shops'));
+app.use('/api/shops/:shopId/products',  require('./routes/products'));
+app.use('/api/shops/:shopId/videos',    require('./routes/videos'));
+app.use('/api/shops/:shopId/reviews',   require('./routes/reviews'));
+app.use('/api/products',                require('./routes/products'));
+app.use('/api/videos',                  require('./routes/videos'));
+app.use('/api/reviews',                 require('./routes/reviews'));
+app.use('/api/creators',                require('./routes/creators'));
+app.use('/api/admin',                   require('./routes/admin'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
