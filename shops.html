@@ -30,14 +30,27 @@
     .profile-avatar-big { width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.2);border:3px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin-bottom:12px; }
     .profile-drawer-name { font-size:1.1rem;font-weight:700;margin-bottom:2px; }
     .profile-drawer-role { font-size:12px;opacity:0.75;text-transform:capitalize; }
-    .profile-drawer-body { flex:1;overflow-y:auto;padding:20px; }
+    .profile-drawer-body { flex:1;overflow-y:auto;padding:0; }
+    .drawer-section-title { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--grey-400);padding:16px 20px 8px;border-top:1px solid var(--grey-100); }
+    .drawer-section-title:first-child { border-top:none; }
+    .profile-info-list { padding:0 20px 8px; }
     .profile-info-item { display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--grey-200);margin-bottom:10px; }
     .profile-info-item i { width:36px;height:36px;border-radius:10px;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0; }
     .profile-info-item div strong { display:block;font-size:11px;color:var(--grey-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px; }
     .profile-info-item div span { font-size:13px;color:var(--black);font-weight:500; }
     .profile-drawer-footer { padding:16px 20px;border-top:1px solid var(--grey-100); }
 
-    /* Nav avatar button */
+    .saved-shop-row { display:flex;align-items:center;gap:12px;padding:10px 20px;transition:background var(--transition);cursor:pointer; }
+    .saved-shop-row:hover { background:var(--grey-50); }
+    .saved-shop-row-thumb { width:40px;height:40px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px; }
+    .saved-shop-row-info { flex:1; }
+    .saved-shop-row-info strong { display:block;font-size:13px;font-weight:600;margin-bottom:1px; }
+    .saved-shop-row-info span { font-size:11px;color:var(--grey-400); }
+    .saved-shop-row-remove { width:26px;height:26px;border-radius:50%;border:none;background:none;color:var(--grey-300);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .saved-shop-row-remove:hover { background:#ffe5e5;color:#e63946; }
+    .drawer-saved-empty { text-align:center;padding:24px 20px;color:var(--grey-400); }
+    .drawer-saved-empty i { font-size:28px;color:var(--grey-200);display:block;margin-bottom:8px; }
+    .drawer-saved-empty p { font-size:12px; }
     .nav-avatar-btn { display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:var(--radius-full);transition:background var(--transition); }
     .nav-avatar-btn:hover { background:var(--grey-100); }
     .nav-avatar-circle { width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0; }
@@ -85,22 +98,23 @@
       <div class="profile-drawer-role" id="drawerRole">customer</div>
     </div>
     <div class="profile-drawer-body">
-      <div class="profile-info-item">
-        <i class="fas fa-envelope"></i>
-        <div><strong>Email</strong><span id="drawerEmail">—</span></div>
+      <p class="drawer-section-title">Account Info</p>
+      <div class="profile-info-list">
+        <div class="profile-info-item">
+          <i class="fas fa-envelope"></i>
+          <div><strong>Email</strong><span id="drawerEmail">—</span></div>
+        </div>
+        <div class="profile-info-item" id="drawerPhoneWrap" style="display:none">
+          <i class="fas fa-phone"></i>
+          <div><strong>Phone</strong><span id="drawerPhone">—</span></div>
+        </div>
+        <div class="profile-info-item">
+          <i class="fas fa-user-shield"></i>
+          <div><strong>Account Type</strong><span id="drawerType">Customer</span></div>
+        </div>
       </div>
-      <div class="profile-info-item" id="drawerPhoneWrap" style="display:none">
-        <i class="fas fa-phone"></i>
-        <div><strong>Phone</strong><span id="drawerPhone">—</span></div>
-      </div>
-      <div class="profile-info-item">
-        <i class="fas fa-user-shield"></i>
-        <div><strong>Account Type</strong><span id="drawerType">Customer</span></div>
-      </div>
-      <div class="profile-info-item">
-        <i class="fas fa-heart"></i>
-        <div><strong>Saved Shops</strong><span id="drawerSaved">0 shops</span></div>
-      </div>
+      <p class="drawer-section-title"><i class="fas fa-heart" style="color:#e63946;margin-right:6px"></i>Saved Shops <span id="drawerSavedCount" style="background:var(--red-light);color:var(--red);padding:2px 8px;border-radius:100px;font-size:10px;margin-left:4px">0</span></p>
+      <div id="drawerSavedList"></div>
     </div>
     <div class="profile-drawer-footer">
       <button onclick="logoutUser()" class="btn btn-outline btn-full" style="justify-content:center">
@@ -193,11 +207,38 @@
       document.getElementById('drawerEmail').textContent  = _user.email || '—';
       document.getElementById('drawerType').textContent   = (_user.role||'customer').charAt(0).toUpperCase() + (_user.role||'customer').slice(1);
       const savedCount = JSON.parse(localStorage.getItem('savedShops') || '[]').length;
-      document.getElementById('drawerSaved').textContent  = `${savedCount} shop${savedCount !== 1 ? 's' : ''}`;
+      renderDrawerSaved();
       if (_user.phone) {
         document.getElementById('drawerPhoneWrap').style.display = 'flex';
         document.getElementById('drawerPhone').textContent = _user.phone;
       }
+    }
+
+    function renderDrawerSaved() {
+      const saved = JSON.parse(localStorage.getItem('savedShops') || '[]');
+      document.getElementById('drawerSavedCount').textContent = saved.length;
+      const list = document.getElementById('drawerSavedList');
+      if (!saved.length) {
+        list.innerHTML = `<div class="drawer-saved-empty"><i class="far fa-heart"></i><p>No saved shops yet.<br>Tap Save on any shop to add here.</p></div>`;
+        return;
+      }
+      list.innerHTML = saved.map(s => `
+        <div class="saved-shop-row" onclick="window.location.href='shop-profile.html?id=${s.id}'">
+          <div class="saved-shop-row-thumb" style="background:${s.color||'var(--red-light)'}">${s.emoji||'🏪'}</div>
+          <div class="saved-shop-row-info">
+            <strong>${s.name}</strong>
+            <span>${s.category} · ${s.area}</span>
+          </div>
+          <button class="saved-shop-row-remove" onclick="event.stopPropagation();removeSaved('${s.id}')" title="Remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>`).join('');
+    }
+
+    function removeSaved(id) {
+      const saved = JSON.parse(localStorage.getItem('savedShops') || '[]').filter(s => s.id !== id);
+      localStorage.setItem('savedShops', JSON.stringify(saved));
+      renderDrawerSaved();
     }
 
     function openProfileDrawer() {
