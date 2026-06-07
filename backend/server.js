@@ -8,12 +8,18 @@ connectDB();
 
 const app = express();
 
-// CORS
+// CORS — allow any localhost port + production
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin',  'https://localspot-app.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  const origin = req.headers.origin || '';
+  const allowed = !origin ||
+    /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+    origin === 'https://localspot-app.vercel.app';
+  if (allowed) {
+    res.header('Access-Control-Allow-Origin',      origin || '*');
+    res.header('Access-Control-Allow-Methods',     'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers',     'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
