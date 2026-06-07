@@ -269,26 +269,51 @@
     // Handle Google OAuth token on page load
     const hash = window.location.hash;
     if (hash.includes('access_token')) {
+      // Show loading immediately
+      document.getElementById('loginForm').innerHTML = `
+        <div style="text-align:center;padding:32px 0">
+          <i class="fas fa-spinner fa-spin" style="font-size:32px;color:var(--red);margin-bottom:16px;display:block"></i>
+          <p style="font-size:14px;color:var(--grey-600)">Signing you in with Google...</p>
+        </div>`;
       const accessToken = new URLSearchParams(hash.replace('#', '?')).get('access_token');
+      // Clear hash from URL
+      history.replaceState(null, '', window.location.pathname);
       fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } })
         .then(r => r.json())
         .then(async profile => {
-          const res  = await fetch(`${API}/auth/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: profile.name, email: profile.email, password: profile.sub, role: 'customer' })
-          });
-          const data = await res.json();
-          const loginData = data.success ? data : await fetch(`${API}/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: profile.email, password: profile.sub })
-          }).then(r => r.json());
-          if (loginData.success) {
-            localStorage.setItem('token', loginData.token);
-            localStorage.setItem('user', JSON.stringify(loginData.user));
-            window.location.href = 'shops.html';
-          }
+          // Try register first, then login if already exists
+          const tryAuth = async (retries = 3) => {
+            for (let i = 0; i < retries; i++) {
+              try {
+                let res  = await fetch(`${API}/auth/register`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ name: profile.name, email: profile.email, password: profile.sub, role: 'customer' })
+                });
+                let data = await res.json();
+                if (!data.success) {
+                  // Already registered — login instead
+                  res  = await fetch(`${API}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: profile.email, password: profile.sub })
+                  });
+                  data = await res.json();
+                }
+                if (data.success) {
+                  localStorage.setItem('token', data.token);
+                  localStorage.setItem('user', JSON.stringify(data.user));
+                  const redirectMap = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
+                  window.location.href = redirectMap[data.user.role] || 'shops.html';
+                  return;
+                }
+              } catch(e) {
+                if (i < retries - 1) await new Promise(r => setTimeout(r, 3000)); // wait 3s before retry
+              }
+            }
+            showError('Server is starting up. Please try again in 10 seconds.');
+          };
+          tryAuth();
         }).catch(() => showError('Google login failed. Please try again.'));
     }
   </script>
