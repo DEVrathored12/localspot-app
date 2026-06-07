@@ -232,8 +232,7 @@
 
     function loginWithGoogle() {
       const clientId    = '1008674868759-i3okbul0v5806rcj4lnp916ovmce5a50.apps.googleusercontent.com';
-      const isLocal     = ['localhost','127.0.0.1'].includes(window.location.hostname);
-      const redirectUri = encodeURIComponent(isLocal ? `${window.location.origin}/login.html` : 'https://localspot-app.vercel.app/login.html');
+      const redirectUri = encodeURIComponent('https://localspot-app.vercel.app/login.html');
       const scope       = encodeURIComponent('openid email profile');
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
     }
