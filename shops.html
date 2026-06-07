@@ -9,20 +9,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    .shops-hero { background: linear-gradient(135deg, #f4f6fb, #eef3fb); padding: 100px 0 48px; }
-    .shops-hero h1 { margin-bottom: 8px; }
-    .shops-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-    .shops-toolbar .search-wrap { flex: 1; min-width: 260px; }
-    .filter-select { padding: 10px 16px; border: 1.5px solid var(--grey-200); border-radius: var(--radius-full); font-size: 13px; background: var(--white); color: var(--grey-800); cursor: pointer; transition: border-color var(--transition); }
-    .filter-select:focus { border-color: var(--red); outline: none; }
-    .results-count { font-size: 13px; color: var(--grey-400); margin-bottom: 20px; }
-    .load-more { display: flex; justify-content: center; margin-top: 48px; }
-    .empty-state { text-align: center; padding: 60px 20px; color: var(--grey-400); }
-    .empty-state i { font-size: 48px; margin-bottom: 16px; display: block; color: var(--grey-200); }
-    .empty-state p { font-size: 14px; }
+    .shops-hero { background: linear-gradient(135deg,#f4f6fb,#eef3fb); padding:100px 0 48px; }
+    .shops-hero h1 { margin-bottom:8px; }
+    .shops-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:28px; }
+    .shops-toolbar .search-wrap { flex:1; min-width:260px; }
+    .filter-select { padding:10px 16px; border:1.5px solid var(--grey-200); border-radius:var(--radius-full); font-size:13px; background:var(--white); color:var(--grey-800); cursor:pointer; transition:border-color var(--transition); }
+    .filter-select:focus { border-color:var(--red); outline:none; }
+    .results-count { font-size:13px; color:var(--grey-400); margin-bottom:20px; }
+    .load-more { display:flex; justify-content:center; margin-top:48px; }
+    .empty-state { text-align:center; padding:60px 20px; color:var(--grey-400); }
+    .empty-state i { font-size:48px; margin-bottom:16px; display:block; color:var(--grey-200); }
+
+    /* Profile Drawer */
+    .profile-drawer-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.25s; }
+    .profile-drawer-overlay.open { opacity:1;pointer-events:all; }
+    .profile-drawer { position:fixed;top:0;right:-340px;width:320px;max-width:95vw;height:100vh;background:var(--white);z-index:1200;box-shadow:var(--shadow-lg);transition:right 0.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column; }
+    .profile-drawer.open { right:0; }
+    .profile-drawer-head { padding:24px; background:linear-gradient(135deg,#1a3c6e,#2d5fa6); color:#fff; position:relative; }
+    .profile-drawer-close { position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,0.2);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px; }
+    .profile-avatar-big { width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.2);border:3px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;margin-bottom:12px; }
+    .profile-drawer-name { font-size:1.1rem;font-weight:700;margin-bottom:2px; }
+    .profile-drawer-role { font-size:12px;opacity:0.75;text-transform:capitalize; }
+    .profile-drawer-body { flex:1;overflow-y:auto;padding:20px; }
+    .profile-info-item { display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--grey-200);margin-bottom:10px; }
+    .profile-info-item i { width:36px;height:36px;border-radius:10px;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0; }
+    .profile-info-item div strong { display:block;font-size:11px;color:var(--grey-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px; }
+    .profile-info-item div span { font-size:13px;color:var(--black);font-weight:500; }
+    .profile-drawer-footer { padding:16px 20px;border-top:1px solid var(--grey-100); }
+
+    /* Nav avatar button */
+    .nav-avatar-btn { display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:var(--radius-full);transition:background var(--transition); }
+    .nav-avatar-btn:hover { background:var(--grey-100); }
+    .nav-avatar-circle { width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0; }
+    .nav-avatar-name { font-size:13px;font-weight:600;color:var(--black); }
   </style>
 </head>
 <body>
+
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="logo"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
@@ -30,12 +53,11 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="shops.html" class="active">Shops</a></li>
         <li><a href="categories.html">Categories</a></li>
-        <li><a href="creators.html">Creators</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
       <div class="nav-actions" id="navActions">
-        <a href="login.html" class="btn btn-outline" id="navLogin">Login</a>
-        <a href="register.html" class="btn btn-primary" id="navRegister">Get Started</a>
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn btn-primary">Get Started</a>
       </div>
       <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
     </div>
@@ -47,11 +69,44 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="shops.html">Shops</a></li>
       <li><a href="categories.html">Categories</a></li>
-      <li><a href="creators.html">Creators</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="login.html">Login</a></li>
-      <li><a href="register.html">Register</a></li>
+      <li><a href="login.html" id="mobileLoginLink">Login</a></li>
+      <li><a href="register.html" id="mobileRegisterLink">Register</a></li>
     </ul>
+  </div>
+
+  <!-- Profile Drawer -->
+  <div class="profile-drawer-overlay" id="profileOverlay" onclick="closeProfileDrawer()"></div>
+  <div class="profile-drawer" id="profileDrawer">
+    <div class="profile-drawer-head">
+      <button class="profile-drawer-close" onclick="closeProfileDrawer()"><i class="fas fa-times"></i></button>
+      <div class="profile-avatar-big" id="drawerAvatar">U</div>
+      <div class="profile-drawer-name" id="drawerName">User</div>
+      <div class="profile-drawer-role" id="drawerRole">customer</div>
+    </div>
+    <div class="profile-drawer-body">
+      <div class="profile-info-item">
+        <i class="fas fa-envelope"></i>
+        <div><strong>Email</strong><span id="drawerEmail">—</span></div>
+      </div>
+      <div class="profile-info-item" id="drawerPhoneWrap" style="display:none">
+        <i class="fas fa-phone"></i>
+        <div><strong>Phone</strong><span id="drawerPhone">—</span></div>
+      </div>
+      <div class="profile-info-item">
+        <i class="fas fa-user-shield"></i>
+        <div><strong>Account Type</strong><span id="drawerType">Customer</span></div>
+      </div>
+      <div class="profile-info-item">
+        <i class="fas fa-heart"></i>
+        <div><strong>Saved Shops</strong><span id="drawerSaved">0 shops</span></div>
+      </div>
+    </div>
+    <div class="profile-drawer-footer">
+      <button onclick="logoutUser()" class="btn btn-outline btn-full" style="justify-content:center">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
   </div>
 
   <section class="shops-hero">
@@ -70,28 +125,17 @@
           <input type="text" id="shopSearch" placeholder="Search shops..." oninput="filterShops()"/>
           <select id="areaFilter" onchange="filterShops()">
             <option value="">All Areas</option>
-            <option>Bandra West</option>
-            <option>Linking Road</option>
-            <option>Colaba</option>
-            <option>Andheri</option>
-            <option>Juhu</option>
+            <option>Bandra West</option><option>Linking Road</option><option>Colaba</option>
+            <option>Andheri</option><option>Juhu</option>
           </select>
           <button class="btn btn-primary" onclick="filterShops()">Search</button>
         </div>
         <select class="filter-select" id="catFilter" onchange="filterShops()">
           <option value="">All Categories</option>
-          <option>Food & Spices</option>
-          <option>Clothing</option>
-          <option>Electronics</option>
-          <option>Beauty</option>
-          <option>Jewellery</option>
-          <option>Gifts</option>
-          <option>Services</option>
-          <option>Books</option>
-          <option>Health</option>
-          <option>Home</option>
-          <option>Sports</option>
-          <option>Pets</option>
+          <option>Food & Spices</option><option>Clothing</option><option>Electronics</option>
+          <option>Beauty</option><option>Jewellery</option><option>Gifts</option>
+          <option>Services</option><option>Books</option><option>Health</option>
+          <option>Home</option><option>Sports</option><option>Pets</option>
         </select>
         <select class="filter-select" id="sortFilter" onchange="filterShops()">
           <option value="featured">Featured First</option>
@@ -99,7 +143,6 @@
           <option value="newest">Newest</option>
         </select>
       </div>
-
       <p class="results-count" id="resultsCount">Loading shops...</p>
       <div class="shops-grid" id="shopsGrid"></div>
       <div class="load-more">
@@ -117,8 +160,8 @@
         <p>Hyperlocal discovery for famous shops, products, and creators near you.</p>
       </div>
       <div class="footer-links"><h4>Discover</h4><ul><li><a href="shops.html">Browse Shops</a></li><li><a href="categories.html">Categories</a></li></ul></div>
-      <div class="footer-links"><h4>For Business</h4><ul><li><a href="register.html?type=shop">List Your Shop</a></li><li><a href="register.html?type=creator">Become a Creator</a></li></ul></div>
-      <div class="footer-links"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="login.html">Login</a></li></ul></div>
+      <div class="footer-links"><h4>For Business</h4><ul><li><a href="register.html?type=shop">List Your Shop</a></li></ul></div>
+      <div class="footer-links"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li></ul></div>
     </div>
     <div class="footer-bottom"><p>© 2025 LocalSpot. All rights reserved.</p></div>
   </footer>
@@ -128,22 +171,48 @@
     const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
 
-    // ── Navbar user state ──
     const _token = localStorage.getItem('token');
     const _user  = JSON.parse(localStorage.getItem('user') || 'null');
+
+    // ── Navbar: show profile avatar if logged in ──
     if (_token && _user) {
       const initials = (_user.name || 'U').slice(0,2).toUpperCase();
-      const dashMap  = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
       document.getElementById('navActions').innerHTML = `
-        <a href="${dashMap[_user.role] || 'shops.html'}" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--black);font-size:13px;font-weight:600">
-          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${initials}</div>
-          <span>${_user.name.split(' ')[0]}</span>
-        </a>
-        <button onclick="logoutUser()" class="btn btn-outline btn-sm">Logout</button>`;
+        <button class="nav-avatar-btn" onclick="openProfileDrawer()">
+          <div class="nav-avatar-circle">${initials}</div>
+          <span class="nav-avatar-name">${_user.name.split(' ')[0]}</span>
+          <i class="fas fa-chevron-down" style="font-size:10px;color:var(--grey-400)"></i>
+        </button>`;
+      // hide login/register from mobile menu
+      document.getElementById('mobileLoginLink').style.display    = 'none';
+      document.getElementById('mobileRegisterLink').style.display = 'none';
+      // fill drawer
+      document.getElementById('drawerAvatar').textContent = initials;
+      document.getElementById('drawerName').textContent   = _user.name || 'User';
+      document.getElementById('drawerRole').textContent   = _user.role || 'customer';
+      document.getElementById('drawerEmail').textContent  = _user.email || '—';
+      document.getElementById('drawerType').textContent   = (_user.role||'customer').charAt(0).toUpperCase() + (_user.role||'customer').slice(1);
+      const savedCount = JSON.parse(localStorage.getItem('savedShops') || '[]').length;
+      document.getElementById('drawerSaved').textContent  = `${savedCount} shop${savedCount !== 1 ? 's' : ''}`;
+      if (_user.phone) {
+        document.getElementById('drawerPhoneWrap').style.display = 'flex';
+        document.getElementById('drawerPhone').textContent = _user.phone;
+      }
+    }
+
+    function openProfileDrawer() {
+      document.getElementById('profileDrawer').classList.add('open');
+      document.getElementById('profileOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeProfileDrawer() {
+      document.getElementById('profileDrawer').classList.remove('open');
+      document.getElementById('profileOverlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
     function logoutUser() { localStorage.clear(); window.location.href = 'login.html'; }
-  </script>
 
+    // ── Shop cards ──
     const COVER_COLORS = [
       'linear-gradient(135deg,#1a3c6e,#2d5fa6)',
       'linear-gradient(135deg,#0a1e38,#1a3c6e)',
@@ -152,51 +221,46 @@
       'linear-gradient(135deg,#0a1e38,#c9a84c)',
       'linear-gradient(135deg,#2d5fa6,#c9a84c)',
     ];
-
     const CATEGORY_EMOJI = {
-      'Food & Spices': '🌶️', 'Clothing': '👗', 'Electronics': '💻',
-      'Beauty': '💄', 'Jewellery': '💍', 'Gifts': '🎁', 'Services': '🔧',
-      'Books': '📚', 'Health': '💊', 'Home': '🛋️', 'Sports': '⚽', 'Pets': '🐾'
+      'Food & Spices':'🌶️','Clothing':'👗','Electronics':'💻','Beauty':'💄',
+      'Jewellery':'💍','Gifts':'🎁','Services':'🔧','Books':'📚',
+      'Health':'💊','Home':'🛋️','Sports':'⚽','Pets':'🐾'
     };
 
-    let allShops = [];
-    let visibleCount = 9;
+    let allShops = [], visibleCount = 9;
 
     async function loadShops() {
       try {
         const res  = await fetch(`${API}/shops`);
         const data = await res.json();
         if (data.success && data.data.length) allShops = data.data;
-      } catch (e) {}
-
+      } catch(e) {}
       if (!allShops.length) allShops = getStaticShops();
-
-      // Apply URL params AFTER shops are loaded
       const p = new URLSearchParams(window.location.search);
       if (p.get('cat'))  document.getElementById('catFilter').value  = p.get('cat');
       if (p.get('area')) document.getElementById('areaFilter').value = p.get('area');
-
+      if (p.get('q'))    document.getElementById('shopSearch').value = p.get('q');
       renderShops();
     }
 
     function getStaticShops() {
       return [
-        { _id:'s1',  name:'The Spice Route',      category:'Food & Spices', area:'Bandra West',  description:'Premium hand-picked spices, masalas, and dry fruits since 1978.',      rating:4.8, hours:'9am–9pm',  phone:'919876543210', whatsapp:'919876543210', badge:'Featured', color:COVER_COLORS[0] },
-        { _id:'s2',  name:'Silk & Threads',        category:'Clothing',      area:'Linking Road', description:'Traditional and designer ethnic wear for every occasion.',              rating:4.6, hours:'10am–8pm', phone:'919876543211', whatsapp:'919876543211', badge:'Trending', color:COVER_COLORS[1] },
-        { _id:'s3',  name:'Crystal Electronics',   category:'Electronics',   area:'Andheri',      description:'Mobiles, laptops, accessories, and repairs. 10-year legacy.',           rating:4.7, hours:'10am–9pm', phone:'919876543212', whatsapp:'919876543212', badge:'Trusted',  color:COVER_COLORS[2] },
-        { _id:'s4',  name:'Meena Jewellers',       category:'Jewellery',     area:'Colaba',       description:'Fine gold, silver & diamond jewellery. Custom designs available.',      rating:4.9, hours:'11am–7pm', phone:'919876543213', whatsapp:'919876543213', badge:'New',      color:COVER_COLORS[3] },
-        { _id:'s5',  name:'Glow Studio',           category:'Beauty',        area:'Juhu',         description:'Premium skincare, makeup, and beauty treatments by experts.',           rating:4.5, hours:'10am–8pm', phone:'919876543214', whatsapp:'919876543214', badge:'Featured', color:COVER_COLORS[4] },
-        { _id:'s6',  name:'The Gift Box',          category:'Gifts',         area:'Bandra West',  description:'Curated gift hampers, personalised items, and luxury packaging.',       rating:4.4, hours:'11am–9pm', phone:'919876543215', whatsapp:'919876543215', badge:'Trending', color:COVER_COLORS[5] },
-        { _id:'s7',  name:'Colaba Bakehouse',      category:'Food & Spices', area:'Colaba',       description:'Artisan breads, cakes, and pastries baked fresh every morning.',       rating:4.7, hours:'7am–10pm', phone:'919876543216', whatsapp:'919876543216', badge:'Trusted',  color:COVER_COLORS[0] },
-        { _id:'s8',  name:'FixIt Pro',             category:'Services',      area:'Andheri',      description:'Home appliance repair, plumbing, and electrical services.',             rating:4.3, hours:'8am–8pm',  phone:'919876543217', whatsapp:'919876543217', badge:'New',      color:COVER_COLORS[1] },
-        { _id:'s9',  name:'PageTurner Books',      category:'Books',         area:'Bandra West',  description:'Curated bookstore with fiction, non-fiction, and rare editions.',       rating:4.6, hours:'10am–9pm', phone:'919876543218', whatsapp:'919876543218', badge:'Featured', color:COVER_COLORS[2] },
-        { _id:'s10', name:'MediCare Pharmacy',     category:'Health',        area:'Andheri',      description:'24/7 pharmacy with medicines, supplements, and health products.',       rating:4.8, hours:'24 hours', phone:'919876543219', whatsapp:'919876543219', badge:'Trusted',  color:COVER_COLORS[3] },
-        { _id:'s11', name:'Casa Decor',            category:'Home',          area:'Juhu',         description:'Modern furniture, home decor, and interior design solutions.',          rating:4.5, hours:'10am–8pm', phone:'919876543220', whatsapp:'919876543220', badge:'New',      color:COVER_COLORS[4] },
-        { _id:'s12', name:'SportZone',             category:'Sports',        area:'Linking Road', description:'Sports equipment, gym gear, and outdoor activity essentials.',          rating:4.4, hours:'9am–9pm',  phone:'919876543221', whatsapp:'919876543221', badge:'Trending', color:COVER_COLORS[5] },
-        { _id:'s13', name:'Paws & Claws',          category:'Pets',          area:'Colaba',       description:'Pet food, accessories, grooming services, and vet consultations.',     rating:4.7, hours:'9am–8pm',  phone:'919876543222', whatsapp:'919876543222', badge:'Featured', color:COVER_COLORS[0] },
-        { _id:'s14', name:'Ethnic Weaves',         category:'Clothing',      area:'Colaba',       description:'Handloom sarees, kurtas, and traditional Indian wear.',                 rating:4.5, hours:'10am–7pm', phone:'919876543223', whatsapp:'919876543223', badge:'Trusted',  color:COVER_COLORS[1] },
-        { _id:'s15', name:'TechHub',               category:'Electronics',   area:'Bandra West',  description:'Latest gadgets, smart home devices, and tech accessories.',             rating:4.6, hours:'10am–9pm', phone:'919876543224', whatsapp:'919876543224', badge:'New',      color:COVER_COLORS[2] },
-        { _id:'s16', name:'Aroma Beauty Lounge',   category:'Beauty',        area:'Linking Road', description:'Luxury salon services, facials, and organic beauty treatments.',        rating:4.8, hours:'9am–8pm',  phone:'919876543225', whatsapp:'919876543225', badge:'Featured', color:COVER_COLORS[3] },
+        { _id:'s1',  name:'The Spice Route',     category:'Food & Spices', area:'Bandra West',  description:'Premium hand-picked spices, masalas, and dry fruits since 1978.',    rating:4.8, hours:'9am–9pm',  phone:'919876543210', whatsapp:'919876543210', badge:'Featured', color:COVER_COLORS[0] },
+        { _id:'s2',  name:'Silk & Threads',       category:'Clothing',      area:'Linking Road', description:'Traditional and designer ethnic wear for every occasion.',            rating:4.6, hours:'10am–8pm', phone:'919876543211', whatsapp:'919876543211', badge:'Trending', color:COVER_COLORS[1] },
+        { _id:'s3',  name:'Crystal Electronics',  category:'Electronics',   area:'Andheri',      description:'Mobiles, laptops, accessories, and repairs. 10-year legacy.',         rating:4.7, hours:'10am–9pm', phone:'919876543212', whatsapp:'919876543212', badge:'Trusted',  color:COVER_COLORS[2] },
+        { _id:'s4',  name:'Meena Jewellers',      category:'Jewellery',     area:'Colaba',       description:'Fine gold, silver & diamond jewellery. Custom designs available.',    rating:4.9, hours:'11am–7pm', phone:'919876543213', whatsapp:'919876543213', badge:'New',      color:COVER_COLORS[3] },
+        { _id:'s5',  name:'Glow Studio',          category:'Beauty',        area:'Juhu',         description:'Premium skincare, makeup, and beauty treatments by experts.',         rating:4.5, hours:'10am–8pm', phone:'919876543214', whatsapp:'919876543214', badge:'Featured', color:COVER_COLORS[4] },
+        { _id:'s6',  name:'The Gift Box',         category:'Gifts',         area:'Bandra West',  description:'Curated gift hampers, personalised items, and luxury packaging.',     rating:4.4, hours:'11am–9pm', phone:'919876543215', whatsapp:'919876543215', badge:'Trending', color:COVER_COLORS[5] },
+        { _id:'s7',  name:'Colaba Bakehouse',     category:'Food & Spices', area:'Colaba',       description:'Artisan breads, cakes, and pastries baked fresh every morning.',     rating:4.7, hours:'7am–10pm', phone:'919876543216', whatsapp:'919876543216', badge:'Trusted',  color:COVER_COLORS[0] },
+        { _id:'s8',  name:'FixIt Pro',            category:'Services',      area:'Andheri',      description:'Home appliance repair, plumbing, and electrical services.',           rating:4.3, hours:'8am–8pm',  phone:'919876543217', whatsapp:'919876543217', badge:'New',      color:COVER_COLORS[1] },
+        { _id:'s9',  name:'PageTurner Books',     category:'Books',         area:'Bandra West',  description:'Curated bookstore with fiction, non-fiction, and rare editions.',     rating:4.6, hours:'10am–9pm', phone:'919876543218', whatsapp:'919876543218', badge:'Featured', color:COVER_COLORS[2] },
+        { _id:'s10', name:'MediCare Pharmacy',    category:'Health',        area:'Andheri',      description:'24/7 pharmacy with medicines, supplements, and health products.',     rating:4.8, hours:'24 hours', phone:'919876543219', whatsapp:'919876543219', badge:'Trusted',  color:COVER_COLORS[3] },
+        { _id:'s11', name:'Casa Decor',           category:'Home',          area:'Juhu',         description:'Modern furniture, home decor, and interior design solutions.',        rating:4.5, hours:'10am–8pm', phone:'919876543220', whatsapp:'919876543220', badge:'New',      color:COVER_COLORS[4] },
+        { _id:'s12', name:'SportZone',            category:'Sports',        area:'Linking Road', description:'Sports equipment, gym gear, and outdoor activity essentials.',        rating:4.4, hours:'9am–9pm',  phone:'919876543221', whatsapp:'919876543221', badge:'Trending', color:COVER_COLORS[5] },
+        { _id:'s13', name:'Paws & Claws',         category:'Pets',          area:'Colaba',       description:'Pet food, accessories, grooming services, and vet consultations.',   rating:4.7, hours:'9am–8pm',  phone:'919876543222', whatsapp:'919876543222', badge:'Featured', color:COVER_COLORS[0] },
+        { _id:'s14', name:'Ethnic Weaves',        category:'Clothing',      area:'Colaba',       description:'Handloom sarees, kurtas, and traditional Indian wear.',               rating:4.5, hours:'10am–7pm', phone:'919876543223', whatsapp:'919876543223', badge:'Trusted',  color:COVER_COLORS[1] },
+        { _id:'s15', name:'TechHub',              category:'Electronics',   area:'Bandra West',  description:'Latest gadgets, smart home devices, and tech accessories.',           rating:4.6, hours:'10am–9pm', phone:'919876543224', whatsapp:'919876543224', badge:'New',      color:COVER_COLORS[2] },
+        { _id:'s16', name:'Aroma Beauty Lounge',  category:'Beauty',        area:'Linking Road', description:'Luxury salon services, facials, and organic beauty treatments.',      rating:4.8, hours:'9am–8pm',  phone:'919876543225', whatsapp:'919876543225', badge:'Featured', color:COVER_COLORS[3] },
       ];
     }
 
@@ -205,35 +269,29 @@
       const cat  = document.getElementById('catFilter').value;
       const area = document.getElementById('areaFilter').value;
       const sort = document.getElementById('sortFilter').value;
-
       let filtered = allShops.filter(s => {
         const matchQ    = !q    || s.name.toLowerCase().includes(q) || (s.description||'').toLowerCase().includes(q);
         const matchCat  = !cat  || s.category === cat;
         const matchArea = !area || s.area === area;
         return matchQ && matchCat && matchArea;
       });
-
-      if (sort === 'rating') filtered.sort((a,b) => (b.rating||0) - (a.rating||0));
-      else if (sort === 'newest') filtered.sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-
+      if (sort === 'rating')  filtered.sort((a,b) => (b.rating||0) - (a.rating||0));
+      if (sort === 'newest')  filtered.sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
       document.getElementById('resultsCount').textContent = `Showing ${Math.min(visibleCount, filtered.length)} of ${filtered.length} shop${filtered.length !== 1 ? 's' : ''}`;
-
-      const grid = document.getElementById('shopsGrid');
+      const grid    = document.getElementById('shopsGrid');
       const visible = filtered.slice(0, visibleCount);
-
       if (!visible.length) {
         grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-store-slash"></i><p>No shops found. Try a different search.</p></div>`;
         document.getElementById('loadMoreBtn').style.display = 'none';
         return;
       }
-
       grid.innerHTML = visible.map(s => {
-        const color = s.color || COVER_COLORS[Math.floor(Math.random() * COVER_COLORS.length)];
-        const emoji = CATEGORY_EMOJI[s.category] || '🏪';
-        const badge = s.badge || (s.featured ? 'Featured' : s.trending ? 'Trending' : '');
+        const color     = s.color || COVER_COLORS[0];
+        const emoji     = CATEGORY_EMOJI[s.category] || '🏪';
+        const badge     = s.badge || (s.featured ? 'Featured' : s.trending ? 'Trending' : '');
         const badgeIcon = badge === 'Featured' ? '⭐' : badge === 'Trending' ? '🔥' : badge === 'Trusted' ? '✅' : badge === 'New' ? '🆕' : '';
-        const wa   = s.whatsapp || s.phone || '';
-        const maps = s.mapLink  || `https://maps.google.com/?q=${encodeURIComponent(s.name + ' ' + s.area)}`;
+        const wa        = s.whatsapp || s.phone || '';
+        const maps      = s.mapLink  || `https://maps.google.com/?q=${encodeURIComponent(s.name+' '+s.area)}`;
         return `
         <div class="shop-card">
           <div class="shop-cover" style="background:${color}">
@@ -250,21 +308,19 @@
             </div>
             <div class="shop-actions">
               <a href="shop-profile.html?id=${s._id}" class="btn btn-primary btn-sm">View Shop</a>
-              ${wa ? `<button class="icon-btn" onclick="window.open('https://wa.me/${wa}','_blank')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>` : ''}
-              <button class="icon-btn" onclick="window.open('${maps}','_blank')" title="Navigate"><i class="fas fa-directions"></i></button>
-              ${s.phone ? `<button class="icon-btn" onclick="window.location.href='tel:+${s.phone}'" title="Call"><i class="fas fa-phone"></i></button>` : ''}
+              ${wa   ? `<button class="icon-btn" onclick="window.open('https://wa.me/${wa}','_blank')"><i class="fab fa-whatsapp"></i></button>` : ''}
+              <button class="icon-btn" onclick="window.open('${maps}','_blank')"><i class="fas fa-directions"></i></button>
+              ${s.phone ? `<button class="icon-btn" onclick="window.location.href='tel:+${s.phone}'"><i class="fas fa-phone"></i></button>` : ''}
             </div>
           </div>
         </div>`;
       }).join('');
-
       document.getElementById('loadMoreBtn').style.display = filtered.length > visibleCount ? 'inline-flex' : 'none';
     }
 
     function filterShops() { visibleCount = 9; renderShops(); }
-    function loadMore() { visibleCount += 9; renderShops(); }
+    function loadMore()     { visibleCount += 9; renderShops(); }
 
-    // Pre-filter from URL params applied inside loadShops() after data is ready
     loadShops();
   </script>
 </body>
