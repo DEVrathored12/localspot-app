@@ -11,15 +11,17 @@ const app = express();
 
 app.use(cors({
   origin: (origin, cb) => {
-    // Allow any localhost/127.0.0.1 port + production
     if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) || origin === 'https://localspot-app.vercel.app') {
       cb(null, true);
     } else {
       cb(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
 }));
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

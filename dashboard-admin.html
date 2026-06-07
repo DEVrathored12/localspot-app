@@ -21,14 +21,14 @@
       <div><strong>Admin</strong><span>Super Admin</span></div>
     </div>
     <nav class="dash-nav">
-      <a data-section="overview"  class="dash-link active"><i class="fas fa-tachometer-alt"></i> Overview</a>
-      <a data-section="users"     class="dash-link"><i class="fas fa-users"></i> Users</a>
-      <a data-section="shops"     class="dash-link"><i class="fas fa-store"></i> Shops</a>
-      <a data-section="creators"  class="dash-link"><i class="fas fa-video"></i> Creators</a>
-      <a data-section="reviews"   class="dash-link"><i class="fas fa-star"></i> Reviews</a>
-      <a data-section="analytics" class="dash-link"><i class="fas fa-chart-line"></i> Analytics</a>
+      <a data-section="overview"  class="dash-link active" onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i> Overview</a>
+      <a data-section="users"     class="dash-link" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a>
+      <a data-section="shops"     class="dash-link" onclick="showSection('shops')"><i class="fas fa-store"></i> Shops</a>
+      <a data-section="creators"  class="dash-link" onclick="showSection('creators')"><i class="fas fa-video"></i> Creators</a>
+      <a data-section="reviews"   class="dash-link" onclick="showSection('reviews')"><i class="fas fa-star"></i> Reviews</a>
+      <a data-section="analytics" class="dash-link" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i> Analytics</a>
       <div class="dash-divider"></div>
-      <a data-section="settings"  class="dash-link"><i class="fas fa-cog"></i> Settings</a>
+      <a data-section="settings"  class="dash-link" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a>
       <a href="login.html" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
@@ -53,19 +53,19 @@
       <div id="section-overview" class="admin-section">
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-users"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-users"></i></div>
             <div class="stat-info"><span>Total Users</span><strong id="statUsers">—</strong><small class="up"><i class="fas fa-arrow-up"></i> All time</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-store"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-store"></i></div>
             <div class="stat-info"><span>Total Shops</span><strong id="statShops">—</strong><small class="up"><i class="fas fa-arrow-up"></i> All time</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-video"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-video"></i></div>
             <div class="stat-info"><span>Total Creators</span><strong id="statCreators">—</strong><small style="color:var(--grey-400)">Active creators</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-rupee-sign"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-rupee-sign"></i></div>
             <div class="stat-info"><span>Revenue</span><strong id="statRevenue">₹0</strong><small style="color:var(--grey-400)">This month</small></div>
           </div>
         </div>
@@ -168,19 +168,19 @@
       <div id="section-analytics" class="admin-section" style="display:none">
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-eye"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-eye"></i></div>
             <div class="stat-info"><span>Page Views</span><strong>—</strong><small style="color:var(--grey-400)">Coming soon</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-mouse-pointer"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-mouse-pointer"></i></div>
             <div class="stat-info"><span>Click Rate</span><strong>—</strong><small style="color:var(--grey-400)">Coming soon</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-user-plus"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-user-plus"></i></div>
             <div class="stat-info"><span>New Signups</span><strong id="analyticsUsers">—</strong><small style="color:var(--grey-400)">Total registered</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="background:#fff0f0;color:#e63946"><i class="fas fa-store"></i></div>
+            <div class="stat-icon" style="background:var(--red-light);color:var(--red)"><i class="fas fa-store"></i></div>
             <div class="stat-info"><span>Listed Shops</span><strong id="analyticsShops">—</strong><small style="color:var(--grey-400)">Total listed</small></div>
           </div>
         </div>
