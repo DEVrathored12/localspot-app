@@ -110,12 +110,11 @@ exports.uploadAvatar = async (req, res, next) => {
     res.json({ success: true, avatar: user.avatar });
   } catch (err) { next(err); }
 };
+exports.googleAuth = async (req, res, next) => {
   try {
     const { access_token, name, email } = req.body;
     if (!access_token || !email)
       return res.status(400).json({ success: false, message: 'Missing token or email' });
-
-    // Verify the access token with Google
     const googleRes = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
       headers: { Authorization: `Bearer ${access_token}` }
     });
@@ -124,7 +123,6 @@ exports.uploadAvatar = async (req, res, next) => {
     const profile = await googleRes.json();
     if (profile.email !== email)
       return res.status(401).json({ success: false, message: 'Token email mismatch' });
-
     let user = await User.findOne({ email: profile.email });
     if (!user) {
       const randomPass = crypto.randomBytes(32).toString('hex');
