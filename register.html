@@ -207,6 +207,11 @@
     const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:5000/api'
       : 'https://localspot-ngn1.onrender.com/api';
+
+    // Wake up Render on page load
+    if (!['localhost','127.0.0.1'].includes(window.location.hostname)) {
+      fetch('https://localspot-ngn1.onrender.com/api/health').catch(()=>{});
+    }
     const roleTabs = document.querySelectorAll('.role-tab');
     roleTabs.forEach(tab => {
       tab.addEventListener('click', () => {
