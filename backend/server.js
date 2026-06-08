@@ -10,11 +10,16 @@ connectDB();
 const app = express();
 
 // CORS
+const ALLOWED_ORIGINS = [
+  'https://localspot-app.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use((req, res, next) => {
-  const origin  = req.headers.origin || '';
+  const origin = req.headers.origin || '';
   const allowed = !origin ||
     /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
-    origin === process.env.FRONTEND_URL;
+    ALLOWED_ORIGINS.includes(origin);
   if (allowed) {
     res.header('Access-Control-Allow-Origin',      origin || '*');
     res.header('Access-Control-Allow-Methods',     'GET,POST,PUT,DELETE,OPTIONS');
