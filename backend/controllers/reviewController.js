@@ -23,7 +23,15 @@ exports.addReview = async (req, res, next) => {
 
 exports.deleteReview = async (req, res, next) => {
   try {
-    await Review.findByIdAndDelete(req.params.id);
+    const review = await Review.findById(req.params.id);
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    if (review.user.toString() !== req.user.id && req.user.role !== 'admin')
+      return res.status(403).json({ success: false, message: 'Not authorized' });
+    await review.deleteOne();
+    // Recalculate shop rating
+    const reviews = await Review.find({ shop: review.shop });
+    const avg = reviews.length ? reviews.reduce((a, r) => a + r.rating, 0) / reviews.length : 0;
+    await Shop.findByIdAndUpdate(review.shop, { rating: avg.toFixed(1), reviewCount: reviews.length });
     res.json({ success: true, message: 'Review deleted' });
   } catch (err) { next(err); }
 };

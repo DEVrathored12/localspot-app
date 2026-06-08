@@ -252,6 +252,92 @@
       t.textContent = msg; t.style.opacity = '1';
       setTimeout(() => t.style.opacity = '0', 2500);
     }
+    // ── Rich demo data ──
+    function injectDemoData() {
+      document.getElementById('statEarnings').textContent = '₹28,400';
+      document.getElementById('statVideos').textContent   = '14';
+      document.getElementById('statJobs').textContent     = '3';
+      document.getElementById('statRating').textContent   = '4.9';
+      document.getElementById('jobsBadge').textContent    = '3 New';
+
+      document.getElementById('overviewJobs').innerHTML = [
+        { shop:'The Spice Route', area:'Bandra West', type:'Product Reel', budget:'₹3,500', emoji:'🌶️', status:'new' },
+        { shop:'Silk & Threads',  area:'Linking Road', type:'Shop Tour',    budget:'₹4,200', emoji:'👗', status:'new' },
+        { shop:'Meena Jewellers', area:'Colaba',       type:'Promo Video',  budget:'₹5,000', emoji:'💍', status:'new' },
+      ].map(j => `
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--grey-200);margin-bottom:8px">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${j.emoji}</div>
+          <div style="flex:1">
+            <strong style="display:block;font-size:13px">${j.shop}</strong>
+            <span style="font-size:11px;color:var(--grey-400)">${j.type} · ${j.area}</span>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:var(--red)">${j.budget}</span>
+          <button class="btn btn-sm btn-primary" style="padding:6px 14px">Accept</button>
+        </div>`).join('');
+
+      document.getElementById('overviewEarnings').innerHTML = `
+        <div style="text-align:center;padding:12px 0 20px">
+          <div style="font-family:var(--font-display);font-size:2.8rem;font-weight:900;color:var(--black)">₹28,400</div>
+          <div style="font-size:12px;color:var(--grey-400);margin-bottom:20px">Earned this month</div>
+        </div>
+        ${[
+          { shop:'Crystal Electronics', amount:'₹4,500', date:'3 Jan 2025', emoji:'💻' },
+          { shop:'Glow Studio',         amount:'₹3,200', date:'28 Dec 2024', emoji:'💄' },
+          { shop:'The Spice Route',     amount:'₹3,500', date:'22 Dec 2024', emoji:'🌶️' },
+          { shop:'Casa Decor',          amount:'₹5,200', date:'18 Dec 2024', emoji:'🛋️' },
+        ].map(e => `
+          <div class="earning-row">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:20px">${e.emoji}</span>
+              <div><strong>${e.shop}</strong><span>${e.date}</span></div>
+            </div>
+            <span style="font-weight:700;color:#27ae60">${e.amount}</span>
+          </div>`).join('')}`;
+
+      // Jobs section
+      document.getElementById('jobsList').innerHTML = [
+        { shop:'The Spice Route', area:'Bandra West', type:'Product Reel',  budget:'₹3,500', deadline:'15 Jan', emoji:'🌶️', desc:'Short 60-sec reel showcasing premium spices and dry fruits.' },
+        { shop:'Silk & Threads',  area:'Linking Road', type:'Shop Tour',    budget:'₹4,200', deadline:'18 Jan', emoji:'👗', desc:'Full shop walkthrough tour with product highlights.' },
+        { shop:'Meena Jewellers', area:'Colaba',       type:'Promo Video',  budget:'₹5,000', deadline:'20 Jan', emoji:'💍', desc:'Festive promo video for diamond jewellery collection.' },
+      ].map(j => `
+        <div style="padding:16px;border:1px solid var(--grey-200);border-radius:var(--radius);margin-bottom:12px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='var(--grey-200)'">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="width:48px;height:48px;border-radius:12px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${j.emoji}</div>
+            <div style="flex:1">
+              <strong style="display:block;font-size:14px;margin-bottom:2px">${j.shop}</strong>
+              <span style="font-size:12px;color:var(--grey-400)">${j.type} · ${j.area} · Due ${j.deadline}</span>
+              <p style="font-size:12px;color:var(--grey-600);margin-top:6px;margin-bottom:12px">${j.desc}</p>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm btn-primary">Accept Job</button>
+                <button class="btn btn-sm btn-outline">Decline</button>
+                <span style="margin-left:auto;font-size:14px;font-weight:700;color:var(--red)">${j.budget}</span>
+              </div>
+            </div>
+          </div>
+        </div>`).join('');
+
+      // Videos section
+      document.getElementById('videoCount').textContent = '14';
+      document.getElementById('videosList').innerHTML = [
+        { shop:'Crystal Electronics', views:'4.2K', date:'3 Jan', emoji:'💻', type:'Product Reel' },
+        { shop:'Glow Studio',         views:'3.1K', date:'28 Dec', emoji:'💄', type:'Shop Tour' },
+        { shop:'The Spice Route',     views:'5.8K', date:'22 Dec', emoji:'🌶️', type:'Promo Video' },
+        { shop:'Casa Decor',          views:'2.9K', date:'18 Dec', emoji:'🛋️', type:'Product Highlights' },
+        { shop:'SportZone',           views:'3.7K', date:'12 Dec', emoji:'⚽', type:'Shop Tour' },
+      ].map(v => `
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--grey-200);margin-bottom:8px">
+          <div style="width:56px;height:40px;border-radius:8px;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${v.emoji}</div>
+          <div style="flex:1">
+            <strong style="display:block;font-size:13px">${v.shop}</strong>
+            <span style="font-size:11px;color:var(--grey-400)">${v.type} · ${v.date}</span>
+          </div>
+          <div style="text-align:right">
+            <span style="display:block;font-size:13px;font-weight:700"><i class="fas fa-eye" style="color:var(--grey-400);font-size:11px"></i> ${v.views}</span>
+          </div>
+        </div>`).join('');
+    }
+
+    injectDemoData();
   </script>
 </body>
 </html>

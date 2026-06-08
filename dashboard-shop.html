@@ -463,8 +463,47 @@
       setTimeout(() => t.style.opacity = '0', 2500);
     }
 
+    // ── Demo data for overview when no real shop exists ──
+    function injectDemoOverview() {
+      document.getElementById('statViews').textContent    = '1,248';
+      document.getElementById('statProducts').textContent = '12';
+      document.getElementById('statRating').textContent   = '4.7';
+      document.getElementById('shopSummary').innerHTML = `
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--grey-50);border-radius:var(--radius-sm);margin-bottom:10px">
+            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌶️</div>
+            <div><strong style="display:block;font-size:14px">The Spice Route</strong><span style="font-size:12px;color:var(--grey-400)">Food & Spices · Bandra West</span></div>
+            <a href="shop-profile.html?id=s1" class="btn btn-sm btn-outline" style="margin-left:auto">View</a>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:linear-gradient(135deg,#e8f8f0,#f0faf5);border-radius:10px;padding:14px;text-align:center">
+              <strong style="display:block;font-size:1.4rem;color:#27ae60">₹2.4L</strong>
+              <span style="font-size:11px;color:var(--grey-600)">Est. Revenue</span>
+            </div>
+            <div style="background:linear-gradient(135deg,#eef3fb,#f4f6fb);border-radius:10px;padding:14px;text-align:center">
+              <strong style="display:block;font-size:1.4rem;color:#1a3c6e">342</strong>
+              <span style="font-size:11px;color:var(--grey-600)">WhatsApp Taps</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--grey-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Recent Activity</div>
+        ${[
+          { icon:'⭐', text:'New 5-star review from Priya K.', time:'2h ago', color:'#fff3cd' },
+          { icon:'💬', text:'WhatsApp enquiry for Kashmiri Saffron', time:'4h ago', color:'#e8f8f0' },
+          { icon:'👁️', text:'18 profile views today', time:'Today', color:'#eef3fb' },
+        ].map(a => `
+          <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:${a.color};margin-bottom:6px">
+            <span style="font-size:18px">${a.icon}</span>
+            <div style="flex:1"><span style="font-size:12px;font-weight:500">${a.text}</span></div>
+            <span style="font-size:11px;color:var(--grey-400);flex-shrink:0">${a.time}</span>
+          </div>`).join('')}`;
+    }
+
     // Init
-    loadMyShop();
+    loadMyShop().then(() => {
+      // If still empty after load, show demo data
+      if (!myShopId) injectDemoOverview();
+    });
   </script>
 </body>
 </html>

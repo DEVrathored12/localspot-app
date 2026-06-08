@@ -1,19 +1,20 @@
-const express = require('express');
-const dotenv  = require('dotenv');
-const path    = require('path');
-const connectDB = require('./config/db');
+const express     = require('express');
+const dotenv      = require('dotenv');
+const path        = require('path');
+const rateLimit   = require('express-rate-limit');
+const connectDB   = require('./config/db');
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// CORS — allow any localhost port + production
+// CORS
 app.use((req, res, next) => {
-  const origin = req.headers.origin || '';
+  const origin  = req.headers.origin || '';
   const allowed = !origin ||
     /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
-    origin === 'https://localspot-app.vercel.app';
+    origin === process.env.FRONTEND_URL;
   if (allowed) {
     res.header('Access-Control-Allow-Origin',      origin || '*');
     res.header('Access-Control-Allow-Methods',     'GET,POST,PUT,DELETE,OPTIONS');
@@ -28,9 +29,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Rate limiters
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { success: false, message: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-app.use('/api/auth',                   require('./routes/auth'));
+app.use('/api/auth',                   authLimiter, require('./routes/auth'));
 app.use('/api/shops',                  require('./routes/shops'));
 app.use('/api/shops/:shopId/products', require('./routes/products'));
 app.use('/api/shops/:shopId/videos',   require('./routes/videos'));

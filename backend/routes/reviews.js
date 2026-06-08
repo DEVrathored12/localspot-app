@@ -5,6 +5,6 @@ const { protect, authorize } = require('../middleware/auth');
 
 router.get('/', getReviews);
 router.post('/', protect, addReview);
-router.delete('/:id', protect, authorize('admin'), deleteReview);
+router.delete('/:id', protect, deleteReview);
 
 module.exports = router;

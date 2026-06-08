@@ -278,9 +278,11 @@
     }
     function registerWithGoogle() {
       const clientId    = '1008674868759-i3okbul0v5806rcj4lnp916ovmce5a50.apps.googleusercontent.com';
-      const redirectUri = encodeURIComponent('https://localspot-app.vercel.app/register.html');
+      const redirectUri = encodeURIComponent(window.location.origin + '/register.html');
       const scope       = encodeURIComponent('openid email profile');
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+      const state       = btoa(crypto.randomUUID());
+      sessionStorage.setItem('oauth_state', state);
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}&state=${state}`;
     }
 
     function registerWithInstagram() {

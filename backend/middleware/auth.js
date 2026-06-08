@@ -12,6 +12,7 @@ exports.protect = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded.id);
+    if (!req.user) return res.status(401).json({ success: false, message: 'User no longer exists' });
     next();
   } catch {
     return res.status(401).json({ success: false, message: 'Token invalid' });
@@ -19,7 +20,7 @@ exports.protect = async (req, res, next) => {
 };
 
 exports.authorize = (...roles) => (req, res, next) => {
-  if (!roles.includes(req.user.role))
+  if (!req.user || !roles.includes(req.user.role))
     return res.status(403).json({ success: false, message: 'Access denied' });
   next();
 };

@@ -182,40 +182,26 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/auth-nav.js"></script>
   <script>
     const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:5000/api' : 'https://localspot-ngn1.onrender.com/api';
 
-    const _token = localStorage.getItem('token');
-    const _user  = JSON.parse(localStorage.getItem('user') || 'null');
-
-    // ── Navbar: show profile avatar if logged in ──
-    if (_token && _user) {
-      const initials = (_user.name || 'U').slice(0,2).toUpperCase();
-      document.getElementById('navActions').innerHTML = `
-        <button class="nav-avatar-btn" onclick="openProfileDrawer()">
-          <div class="nav-avatar-circle">${initials}</div>
-          <span class="nav-avatar-name">${_user.name.split(' ')[0]}</span>
-          <i class="fas fa-chevron-down" style="font-size:10px;color:var(--grey-400)"></i>
-        </button>`;
-      // hide login/register from mobile menu
-      document.getElementById('mobileLoginLink').style.display    = 'none';
-      document.getElementById('mobileRegisterLink').style.display = 'none';
-      // fill drawer
-      document.getElementById('drawerAvatar').textContent = initials;
-      document.getElementById('drawerName').textContent   = _user.name || 'User';
-      document.getElementById('drawerRole').textContent   = _user.role || 'customer';
-      document.getElementById('drawerEmail').textContent  = _user.email || '—';
-      document.getElementById('drawerType').textContent   = (_user.role||'customer').charAt(0).toUpperCase() + (_user.role||'customer').slice(1);
-      const savedCount = JSON.parse(localStorage.getItem('savedShops') || '[]').length;
-      renderDrawerSaved();
-      if (_user.phone) {
+    // Fill profile drawer if logged in
+    const _user2 = JSON.parse(localStorage.getItem('user') || 'null');
+    if (_user2) {
+      const initials2 = (_user2.name || 'U').slice(0,2).toUpperCase();
+      document.getElementById('drawerAvatar').textContent = initials2;
+      document.getElementById('drawerName').textContent   = _user2.name || 'User';
+      document.getElementById('drawerRole').textContent   = _user2.role || 'customer';
+      document.getElementById('drawerEmail').textContent  = _user2.email || '—';
+      document.getElementById('drawerType').textContent   = (_user2.role||'customer').charAt(0).toUpperCase() + (_user2.role||'customer').slice(1);
+      if (_user2.phone) {
         document.getElementById('drawerPhoneWrap').style.display = 'flex';
-        document.getElementById('drawerPhone').textContent = _user.phone;
+        document.getElementById('drawerPhone').textContent = _user2.phone;
       }
+      renderDrawerSaved();
     }
-
-    function renderDrawerSaved() {
       const saved = JSON.parse(localStorage.getItem('savedShops') || '[]');
       document.getElementById('drawerSavedCount').textContent = saved.length;
       const list = document.getElementById('drawerSavedList');
@@ -364,6 +350,12 @@
     function loadMore()     { visibleCount += 9; renderShops(); }
 
     loadShops();
+
+    // Auto-focus search if redirected from navbar Search button
+    if (new URLSearchParams(window.location.search).get('focus') === 'search') {
+      document.getElementById('shopSearch').focus();
+      document.getElementById('shopSearch').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   </script>
 </body>
 </html>

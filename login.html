@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Password <a href="#" class="forgot-link">Forgot?</a></label>
+            <label>Password <a href="#" class="forgot-link" onclick="showForgotModal(event)">Forgot?</a></label>
             <div class="input-icon-wrap">
               <i class="fas fa-lock"></i>
               <input type="password" id="loginPassword" placeholder="Enter your password" required/>
@@ -148,6 +148,21 @@
         <a href="https://developers.facebook.com/apps" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center"><i class="fab fa-instagram"></i> Open Meta Developer</a>
         <button onclick="document.getElementById('instaModal').style.display='none'" class="btn btn-outline">Close</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgotModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:420px;width:100%;position:relative">
+      <button onclick="closeForgotModal()" style="position:absolute;top:16px;right:16px;background:var(--grey-100);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--grey-600)"><i class="fas fa-times"></i></button>
+      <h3 style="margin:0 0 8px;font-size:1.1rem">Forgot Password?</h3>
+      <p style="font-size:13px;color:var(--grey-600);margin-bottom:20px">Enter your email and we'll send you a reset link.</p>
+      <div class="input-icon-wrap" style="margin-bottom:16px">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="forgotEmail" placeholder="you@example.com" style="width:100%"/>
+      </div>
+      <div id="forgotMsg" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px"></div>
+      <button id="forgotBtn" onclick="handleForgot()" class="btn btn-primary btn-full">Send Reset Link <i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 
@@ -256,9 +271,11 @@
 
     function loginWithGoogle() {
       const clientId    = '1008674868759-i3okbul0v5806rcj4lnp916ovmce5a50.apps.googleusercontent.com';
-      const redirectUri = encodeURIComponent('https://localspot-app.vercel.app/login.html');
+      const redirectUri = encodeURIComponent(window.location.origin + '/login.html');
       const scope       = encodeURIComponent('openid email profile');
-      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+      const state       = btoa(crypto.randomUUID());
+      sessionStorage.setItem('oauth_state', state);
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}&state=${state}`;
     }
 
     function loginWithInstagram() {
@@ -290,55 +307,95 @@
       document.getElementById('instaModal').style.display = 'flex';
     }
 
+    function showForgotModal(e) {
+      e.preventDefault();
+      document.getElementById('forgotModal').style.display = 'flex';
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgotModal').style.display = 'none';
+      document.getElementById('forgotEmail').value = '';
+      const msg = document.getElementById('forgotMsg');
+      msg.style.display = 'none';
+    }
+
+    async function handleForgot() {
+      const email = document.getElementById('forgotEmail').value.trim();
+      const msg   = document.getElementById('forgotMsg');
+      const btn   = document.getElementById('forgotBtn');
+      if (!email) { showForgotMsg('Please enter your email.', true); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const res  = await fetch(`${API}/auth/forgot-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        showForgotMsg(data.message || (data.success ? 'Reset link sent!' : 'Something went wrong.'), !data.success);
+      } catch {
+        showForgotMsg('Server error. Please try again.', true);
+      }
+      btn.disabled = false;
+      btn.innerHTML = 'Send Reset Link <i class="fas fa-paper-plane"></i>';
+    }
+
+    function showForgotMsg(text, isError = false) {
+      const el = document.getElementById('forgotMsg');
+      el.style.cssText = `display:block;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;border:1px solid ${isError ? '#c8d8f0' : '#b7e4c7'};background:${isError ? '#eef3fb' : '#e8f8f0'};color:${isError ? '#1a3c6e' : '#27ae60'}`;
+      el.textContent = text;
+    }
+
     // Handle Google OAuth token on page load
     const hash = window.location.hash;
     if (hash.includes('access_token')) {
-      // Show loading immediately
-      document.getElementById('loginForm').innerHTML = `
-        <div style="text-align:center;padding:32px 0">
-          <i class="fas fa-spinner fa-spin" style="font-size:32px;color:var(--red);margin-bottom:16px;display:block"></i>
-          <p style="font-size:14px;color:var(--grey-600)">Signing you in with Google...</p>
-        </div>`;
-      const accessToken = new URLSearchParams(hash.replace('#', '?')).get('access_token');
-      // Clear hash from URL
+      const hashParams  = new URLSearchParams(hash.replace('#', '?'));
+      const returnedState = hashParams.get('state');
+      const savedState    = sessionStorage.getItem('oauth_state');
+      sessionStorage.removeItem('oauth_state');
       history.replaceState(null, '', window.location.pathname);
-      fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } })
-        .then(r => r.json())
-        .then(async profile => {
-          // Try register first, then login if already exists
-          const tryAuth = async (retries = 3) => {
-            for (let i = 0; i < retries; i++) {
-              try {
-                let res  = await fetch(`${API}/auth/register`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ name: profile.name, email: profile.email, password: profile.sub, role: 'customer' })
-                });
-                let data = await res.json();
-                if (!data.success) {
-                  // Already registered — login instead
-                  res  = await fetch(`${API}/auth/login`, {
+
+      if (!returnedState || returnedState !== savedState) {
+        showError('OAuth state mismatch. Please try again.');
+      } else {
+        document.getElementById('loginForm').innerHTML = `
+          <div style="text-align:center;padding:32px 0">
+            <i class="fas fa-spinner fa-spin" style="font-size:32px;color:var(--red);margin-bottom:16px;display:block"></i>
+            <p style="font-size:14px;color:var(--grey-600)">Signing you in with Google...</p>
+          </div>`;
+        const accessToken = hashParams.get('access_token');
+        fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } })
+          .then(r => r.json())
+          .then(async profile => {
+            // Send Google token to backend for secure verification
+            const tryAuth = async (retries = 3) => {
+              for (let i = 0; i < retries; i++) {
+                try {
+                  const res  = await fetch(`${API}/auth/google`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: profile.email, password: profile.sub })
+                    body: JSON.stringify({ access_token: accessToken, name: profile.name, email: profile.email })
                   });
-                  data = await res.json();
+                  const data = await res.json();
+                  if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    const redirectMap = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
+                    window.location.href = redirectMap[data.user.role] || 'shops.html';
+                    return;
+                  }
+                } catch(e) {
+                  if (i < retries - 1) await new Promise(r => setTimeout(r, 3000));
                 }
-                if (data.success) {
-                  localStorage.setItem('token', data.token);
-                  localStorage.setItem('user', JSON.stringify(data.user));
-                  const redirectMap = { customer:'shops.html', shop:'dashboard-shop.html', creator:'dashboard-creator.html', admin:'dashboard-admin.html' };
-                  window.location.href = redirectMap[data.user.role] || 'shops.html';
-                  return;
-                }
-              } catch(e) {
-                if (i < retries - 1) await new Promise(r => setTimeout(r, 3000)); // wait 3s before retry
               }
-            }
-            showError('Server is starting up. Please try again in 10 seconds.');
-          };
-          tryAuth();
-        }).catch(() => showError('Google login failed. Please try again.'));
+              showError('Server is starting up. Please try again in 10 seconds.');
+            };
+            tryAuth();
+          }).catch(() => showError('Google login failed. Please try again.'));
+      }
     }
   </script>
 </body>

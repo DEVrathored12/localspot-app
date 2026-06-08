@@ -62,10 +62,9 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="shops.html">Shops</a></li>
         <li><a href="categories.html">Categories</a></li>
-        <li><a href="creators.html">Creators</a></li>
         <li><a href="about.html" class="active">About</a></li>
       </ul>
-      <div class="nav-actions">
+      <div class="nav-actions" id="navActions">
         <a href="login.html" class="btn btn-outline">Login</a>
         <a href="register.html" class="btn btn-primary">Get Started</a>
       </div>
@@ -75,10 +74,12 @@
   <div class="mobile-menu" id="mobileMenu">
     <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
     <ul>
-      <li><a href="index.html">Home</a></li><li><a href="shops.html">Shops</a></li>
-      <li><a href="categories.html">Categories</a></li><li><a href="creators.html">Creators</a></li>
-      <li><a href="about.html">About</a></li><li><a href="login.html">Login</a></li>
-      <li><a href="register.html">Register</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shops.html">Shops</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li id="mobileLoginLink"><a href="login.html">Login</a></li>
+      <li id="mobileRegisterLink"><a href="register.html">Register</a></li>
     </ul>
   </div>
 
@@ -259,6 +260,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/auth-nav.js"></script>
   <script>
     function handleContact(e) {
       e.preventDefault();

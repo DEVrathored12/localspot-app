@@ -25,16 +25,22 @@ exports.createShop = async (req, res, next) => {
 
 exports.updateShop = async (req, res, next) => {
   try {
-    const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const shop = await Shop.findById(req.params.id);
     if (!shop) return res.status(404).json({ success: false, message: 'Shop not found' });
-    res.json({ success: true, data: shop });
+    if (shop.owner.toString() !== req.user.id && req.user.role !== 'admin')
+      return res.status(403).json({ success: false, message: 'Not authorized to update this shop' });
+    const updated = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    res.json({ success: true, data: updated });
   } catch (err) { next(err); }
 };
 
 exports.deleteShop = async (req, res, next) => {
   try {
-    const shop = await Shop.findByIdAndDelete(req.params.id);
+    const shop = await Shop.findById(req.params.id);
     if (!shop) return res.status(404).json({ success: false, message: 'Shop not found' });
+    if (shop.owner.toString() !== req.user.id && req.user.role !== 'admin')
+      return res.status(403).json({ success: false, message: 'Not authorized to delete this shop' });
+    await shop.deleteOne();
     res.json({ success: true, message: 'Shop deleted' });
   } catch (err) { next(err); }
 };
