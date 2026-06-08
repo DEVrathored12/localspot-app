@@ -13,45 +13,123 @@
     .stat-icon { background: var(--red-light) !important; color: var(--red) !important; }
     .section-page { display: none; }
     .section-page.active { display: block; }
-    .shop-setup-banner {
-      background: linear-gradient(135deg, #1a3c6e, #2d5fa6);
-      color: #fff; border-radius: var(--radius); padding: 24px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
-    }
-    .shop-setup-banner h3 { color: #fff; font-size: 1rem; margin-bottom: 4px; }
-    .shop-setup-banner p { color: rgba(255,255,255,0.75); font-size: 13px; margin: 0; }
-    .profile-form { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+
+    /* Form styles */
+    .profile-form { display: flex; flex-direction: column; gap: 16px; max-width: 680px; }
+    .profile-form label { font-size: 13px; font-weight: 600; color: var(--grey-800); margin-bottom: 4px; display: block; }
     .profile-form input, .profile-form select, .profile-form textarea {
       width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-200);
       border-radius: var(--radius-sm); font-size: 14px; font-family: inherit;
       color: var(--black); transition: border-color var(--transition); background: var(--white);
     }
     .profile-form input:focus, .profile-form select:focus, .profile-form textarea:focus { border-color: var(--red); outline: none; }
-    .profile-form label { font-size: 13px; font-weight: 600; color: var(--grey-800); margin-bottom: 4px; display: block; }
+
+    /* Tags input */
+    .tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 12px; border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm); min-height: 46px; cursor: text; }
+    .tags-wrap:focus-within { border-color: var(--red); }
+    .tag-item { background: var(--red-light); color: var(--red); padding: 3px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .tag-item button { background: none; border: none; color: var(--red); cursor: pointer; padding: 0; font-size: 11px; }
+    .tag-input { border: none; outline: none; font-size: 13px; min-width: 120px; flex: 1; background: transparent; }
+
+    /* Product cards grid */
+    .products-grid-dash { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .prod-card-dash {
+      background: var(--white); border: 1.5px solid var(--grey-200); border-radius: var(--radius);
+      overflow: hidden; transition: all var(--transition);
+    }
+    .prod-card-dash:hover { border-color: var(--red); box-shadow: var(--shadow-md); }
+    .prod-card-img { height: 100px; background: var(--grey-50); display: flex; align-items: center; justify-content: center; font-size: 36px; position: relative; }
+    .prod-stock-badge { position: absolute; top: 8px; right: 8px; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
+    .prod-card-body { padding: 12px; }
+    .prod-card-body h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .prod-card-body .price { font-size: 14px; font-weight: 700; color: var(--red); }
+    .prod-card-body .desc { font-size: 11px; color: var(--grey-400); margin: 4px 0 10px; line-height: 1.4; }
+    .prod-card-actions { display: flex; gap: 6px; }
+
+    /* Review cards */
+    .review-card { background: var(--grey-50); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 12px; border: 1px solid var(--grey-200); }
+    .review-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .rev-av { width: 38px; height: 38px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .rev-stars { color: #f39c12; font-size: 13px; }
+    .rev-empty { color: var(--grey-200); }
+
+    /* Setup banner */
+    .setup-banner {
+      background: linear-gradient(135deg, #1a3c6e, #2d5fa6);
+      border-radius: var(--radius); padding: 24px 28px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .setup-banner-icon { font-size: 36px; flex-shrink: 0; }
+    .setup-banner h3 { color: #fff; font-size: 1rem; margin-bottom: 4px; }
+    .setup-banner p { color: rgba(255,255,255,0.75); font-size: 13px; margin: 0; }
+    .setup-banner .btn { flex-shrink: 0; margin-left: auto; }
+
+    /* Stats mini */
+    .mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .mini-stat { background: var(--grey-50); border-radius: 10px; padding: 14px; text-align: center; }
+    .mini-stat strong { display: block; font-size: 1.3rem; font-family: var(--font-display); color: var(--black); }
+    .mini-stat span { font-size: 11px; color: var(--grey-400); }
+
+    /* Activity feed */
+    .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 8px; margin-bottom: 6px; }
+    .activity-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+
+    /* Quick action buttons */
+    .quick-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .qa { display: flex; align-items: center; gap: 10px; padding: 14px; background: var(--grey-50); border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; color: var(--grey-800); transition: all var(--transition); text-decoration: none; }
+    .qa i { color: var(--red); width: 18px; }
+    .qa:hover { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+    /* Toggle switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .toggle { position: relative; width: 44px; height: 24px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; inset: 0; background: var(--grey-200); border-radius: 100px; cursor: pointer; transition: 0.3s; }
+    .slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
+    input:checked + .slider { background: var(--red); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--grey-400); }
+    .empty-state i { font-size: 44px; color: var(--grey-200); display: block; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; margin-bottom: 16px; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .products-grid-dash { grid-template-columns: 1fr 1fr; }
+      .quick-action-grid { grid-template-columns: 1fr 1fr; }
+      .mini-stats { grid-template-columns: 1fr 1fr; }
+      .profile-form { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .products-grid-dash { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="dashboard-page">
 
+  <!-- ── SIDEBAR ── -->
   <aside class="dash-sidebar" id="dashSidebar">
     <div class="dash-logo">
       <a href="index.html" class="logo logo-light"><span class="logo-mark">L</span><span>ocal<strong>Spot</strong></span></a>
     </div>
     <div class="dash-user">
       <div class="dash-avatar" id="sideAvatar">S</div>
-      <div><strong id="sideName">Shop Owner</strong><span>Shop Owner</span></div>
+      <div><strong id="sideName">Shop Owner</strong><span id="sideRole">Shop Owner</span></div>
     </div>
     <nav class="dash-nav">
       <a class="dash-link active" data-section="overview"  onclick="showSection('overview')"><i class="fas fa-tachometer-alt"></i> Overview</a>
       <a class="dash-link"        data-section="profile"   onclick="showSection('profile')"><i class="fas fa-store"></i> Shop Profile</a>
-      <a class="dash-link"        data-section="products"  onclick="showSection('products')"><i class="fas fa-images"></i> Products</a>
-      <a class="dash-link"        data-section="videos"    onclick="showSection('videos')"><i class="fas fa-video"></i> Videos</a>
+      <a class="dash-link"        data-section="products"  onclick="showSection('products')"><i class="fas fa-box-open"></i> Products</a>
       <a class="dash-link"        data-section="reviews"   onclick="showSection('reviews')"><i class="fas fa-star"></i> Reviews</a>
+      <a class="dash-link"        data-section="settings"  onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a>
       <div class="dash-divider"></div>
-      <a class="dash-link logout" href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a class="dash-link" href="shops.html" target="_blank"><i class="fas fa-globe"></i> Browse Shops</a>
+      <a class="dash-link logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
 
+  <!-- ── MAIN ── -->
   <div class="dash-main">
     <header class="dash-topbar">
       <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
@@ -60,141 +138,255 @@
         <span id="pageWelcome">Welcome back! 👋</span>
       </div>
       <div class="dash-topbar-actions">
-        <button class="icon-btn notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
-        <a href="shop-profile.html" class="btn btn-sm btn-outline">View My Shop</a>
+        <button class="icon-btn notif-btn" title="Notifications"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a id="viewShopBtn" href="shops.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> View Shop</a>
       </div>
     </header>
 
     <div class="dash-content">
 
-      <!-- ── OVERVIEW ── -->
+      <!-- ══════════════════════════════════
+           OVERVIEW
+      ══════════════════════════════════ -->
       <div id="section-overview" class="section-page active">
+
+        <!-- Setup banner (hidden once shop exists) -->
+        <div class="setup-banner" id="setupBanner" style="display:none">
+          <div class="setup-banner-icon">🏪</div>
+          <div>
+            <h3>Complete your shop profile</h3>
+            <p>Add your shop details so customers can discover and contact you.</p>
+          </div>
+          <button class="btn btn-primary" onclick="showSection('profile')">Set Up Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <!-- Stats -->
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-eye"></i></div>
-            <div class="stat-info"><span>Profile Views</span><strong id="statViews">—</strong><small class="up"><i class="fas fa-arrow-up"></i> This week</small></div>
+            <div class="stat-icon"><i class="fas fa-store"></i></div>
+            <div class="stat-info"><span>Shop Status</span><strong id="statStatus">—</strong><small id="statStatusLabel" style="color:var(--grey-400)">Not created</small></div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-images"></i></div>
-            <div class="stat-info"><span>Products Listed</span><strong id="statProducts">—</strong><small style="color:var(--grey-400)">In your shop</small></div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fab fa-whatsapp"></i></div>
-            <div class="stat-info"><span>WhatsApp Taps</span><strong>—</strong><small style="color:var(--grey-400)">This month</small></div>
+            <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+            <div class="stat-info"><span>Products</span><strong id="statProducts">0</strong><small style="color:var(--grey-400)">Listed</small></div>
           </div>
           <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-star"></i></div>
-            <div class="stat-info"><span>Avg. Rating</span><strong id="statRating">—</strong><small style="color:var(--grey-400)">Customer reviews</small></div>
+            <div class="stat-info"><span>Rating</span><strong id="statRating">—</strong><small style="color:var(--grey-400)">Avg. score</small></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-comments"></i></div>
+            <div class="stat-info"><span>Reviews</span><strong id="statReviews">0</strong><small style="color:var(--grey-400)">Total received</small></div>
           </div>
         </div>
 
         <div class="dash-two-col">
+          <!-- Shop summary card -->
           <div class="dash-card">
-            <div class="dash-card-head"><h3>Your Shop</h3></div>
-            <div id="shopSummary" style="color:var(--grey-400);font-size:13px;padding:8px 0">Loading...</div>
+            <div class="dash-card-head"><h3>My Shop</h3><button class="btn btn-sm btn-outline" onclick="showSection('profile')"><i class="fas fa-edit"></i> Edit</button></div>
+            <div id="shopSummaryCard">
+              <div class="empty-state" style="padding:24px">
+                <i class="fas fa-store"></i>
+                <p>No shop created yet.</p>
+                <button class="btn btn-primary btn-sm" onclick="showSection('profile')">Create Shop Profile</button>
+              </div>
+            </div>
           </div>
-          <div class="dash-card plan-card">
-            <h3>Your Plan</h3>
-            <div class="plan-info">
-              <div class="plan-badge free">Free Plan</div>
-              <ul class="plan-features">
-                <li class="active"><i class="fas fa-check"></i> Shop Profile</li>
-                <li class="active"><i class="fas fa-check"></i> Up to 5 Products</li>
-                <li class="inactive"><i class="fas fa-times"></i> Featured Listing</li>
-                <li class="inactive"><i class="fas fa-times"></i> Video Showcase</li>
-                <li class="inactive"><i class="fas fa-times"></i> Priority Support</li>
-              </ul>
-              <a href="#" class="btn btn-primary btn-full">Upgrade to Premium</a>
+
+          <!-- Quick actions -->
+          <div class="dash-card">
+            <div class="dash-card-head"><h3>Quick Actions</h3></div>
+            <div class="quick-action-grid">
+              <button class="qa" onclick="showSection('profile')"><i class="fas fa-store"></i> Edit Profile</button>
+              <button class="qa" onclick="showSection('products');openAddProduct()"><i class="fas fa-plus"></i> Add Product</button>
+              <button class="qa" onclick="showSection('reviews')"><i class="fas fa-star"></i> View Reviews</button>
+              <a class="qa" id="waQuickBtn" href="#" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+            <div class="dash-divider" style="margin:16px 0"></div>
+            <div class="dash-card-head" style="margin-bottom:12px"><h3>Recent Reviews</h3></div>
+            <div id="recentReviews">
+              <p style="font-size:13px;color:var(--grey-400)">No reviews yet.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── SHOP PROFILE ── -->
+      <!-- ══════════════════════════════════
+           SHOP PROFILE
+      ══════════════════════════════════ -->
       <div id="section-profile" class="section-page">
         <div class="dash-card">
           <div class="dash-card-head">
             <h3>Shop Profile</h3>
-            <span id="profileStatus" class="status-badge pending">Not Created</span>
+            <span class="status-badge pending" id="profileStatusBadge">Not Created</span>
           </div>
-          <div id="profileFormWrap">
-            <div class="shop-setup-banner">
+          <form class="profile-form" id="shopProfileForm" onsubmit="saveShopProfile(event)">
+            <div class="form-row">
               <div>
-                <h3>Set up your shop profile</h3>
-                <p>Fill in your shop details so customers can find and contact you.</p>
+                <label>Shop Name *</label>
+                <input type="text" id="pName" placeholder="e.g. The Spice Route" required/>
+              </div>
+              <div>
+                <label>Category *</label>
+                <select id="pCategory" required>
+                  <option value="">Select category</option>
+                  <option>Food & Spices</option><option>Clothing</option><option>Electronics</option>
+                  <option>Beauty</option><option>Jewellery</option><option>Gifts</option>
+                  <option>Services</option><option>Books</option><option>Health</option>
+                  <option>Home</option><option>Sports</option><option>Pets</option>
+                </select>
               </div>
             </div>
-            <form class="profile-form" id="shopProfileForm" onsubmit="saveShopProfile(event)">
-              <div class="form-row">
-                <div><label>Shop Name *</label><input type="text" id="pName" placeholder="e.g. The Spice Route" required/></div>
-                <div><label>Category *</label>
-                  <select id="pCategory" required>
-                    <option value="">Select category</option>
-                    <option>Food & Spices</option><option>Clothing</option><option>Electronics</option>
-                    <option>Beauty</option><option>Jewellery</option><option>Gifts</option>
-                    <option>Services</option><option>Books</option><option>Health</option>
-                    <option>Home</option><option>Sports</option><option>Pets</option>
-                  </select>
-                </div>
+            <div>
+              <label>Description</label>
+              <textarea id="pDesc" rows="3" placeholder="Tell customers about your shop, specialities, history..."></textarea>
+            </div>
+            <div class="form-row">
+              <div>
+                <label>Area / Locality *</label>
+                <input type="text" id="pArea" placeholder="e.g. Bandra West" required/>
               </div>
-              <div><label>Description</label><textarea id="pDesc" rows="3" placeholder="Tell customers about your shop..."></textarea></div>
-              <div class="form-row">
-                <div><label>Area / Locality *</label><input type="text" id="pArea" placeholder="e.g. Bandra West" required/></div>
-                <div><label>Full Address</label><input type="text" id="pAddress" placeholder="Street, City, PIN"/></div>
+              <div>
+                <label>Full Address</label>
+                <input type="text" id="pAddress" placeholder="Street, City, PIN"/>
               </div>
-              <div class="form-row">
-                <div><label>Phone</label><input type="tel" id="pPhone" placeholder="+91 98765 43210"/></div>
-                <div><label>WhatsApp</label><input type="tel" id="pWhatsapp" placeholder="+91 98765 43210"/></div>
+            </div>
+            <div class="form-row">
+              <div>
+                <label>Phone</label>
+                <input type="tel" id="pPhone" placeholder="+91 98765 43210"/>
               </div>
-              <div><label>Google Maps Link</label><input type="url" id="pMapLink" placeholder="https://maps.google.com/..."/></div>
-              <div style="display:flex;gap:10px;margin-top:8px">
-                <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Shop Profile <i class="fas fa-save"></i></button>
+              <div>
+                <label>WhatsApp Number</label>
+                <input type="tel" id="pWhatsapp" placeholder="+91 98765 43210"/>
               </div>
-            </form>
-          </div>
+            </div>
+            <div>
+              <label>Google Maps Link</label>
+              <input type="url" id="pMapLink" placeholder="https://maps.google.com/..."/>
+            </div>
+            <div>
+              <label>Tags <small style="color:var(--grey-400);font-weight:400">(press Enter to add)</small></label>
+              <div class="tags-wrap" id="tagsWrap" onclick="document.getElementById('tagInput').focus()">
+                <input class="tag-input" id="tagInput" placeholder="e.g. organic, handmade..." onkeydown="handleTagInput(event)"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border:1.5px solid var(--grey-200);border-radius:var(--radius-sm)">
+                <label style="margin:0;flex:1">Mark as Featured</label>
+                <label class="toggle"><input type="checkbox" id="pFeatured"/><span class="slider"></span></label>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px;border:1.5px solid var(--grey-200);border-radius:var(--radius-sm)">
+                <label style="margin:0;flex:1">Mark as Trending</label>
+                <label class="toggle"><input type="checkbox" id="pTrending"/><span class="slider"></span></label>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+              <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                <i class="fas fa-save"></i> Save Profile
+              </button>
+              <button type="button" class="btn btn-outline" id="deleteShopBtn" style="display:none;border-color:#e63946;color:#e63946" onclick="deleteShop()">
+                <i class="fas fa-trash"></i> Delete Shop
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
-      <!-- ── PRODUCTS ── -->
+      <!-- ══════════════════════════════════
+           PRODUCTS
+      ══════════════════════════════════ -->
       <div id="section-products" class="section-page">
         <div class="dash-card">
           <div class="dash-card-head">
-            <h3>My Products <span class="count-badge" id="productCount">0</span></h3>
-            <button class="btn btn-sm btn-primary" onclick="document.getElementById('addProductModal').style.display='flex'">
-              <i class="fas fa-plus"></i> Add Product
-            </button>
+            <h3>Products <span class="count-badge" id="productCount">0</span></h3>
+            <button class="btn btn-sm btn-primary" onclick="openAddProduct()"><i class="fas fa-plus"></i> Add Product</button>
           </div>
-          <div class="products-table-wrap">
-            <table class="dash-table">
-              <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
-              <tbody id="productsTableBody">
-                <tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:32px">Loading products...</td></tr>
-              </tbody>
-            </table>
+          <div id="productsGrid" class="products-grid-dash">
+            <div class="empty-state" style="grid-column:1/-1">
+              <i class="fas fa-box-open"></i>
+              <p>No products yet. Add your first product!</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- ── VIDEOS ── -->
-      <div id="section-videos" class="section-page">
-        <div class="dash-card">
-          <div class="dash-card-head"><h3>Video Requests</h3></div>
-          <div style="text-align:center;padding:48px 20px;color:var(--grey-400)">
-            <i class="fas fa-video" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
-            <p style="font-size:14px;margin-bottom:16px">No video requests yet.</p>
-            <p style="font-size:13px">Upgrade to Premium to request promo videos from local creators.</p>
-            <a href="#" class="btn btn-primary" style="margin-top:16px">Upgrade Plan</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── REVIEWS ── -->
+      <!-- ══════════════════════════════════
+           REVIEWS
+      ══════════════════════════════════ -->
       <div id="section-reviews" class="section-page">
         <div class="dash-card">
-          <div class="dash-card-head"><h3>Customer Reviews</h3></div>
-          <div id="reviewsList" style="text-align:center;padding:48px 20px;color:var(--grey-400)">
-            <i class="fas fa-star" style="font-size:40px;color:var(--grey-200);display:block;margin-bottom:12px"></i>
-            <p style="font-size:14px">No reviews yet. Reviews will appear here once customers rate your shop.</p>
+          <div class="dash-card-head">
+            <h3>Customer Reviews <span class="count-badge" id="reviewCount">0</span></h3>
+          </div>
+          <!-- Rating summary -->
+          <div id="ratingSummary" style="display:none;background:var(--grey-50);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px">
+            <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+              <div style="text-align:center">
+                <div style="font-family:var(--font-display);font-size:3rem;font-weight:900;color:var(--black);line-height:1" id="avgRatingBig">0</div>
+                <div id="starsDisplay" style="color:#f39c12;font-size:16px;margin:4px 0"></div>
+                <div style="font-size:12px;color:var(--grey-400)" id="totalReviewsLabel">0 reviews</div>
+              </div>
+              <div style="flex:1;min-width:200px" id="ratingBars"></div>
+            </div>
+          </div>
+          <div id="reviewsList">
+            <div class="empty-state">
+              <i class="fas fa-star"></i>
+              <p>No reviews yet. Share your shop link to get your first review!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════
+           SETTINGS
+      ══════════════════════════════════ -->
+      <div id="section-settings" class="section-page">
+        <div class="dash-card" style="max-width:560px">
+          <div class="dash-card-head"><h3>Account Settings</h3></div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="padding:16px;background:var(--grey-50);border-radius:var(--radius-sm);display:flex;align-items:center;gap:14px">
+              <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0" id="settingsAvatar">S</div>
+              <div>
+                <div style="font-size:14px;font-weight:700" id="settingsName">—</div>
+                <div style="font-size:12px;color:var(--grey-400)" id="settingsEmail">—</div>
+                <div style="font-size:11px;color:var(--red);font-weight:600;margin-top:2px">Shop Owner</div>
+              </div>
+            </div>
+
+            <div style="border:1.5px solid var(--grey-200);border-radius:var(--radius-sm);overflow:hidden">
+              <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--grey-100)">
+                <div><div style="font-size:13px;font-weight:600">Shop Visibility</div><div style="font-size:12px;color:var(--grey-400)">Show your shop in search results</div></div>
+                <label class="toggle"><input type="checkbox" id="visibilityToggle" checked onchange="updateVisibility()"/><span class="slider"></span></label>
+              </div>
+              <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div><div style="font-size:13px;font-weight:600">WhatsApp Enquiries</div><div style="font-size:12px;color:var(--grey-400)">Allow customers to contact via WhatsApp</div></div>
+                <label class="toggle"><input type="checkbox" id="waToggle" checked/><span class="slider"></span></label>
+              </div>
+            </div>
+
+            <div style="border:1.5px solid var(--grey-200);border-radius:var(--radius-sm);overflow:hidden">
+              <a href="about.html#pricing" style="padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--grey-100);color:var(--black)">
+                <i class="fas fa-rocket" style="color:var(--gold);width:20px"></i>
+                <div style="flex:1"><div style="font-size:13px;font-weight:600">Upgrade to Premium</div><div style="font-size:12px;color:var(--grey-400)">Get featured listings & video slots</div></div>
+                <i class="fas fa-chevron-right" style="color:var(--grey-400);font-size:12px"></i>
+              </a>
+              <a href="shops.html" target="_blank" style="padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--grey-100);color:var(--black)">
+                <i class="fas fa-globe" style="color:var(--red);width:20px"></i>
+                <div style="flex:1"><div style="font-size:13px;font-weight:600">Browse All Shops</div><div style="font-size:12px;color:var(--grey-400)">See how your shop looks to customers</div></div>
+                <i class="fas fa-chevron-right" style="color:var(--grey-400);font-size:12px"></i>
+              </a>
+              <a href="mailto:localspot03@gmail.com" style="padding:14px 16px;display:flex;align-items:center;gap:12px;color:var(--black)">
+                <i class="fas fa-headset" style="color:var(--red);width:20px"></i>
+                <div style="flex:1"><div style="font-size:13px;font-weight:600">Contact Support</div><div style="font-size:12px;color:var(--grey-400)">localspot03@gmail.com</div></div>
+                <i class="fas fa-chevron-right" style="color:var(--grey-400);font-size:12px"></i>
+              </a>
+            </div>
+
+            <button onclick="confirmLogout()" style="width:100%;padding:12px;border-radius:var(--radius-sm);border:1.5px solid #e63946;background:#fff;color:#e63946;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
           </div>
         </div>
       </div>
@@ -202,30 +394,32 @@
     </div>
   </div>
 
-  <!-- ADD PRODUCT MODAL -->
-  <div class="modal-overlay" id="addProductModal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <!-- ══════════════════════════════════
+       ADD / EDIT PRODUCT MODAL
+  ══════════════════════════════════ -->
+  <div class="modal-overlay" id="productModal" style="display:none" onclick="if(event.target===this)closeProductModal()">
     <div class="modal-card">
       <div class="modal-head">
-        <h3>Add New Product</h3>
-        <button class="close-modal" onclick="document.getElementById('addProductModal').style.display='none'"><i class="fas fa-times"></i></button>
+        <h3 id="productModalTitle">Add Product</h3>
+        <button class="close-modal" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
       </div>
-      <form class="modal-form" id="addProductForm" onsubmit="addProduct(event)">
+      <form class="modal-form" id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="editProductId"/>
         <div class="form-group">
           <label>Product Name *</label>
           <input type="text" id="prodName" placeholder="e.g. Kashmiri Saffron" required/>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Category</label>
-            <select id="prodCategory">
-              <option>Spices</option><option>Dry Fruits</option><option>Masalas</option>
-              <option>Clothing</option><option>Electronics</option><option>Beauty</option>
-              <option>Jewellery</option><option>Gifts</option><option>Other</option>
-            </select>
+            <label>Price</label>
+            <input type="text" id="prodPrice" placeholder="e.g. ₹120"/>
           </div>
           <div class="form-group">
-            <label>Price</label>
-            <input type="text" id="prodPrice" placeholder="e.g. ₹120 / 250g"/>
+            <label>Stock</label>
+            <select id="prodStock">
+              <option value="true">In Stock</option>
+              <option value="false">Out of Stock</option>
+            </select>
           </div>
         </div>
         <div class="form-group">
@@ -233,12 +427,17 @@
           <textarea id="prodDesc" rows="3" placeholder="Brief product description..."></textarea>
         </div>
         <div class="modal-actions">
-          <button type="button" class="btn btn-outline" onclick="document.getElementById('addProductModal').style.display='none'">Cancel</button>
-          <button type="submit" class="btn btn-primary" id="addProductBtn">Add Product</button>
+          <button type="button" class="btn btn-outline" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveProductBtn">Save Product</button>
         </div>
       </form>
     </div>
   </div>
+
+  <!-- ══════════════════════════════════
+       TOAST
+  ══════════════════════════════════ -->
+  <div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s;pointer-events:none"></div>
 
   <script src="js/main.js"></script>
   <script>
@@ -247,62 +446,134 @@
     const token = localStorage.getItem('token');
     const user  = JSON.parse(localStorage.getItem('user') || '{}');
 
-    if (!token || user.role !== 'shop') window.location.href = 'login.html';
+    if (!token || user.role !== 'shop') { window.location.href = 'login.html'; }
 
-    // Init user info
-    document.getElementById('sideAvatar').textContent  = (user.name || 'S').slice(0,2).toUpperCase();
-    document.getElementById('sideName').textContent     = user.name || 'Shop Owner';
-    document.getElementById('pageWelcome').textContent  = `Welcome back, ${(user.name||'').split(' ')[0]}! 👋`;
+    // ── Init UI ──
+    const initials = (user.name || 'S').slice(0,2).toUpperCase();
+    document.getElementById('sideAvatar').textContent  = initials;
+    document.getElementById('sideName').textContent    = user.name || 'Shop Owner';
+    document.getElementById('pageWelcome').textContent = `Welcome back, ${(user.name||'').split(' ')[0]}! 👋`;
+    document.getElementById('settingsAvatar').textContent = initials;
+    document.getElementById('settingsName').textContent   = user.name || '—';
+    document.getElementById('settingsEmail').textContent  = user.email || '—';
 
-    // Sidebar toggle
+    // ── Sidebar ──
     document.getElementById('sidebarToggle').addEventListener('click', () =>
       document.getElementById('dashSidebar').classList.toggle('open'));
+    document.getElementById('logoutBtn').addEventListener('click', confirmLogout);
 
-    // Logout
-    document.querySelector('.dash-link.logout').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.clear();
-      window.location.href = 'login.html';
-    });
+    function confirmLogout() {
+      if (confirm('Are you sure you want to logout?')) { localStorage.clear(); window.location.href = 'login.html'; }
+    }
 
-    // Section switching
+    // ── Section nav ──
     function showSection(name) {
       document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.dash-link[data-section]').forEach(l => l.classList.remove('active'));
       document.getElementById('section-' + name).classList.add('active');
-      document.querySelector(`.dash-link[data-section="${name}"]`).classList.add('active');
-      const titles = { overview:'Overview', profile:'Shop Profile', products:'Products', videos:'Videos', reviews:'Reviews' };
+      const link = document.querySelector(`.dash-link[data-section="${name}"]`);
+      if (link) link.classList.add('active');
+      const titles = { overview:'Overview', profile:'Shop Profile', products:'Products', reviews:'Reviews', settings:'Settings' };
       document.getElementById('pageTitle').textContent = titles[name] || name;
       document.getElementById('dashSidebar').classList.remove('open');
-      if (name === 'products') loadProducts();
-      if (name === 'reviews')  loadReviews();
+      if (name === 'products') renderProducts();
+      if (name === 'reviews')  renderReviews();
     }
 
-    // ── Shop Profile ──
-    let myShopId = localStorage.getItem('shopId') || null;
+    // ══════════════════════════════════
+    // SHOP DATA
+    // ══════════════════════════════════
+    let myShop = null;
+    let myProducts = [];
+    let myReviews  = [];
+    let tags = [];
 
-    async function loadMyShop() {
+    async function init() {
       try {
         const res  = await fetch(`${API}/shops`, { headers: { Authorization: `Bearer ${token}` } });
         const data = await res.json();
         if (!data.success) return;
-        const mine = data.data.find(s => s.owner?._id === user.id || s.owner === user.id);
-        if (mine) {
-          myShopId = mine._id;
-          localStorage.setItem('shopId', myShopId);
-          populateProfileForm(mine);
-          updateOverviewShop(mine);
-          document.getElementById('profileStatus').textContent  = 'Active';
-          document.getElementById('profileStatus').className    = 'status-badge active';
-          document.getElementById('statRating').textContent     = mine.rating || '—';
-        } else {
-          document.getElementById('shopSummary').innerHTML =
-            `<p style="margin-bottom:12px">You haven't created your shop profile yet.</p>
-             <button class="btn btn-primary btn-sm" onclick="showSection('profile')"><i class="fas fa-store"></i> Create Shop Profile</button>`;
-        }
+        myShop = data.data.find(s => s.owner?._id === user.id || s.owner === user.id) || null;
       } catch(e) {}
+
+      if (myShop) {
+        localStorage.setItem('shopId', myShop._id);
+        populateProfileForm(myShop);
+        updateOverviewCard(myShop);
+        updateStatCards(myShop);
+        // Load products & reviews counts
+        await loadProductsData();
+        await loadReviewsData();
+        renderRecentReviews();
+        document.getElementById('setupBanner').style.display = 'none';
+        document.getElementById('deleteShopBtn').style.display = 'inline-flex';
+        if (myShop.whatsapp || myShop.phone) {
+          document.getElementById('waQuickBtn').href = `https://wa.me/${myShop.whatsapp || myShop.phone}`;
+          document.getElementById('viewShopBtn').href = `shop-profile.html?id=${myShop._id}`;
+        }
+      } else {
+        document.getElementById('setupBanner').style.display = 'flex';
+        document.getElementById('statStatus').textContent = '—';
+        document.getElementById('statStatusLabel').textContent = 'Not created';
+      }
     }
 
+    function updateStatCards(shop) {
+      document.getElementById('statStatus').textContent    = shop.featured ? '⭐ Featured' : '✅ Active';
+      document.getElementById('statStatusLabel').textContent = shop.category + ' · ' + shop.area;
+      document.getElementById('statRating').textContent    = shop.rating ? parseFloat(shop.rating).toFixed(1) : '—';
+      document.getElementById('statReviews').textContent   = shop.reviewCount || 0;
+    }
+
+    function updateOverviewCard(shop) {
+      const COLORS = ['linear-gradient(135deg,#1a3c6e,#2d5fa6)','linear-gradient(135deg,#0a1e38,#1a3c6e)','linear-gradient(135deg,#1a3c6e,#c9a84c)'];
+      const EMOJI  = {'Food & Spices':'🌶️','Clothing':'👗','Electronics':'💻','Beauty':'💄','Jewellery':'💍','Gifts':'🎁','Services':'🔧','Books':'📚','Health':'💊','Home':'🛋️','Sports':'⚽','Pets':'🐾'};
+      const color  = COLORS[Math.floor(Math.random()*3)];
+      const emoji  = EMOJI[shop.category] || '🏪';
+      document.getElementById('shopSummaryCard').innerHTML = `
+        <div style="border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--grey-200)">
+          <div style="height:80px;background:${color};display:flex;align-items:center;padding:16px;gap:14px">
+            <div style="font-size:28px">${emoji}</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:#fff">${shop.name}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.7)">${shop.category} · ${shop.area}</div>
+            </div>
+            ${shop.featured ? '<span style="margin-left:auto;background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px">⭐ Featured</span>' : ''}
+          </div>
+          <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+            ${shop.phone    ? `<div style="font-size:12px;color:var(--grey-600);display:flex;align-items:center;gap:8px"><i class="fas fa-phone" style="color:var(--red);width:14px"></i>${shop.phone}</div>` : ''}
+            ${shop.address  ? `<div style="font-size:12px;color:var(--grey-600);display:flex;align-items:center;gap:8px"><i class="fas fa-map-marker-alt" style="color:var(--red);width:14px"></i>${shop.address}</div>` : ''}
+            ${shop.whatsapp ? `<div style="font-size:12px;color:var(--grey-600);display:flex;align-items:center;gap:8px"><i class="fab fa-whatsapp" style="color:#25d366;width:14px"></i>${shop.whatsapp}</div>` : ''}
+          </div>
+          <div class="mini-stats" style="padding:0 14px 14px">
+            <div class="mini-stat"><strong>${myProducts.length}</strong><span>Products</span></div>
+            <div class="mini-stat"><strong>${shop.reviewCount || 0}</strong><span>Reviews</span></div>
+          </div>
+        </div>`;
+    }
+
+    // ── Tags ──
+    function renderTags() {
+      const wrap = document.getElementById('tagsWrap');
+      wrap.querySelectorAll('.tag-item').forEach(t => t.remove());
+      tags.forEach(tag => {
+        const el = document.createElement('span');
+        el.className = 'tag-item';
+        el.innerHTML = `${tag} <button type="button" onclick="removeTag('${tag}')"><i class="fas fa-times"></i></button>`;
+        wrap.insertBefore(el, document.getElementById('tagInput'));
+      });
+    }
+    function handleTagInput(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = e.target.value.trim().replace(',','');
+        if (val && !tags.includes(val)) { tags.push(val); renderTags(); }
+        e.target.value = '';
+      }
+    }
+    function removeTag(tag) { tags = tags.filter(t => t !== tag); renderTags(); }
+
+    // ── Populate profile form ──
     function populateProfileForm(s) {
       document.getElementById('pName').value     = s.name        || '';
       document.getElementById('pCategory').value = s.category    || '';
@@ -312,198 +583,266 @@
       document.getElementById('pPhone').value    = s.phone       || '';
       document.getElementById('pWhatsapp').value = s.whatsapp    || '';
       document.getElementById('pMapLink').value  = s.mapLink     || '';
-      document.querySelector('.shop-setup-banner').style.display = 'none';
+      document.getElementById('pFeatured').checked = s.featured  || false;
+      document.getElementById('pTrending').checked = s.trending  || false;
+      document.getElementById('profileStatusBadge').textContent = 'Active';
+      document.getElementById('profileStatusBadge').className   = 'status-badge active';
+      tags = Array.isArray(s.tags) ? [...s.tags] : [];
+      renderTags();
     }
 
-    function updateOverviewShop(s) {
-      document.getElementById('shopSummary').innerHTML = `
-        <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--grey-50);border-radius:var(--radius-sm)">
-          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏪</div>
-          <div>
-            <strong style="display:block;font-size:14px">${s.name}</strong>
-            <span style="font-size:12px;color:var(--grey-400)">${s.category} · ${s.area}</span>
-          </div>
-          <a href="shop-profile.html" class="btn btn-sm btn-outline" style="margin-left:auto">View</a>
-        </div>`;
-    }
-
+    // ── Save shop ──
     async function saveShopProfile(e) {
       e.preventDefault();
-      const btn  = document.getElementById('saveProfileBtn');
-      btn.disabled = true; btn.innerHTML = 'Saving... <i class="fas fa-spinner fa-spin"></i>';
+      const btn = document.getElementById('saveProfileBtn');
+      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
       const body = {
-        name: document.getElementById('pName').value.trim(),
-        category: document.getElementById('pCategory').value,
+        name:        document.getElementById('pName').value.trim(),
+        category:    document.getElementById('pCategory').value,
         description: document.getElementById('pDesc').value.trim(),
-        area: document.getElementById('pArea').value.trim(),
-        address: document.getElementById('pAddress').value.trim(),
-        phone: document.getElementById('pPhone').value.trim(),
-        whatsapp: document.getElementById('pWhatsapp').value.trim(),
-        mapLink: document.getElementById('pMapLink').value.trim(),
+        area:        document.getElementById('pArea').value.trim(),
+        address:     document.getElementById('pAddress').value.trim(),
+        phone:       document.getElementById('pPhone').value.trim(),
+        whatsapp:    document.getElementById('pWhatsapp').value.trim(),
+        mapLink:     document.getElementById('pMapLink').value.trim(),
+        featured:    document.getElementById('pFeatured').checked,
+        trending:    document.getElementById('pTrending').checked,
+        tags,
       };
       try {
-        const url    = myShopId ? `${API}/shops/${myShopId}` : `${API}/shops`;
-        const method = myShopId ? 'PUT' : 'POST';
+        const url    = myShop ? `${API}/shops/${myShop._id}` : `${API}/shops`;
+        const method = myShop ? 'PUT' : 'POST';
         const res    = await fetch(url, {
           method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(body)
         });
         const data = await res.json();
         if (data.success) {
-          myShopId = data.data._id;
-          localStorage.setItem('shopId', myShopId);
-          document.getElementById('profileStatus').textContent = 'Active';
-          document.getElementById('profileStatus').className   = 'status-badge active';
-          document.querySelector('.shop-setup-banner').style.display = 'none';
-          updateOverviewShop(data.data);
-          showToast('Shop profile saved!');
-        } else { showToast(data.message || 'Failed to save'); }
-      } catch(e) { showToast('Server error. Try again.'); }
-      btn.disabled = false; btn.innerHTML = 'Save Shop Profile <i class="fas fa-save"></i>';
+          myShop = data.data;
+          localStorage.setItem('shopId', myShop._id);
+          updateOverviewCard(myShop);
+          updateStatCards(myShop);
+          document.getElementById('profileStatusBadge').textContent = 'Active';
+          document.getElementById('profileStatusBadge').className   = 'status-badge active';
+          document.getElementById('deleteShopBtn').style.display = 'inline-flex';
+          document.getElementById('setupBanner').style.display = 'none';
+          if (myShop.whatsapp || myShop.phone) document.getElementById('waQuickBtn').href = `https://wa.me/${myShop.whatsapp || myShop.phone}`;
+          showToast('✅ Shop profile saved!');
+        } else { showToast('❌ ' + (data.message || 'Failed to save')); }
+      } catch { showToast('❌ Server error. Try again.'); }
+      btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Profile';
     }
 
-    // ── Products ──
-    async function loadProducts() {
-      const tbody = document.getElementById('productsTableBody');
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">Loading...</td></tr>`;
-      if (!myShopId) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">
-          Create your shop profile first. <button class="btn btn-sm btn-primary" style="margin-left:8px" onclick="showSection('profile')">Create Profile</button>
-        </td></tr>`;
-        return;
-      }
+    // ── Delete shop ──
+    async function deleteShop() {
+      if (!myShop) return;
+      if (!confirm(`Delete "${myShop.name}"? This cannot be undone.`)) return;
       try {
-        const res  = await fetch(`${API}/shops/${myShopId}/products`, { headers: { Authorization: `Bearer ${token}` } });
+        await fetch(`${API}/shops/${myShop._id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+        myShop = null; myProducts = []; myReviews = [];
+        localStorage.removeItem('shopId');
+        document.getElementById('shopProfileForm').reset();
+        document.getElementById('profileStatusBadge').textContent = 'Not Created';
+        document.getElementById('profileStatusBadge').className   = 'status-badge pending';
+        document.getElementById('deleteShopBtn').style.display = 'none';
+        document.getElementById('setupBanner').style.display = 'flex';
+        document.getElementById('shopSummaryCard').innerHTML = `<div class="empty-state" style="padding:24px"><i class="fas fa-store"></i><p>No shop created yet.</p><button class="btn btn-primary btn-sm" onclick="showSection('profile')">Create Shop Profile</button></div>`;
+        showToast('🗑️ Shop deleted.');
+        showSection('overview');
+      } catch { showToast('❌ Failed to delete shop.'); }
+    }
+
+    // ══════════════════════════════════
+    // PRODUCTS
+    // ══════════════════════════════════
+    async function loadProductsData() {
+      if (!myShop) return;
+      try {
+        const res  = await fetch(`${API}/shops/${myShop._id}/products`, { headers: { Authorization: `Bearer ${token}` } });
         const data = await res.json();
-        document.getElementById('productCount').textContent = data.count || 0;
-        document.getElementById('statProducts').textContent = data.count || 0;
-        if (!data.success || !data.data.length) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:32px">No products yet. Add your first product.</td></tr>`;
+        myProducts = data.success ? data.data : [];
+        document.getElementById('statProducts').textContent = myProducts.length;
+        document.getElementById('productCount').textContent = myProducts.length;
+      } catch { myProducts = []; }
+    }
+
+    const PROD_EMOJIS = ['📦','🛍️','🧴','👟','💎','🎁','🌿','🔧','📱','🍱','👗','💄'];
+
+    function renderProducts() {
+      loadProductsData().then(() => {
+        const grid = document.getElementById('productsGrid');
+        if (!myShop) {
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-store"></i><p>Create your shop profile first.</p><button class="btn btn-primary btn-sm" onclick="showSection('profile')">Create Profile</button></div>`;
           return;
         }
-        tbody.innerHTML = data.data.map(p => `
-          <tr>
-            <td><div class="prod-name-cell">
-              <div class="prod-thumb" style="background:var(--red-light);color:var(--red)">📦</div>
-              <div><span style="font-weight:600">${p.name}</span>${p.description ? `<br><small style="color:var(--grey-400)">${p.description.slice(0,40)}...</small>` : ''}</div>
-            </div></td>
-            <td>${p.price || '—'}</td>
-            <td><span class="status-badge ${p.inStock !== false ? 'active' : 'pending'}">${p.inStock !== false ? 'In Stock' : 'Out of Stock'}</span></td>
-            <td>
-              <button class="icon-btn red" onclick="deleteProduct('${p._id}')" title="Delete"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>`).join('');
-      } catch(e) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--grey-400);padding:24px">Could not load products.</td></tr>`;
-      }
+        if (!myProducts.length) {
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-box-open"></i><p>No products yet. Add your first product!</p><button class="btn btn-primary btn-sm" onclick="openAddProduct()"><i class="fas fa-plus"></i> Add Product</button></div>`;
+          return;
+        }
+        grid.innerHTML = myProducts.map((p, i) => `
+          <div class="prod-card-dash">
+            <div class="prod-card-img" style="background:var(--${p.inStock!==false?'red':'grey'}-light)">
+              <span>${PROD_EMOJIS[i % PROD_EMOJIS.length]}</span>
+              <span class="prod-stock-badge status-badge ${p.inStock!==false?'active':'pending'}">${p.inStock!==false?'In Stock':'Out of Stock'}</span>
+            </div>
+            <div class="prod-card-body">
+              <h4>${p.name}</h4>
+              <div class="price">${p.price || '—'}</div>
+              ${p.description ? `<div class="desc">${p.description.slice(0,60)}${p.description.length>60?'...':''}</div>` : '<div class="desc" style="height:14px"></div>'}
+              <div class="prod-card-actions">
+                <button class="btn btn-sm btn-outline" style="flex:1;justify-content:center" onclick="openEditProduct(${JSON.stringify(p).replace(/"/g,'&quot;')})"><i class="fas fa-edit"></i> Edit</button>
+                <button class="icon-btn red" onclick="deleteProduct('${p._id}')" title="Delete"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+          </div>`).join('');
+      });
     }
 
-    async function addProduct(e) {
+    function openAddProduct() {
+      document.getElementById('productModalTitle').textContent = 'Add Product';
+      document.getElementById('productForm').reset();
+      document.getElementById('editProductId').value = '';
+      document.getElementById('saveProductBtn').textContent = 'Add Product';
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function openEditProduct(p) {
+      document.getElementById('productModalTitle').textContent = 'Edit Product';
+      document.getElementById('editProductId').value = p._id;
+      document.getElementById('prodName').value  = p.name        || '';
+      document.getElementById('prodPrice').value = p.price       || '';
+      document.getElementById('prodDesc').value  = p.description || '';
+      document.getElementById('prodStock').value = p.inStock !== false ? 'true' : 'false';
+      document.getElementById('saveProductBtn').textContent = 'Save Changes';
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeProductModal() { document.getElementById('productModal').style.display = 'none'; }
+
+    async function saveProduct(e) {
       e.preventDefault();
-      if (!myShopId) { showToast('Create your shop profile first.'); return; }
-      const btn  = document.getElementById('addProductBtn');
-      btn.disabled = true; btn.textContent = 'Adding...';
+      if (!myShop) { showToast('Create your shop profile first.'); return; }
+      const btn  = document.getElementById('saveProductBtn');
+      const editId = document.getElementById('editProductId').value;
+      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       const body = {
-        name: document.getElementById('prodName').value.trim(),
-        category: document.getElementById('prodCategory').value,
-        price: document.getElementById('prodPrice').value.trim(),
+        name:        document.getElementById('prodName').value.trim(),
+        price:       document.getElementById('prodPrice').value.trim(),
         description: document.getElementById('prodDesc').value.trim(),
+        inStock:     document.getElementById('prodStock').value === 'true',
       };
       try {
-        const res  = await fetch(`${API}/shops/${myShopId}/products`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        const url    = editId ? `${API}/shops/${myShop._id}/products/${editId}` : `${API}/shops/${myShop._id}/products`;
+        const method = editId ? 'PUT' : 'POST';
+        const res    = await fetch(url, {
+          method, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
           body: JSON.stringify(body)
         });
         const data = await res.json();
         if (data.success) {
-          document.getElementById('addProductModal').style.display = 'none';
-          document.getElementById('addProductForm').reset();
-          loadProducts();
-          showToast('Product added!');
-        } else { showToast(data.message || 'Failed to add product'); }
-      } catch(e) { showToast('Server error. Try again.'); }
-      btn.disabled = false; btn.textContent = 'Add Product';
+          closeProductModal();
+          renderProducts();
+          showToast(editId ? '✅ Product updated!' : '✅ Product added!');
+        } else { showToast('❌ ' + (data.message || 'Failed')); }
+      } catch { showToast('❌ Server error.'); }
+      btn.disabled = false; btn.textContent = editId ? 'Save Changes' : 'Add Product';
     }
 
     async function deleteProduct(id) {
       if (!confirm('Delete this product?')) return;
-      await fetch(`${API}/shops/${myShopId}/products/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-      loadProducts();
+      try {
+        await fetch(`${API}/shops/${myShop._id}/products/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+        renderProducts();
+        showToast('🗑️ Product deleted.');
+      } catch { showToast('❌ Failed to delete.'); }
     }
 
-    // ── Reviews ──
-    async function loadReviews() {
-      if (!myShopId) return;
+    // ══════════════════════════════════
+    // REVIEWS
+    // ══════════════════════════════════
+    async function loadReviewsData() {
+      if (!myShop) return;
       try {
-        const res  = await fetch(`${API}/shops/${myShopId}/reviews`);
+        const res  = await fetch(`${API}/shops/${myShop._id}/reviews`);
         const data = await res.json();
-        if (!data.success || !data.data.length) return;
-        document.getElementById('reviewsList').innerHTML = data.data.map(r => `
-          <div class="review-item">
-            <div class="review-author">
-              <div class="rev-avatar">${(r.user?.name || 'U').slice(0,2).toUpperCase()}</div>
-              <div><strong>${r.user?.name || 'Customer'}</strong><span>${new Date(r.createdAt).toLocaleDateString()}</span></div>
-              <div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-            </div>
-            <p>${r.comment || ''}</p>
-          </div>`).join('');
-      } catch(e) {}
+        myReviews = data.success ? data.data : [];
+        document.getElementById('statReviews').textContent  = myReviews.length;
+        document.getElementById('reviewCount').textContent  = myReviews.length;
+        if (myShop) myShop.reviewCount = myReviews.length;
+      } catch { myReviews = []; }
     }
+
+    function renderRecentReviews() {
+      const el = document.getElementById('recentReviews');
+      if (!myReviews.length) { el.innerHTML = '<p style="font-size:13px;color:var(--grey-400)">No reviews yet.</p>'; return; }
+      el.innerHTML = myReviews.slice(0,3).map(r => `
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--grey-50);border-radius:8px;margin-bottom:8px">
+          <div class="rev-av" style="width:32px;height:32px;font-size:11px">${(r.user?.name||'U').slice(0,2).toUpperCase()}</div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <strong style="font-size:12px">${r.user?.name||'Customer'}</strong>
+              <span style="color:#f39c12;font-size:11px">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+            </div>
+            <p style="font-size:12px;color:var(--grey-600);margin:2px 0 0">${r.comment||''}</p>
+          </div>
+        </div>`).join('');
+    }
+
+    function renderReviews() {
+      loadReviewsData().then(() => {
+        const list = document.getElementById('reviewsList');
+        const summary = document.getElementById('ratingSummary');
+        if (!myShop) { list.innerHTML = `<div class="empty-state"><i class="fas fa-store"></i><p>Create your shop profile first.</p></div>`; return; }
+        if (!myReviews.length) {
+          summary.style.display = 'none';
+          list.innerHTML = `<div class="empty-state"><i class="fas fa-star"></i><p>No reviews yet. Share your shop link to get reviews!</p>${myShop ? `<a href="shop-profile.html?id=${myShop._id}" target="_blank" class="btn btn-primary btn-sm">View My Shop Page</a>` : ''}</div>`;
+          return;
+        }
+        // Rating summary
+        summary.style.display = 'block';
+        const avg = myReviews.reduce((a,r) => a + r.rating, 0) / myReviews.length;
+        document.getElementById('avgRatingBig').textContent    = avg.toFixed(1);
+        document.getElementById('starsDisplay').innerHTML      = '★'.repeat(Math.round(avg)) + '☆'.repeat(5-Math.round(avg));
+        document.getElementById('totalReviewsLabel').textContent = myReviews.length + ' review' + (myReviews.length!==1?'s':'');
+        const counts = [5,4,3,2,1].map(s => ({ s, n: myReviews.filter(r=>r.rating===s).length }));
+        document.getElementById('ratingBars').innerHTML = counts.map(c => `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;color:var(--grey-600)">
+            <span style="width:8px">${c.s}</span><i class="fas fa-star" style="color:#f39c12;font-size:10px"></i>
+            <div style="flex:1;height:6px;background:var(--grey-200);border-radius:3px;overflow:hidden">
+              <div style="width:${myReviews.length?Math.round(c.n/myReviews.length*100):0}%;height:100%;background:var(--red);border-radius:3px"></div>
+            </div>
+            <span style="width:20px;text-align:right">${c.n}</span>
+          </div>`).join('');
+        // Review list
+        list.innerHTML = myReviews.map(r => `
+          <div class="review-card">
+            <div class="review-card-head">
+              <div class="rev-av">${(r.user?.name||'U').slice(0,2).toUpperCase()}</div>
+              <div style="flex:1">
+                <strong style="display:block;font-size:13px">${r.user?.name||'Customer'}</strong>
+                <span style="font-size:11px;color:var(--grey-400)">${new Date(r.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
+              </div>
+              <div class="rev-stars">${'★'.repeat(r.rating)}<span class="rev-empty">${'★'.repeat(5-r.rating)}</span></div>
+            </div>
+            ${r.comment ? `<p style="font-size:13px;color:var(--grey-600);margin:0">${r.comment}</p>` : ''}
+          </div>`).join('');
+        renderRecentReviews();
+      });
+    }
+
+    // ── Settings ──
+    function updateVisibility() { showToast(document.getElementById('visibilityToggle').checked ? '✅ Shop is now visible' : '🔒 Shop hidden from search'); }
 
     // ── Toast ──
     function showToast(msg) {
-      let t = document.getElementById('toast');
-      if (!t) {
-        t = document.createElement('div'); t.id = 'toast';
-        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f1629;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:opacity 0.3s';
-        document.body.appendChild(t);
-      }
+      const t = document.getElementById('toast');
       t.textContent = msg; t.style.opacity = '1';
-      setTimeout(() => t.style.opacity = '0', 2500);
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.style.opacity = '0', 2800);
     }
 
-    // ── Demo data for overview when no real shop exists ──
-    function injectDemoOverview() {
-      document.getElementById('statViews').textContent    = '1,248';
-      document.getElementById('statProducts').textContent = '12';
-      document.getElementById('statRating').textContent   = '4.7';
-      document.getElementById('shopSummary').innerHTML = `
-        <div style="margin-bottom:16px">
-          <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--grey-50);border-radius:var(--radius-sm);margin-bottom:10px">
-            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#1a3c6e,#2d5fa6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌶️</div>
-            <div><strong style="display:block;font-size:14px">The Spice Route</strong><span style="font-size:12px;color:var(--grey-400)">Food & Spices · Bandra West</span></div>
-            <a href="shop-profile.html?id=s1" class="btn btn-sm btn-outline" style="margin-left:auto">View</a>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:linear-gradient(135deg,#e8f8f0,#f0faf5);border-radius:10px;padding:14px;text-align:center">
-              <strong style="display:block;font-size:1.4rem;color:#27ae60">₹2.4L</strong>
-              <span style="font-size:11px;color:var(--grey-600)">Est. Revenue</span>
-            </div>
-            <div style="background:linear-gradient(135deg,#eef3fb,#f4f6fb);border-radius:10px;padding:14px;text-align:center">
-              <strong style="display:block;font-size:1.4rem;color:#1a3c6e">342</strong>
-              <span style="font-size:11px;color:var(--grey-600)">WhatsApp Taps</span>
-            </div>
-          </div>
-        </div>
-        <div style="font-size:12px;font-weight:700;color:var(--grey-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Recent Activity</div>
-        ${[
-          { icon:'⭐', text:'New 5-star review from Priya K.', time:'2h ago', color:'#fff3cd' },
-          { icon:'💬', text:'WhatsApp enquiry for Kashmiri Saffron', time:'4h ago', color:'#e8f8f0' },
-          { icon:'👁️', text:'18 profile views today', time:'Today', color:'#eef3fb' },
-        ].map(a => `
-          <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:${a.color};margin-bottom:6px">
-            <span style="font-size:18px">${a.icon}</span>
-            <div style="flex:1"><span style="font-size:12px;font-weight:500">${a.text}</span></div>
-            <span style="font-size:11px;color:var(--grey-400);flex-shrink:0">${a.time}</span>
-          </div>`).join('')}`;
-    }
-
-    // Init
-    loadMyShop().then(() => {
-      // If still empty after load, show demo data
-      if (!myShopId) injectDemoOverview();
-    });
+    // ── Boot ──
+    init();
   </script>
 </body>
 </html>
