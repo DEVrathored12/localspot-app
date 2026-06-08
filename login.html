@@ -175,19 +175,35 @@
     if (!isLocal) {
       const wakeStatus = document.createElement('div');
       wakeStatus.id = 'wakeStatus';
-      wakeStatus.style.cssText = 'background:#eef3fb;color:#1a3c6e;border:1px solid #c8d8f0;padding:8px 14px;border-radius:8px;font-size:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px';
-      wakeStatus.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Connecting to server...';
+      wakeStatus.style.cssText = 'background:#eef3fb;color:#1a3c6e;border:1px solid #c8d8f0;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:12px;display:flex;align-items:center;gap:10px';
       document.getElementById('loginForm').prepend(wakeStatus);
-      
+
+      let seconds = 0;
+      const timer = setInterval(() => {
+        seconds++;
+        const bar = Math.min(Math.round((seconds / 50) * 100), 99);
+        wakeStatus.innerHTML = `
+          <i class="fas fa-circle-notch fa-spin" style="flex-shrink:0"></i>
+          <div style="flex:1">
+            <div style="font-weight:600;margin-bottom:4px">Starting server... (${seconds}s)</div>
+            <div style="background:#c8d8f0;border-radius:100px;height:4px;overflow:hidden">
+              <div style="height:100%;background:#1a3c6e;border-radius:100px;width:${bar}%;transition:width 1s linear"></div>
+            </div>
+            <div style="font-size:11px;color:#5a7ab5;margin-top:4px">Free server wakes in ~30–50s. Please wait.</div>
+          </div>`;
+      }, 1000);
+      wakeStatus.innerHTML = `<i class="fas fa-circle-notch fa-spin" style="flex-shrink:0"></i><div style="flex:1"><div style="font-weight:600;margin-bottom:4px">Starting server... (0s)</div><div style="background:#c8d8f0;border-radius:100px;height:4px"><div style="height:100%;background:#1a3c6e;border-radius:100px;width:0%"></div></div><div style="font-size:11px;color:#5a7ab5;margin-top:4px">Free server wakes in ~30–50s. Please wait.</div></div>`;
+
       const wakeUp = async () => {
         try {
           const res = await fetch(`${API}/health`);
           if (res.ok) {
+            clearInterval(timer);
             wakeStatus.style.background = '#e8f8f0';
             wakeStatus.style.color = '#27ae60';
             wakeStatus.style.borderColor = '#b7e4c7';
-            wakeStatus.innerHTML = '<i class="fas fa-check-circle"></i> Server ready';
-            setTimeout(() => wakeStatus.remove(), 2000);
+            wakeStatus.innerHTML = '<i class="fas fa-check-circle" style="flex-shrink:0;font-size:16px"></i><span><strong>Server ready!</strong> You can now sign in.</span>';
+            setTimeout(() => wakeStatus.remove(), 2500);
           } else { setTimeout(wakeUp, 3000); }
         } catch(e) { setTimeout(wakeUp, 3000); }
       };
